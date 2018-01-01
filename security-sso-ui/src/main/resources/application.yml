@@ -1,0 +1,10 @@
+zuul:
+  routes:
+    resource:
+      path: /resource/**
+      url: http://localhost:9000
+server:
+  port: 8081
+spring:
+  profiles:
+    include: security
