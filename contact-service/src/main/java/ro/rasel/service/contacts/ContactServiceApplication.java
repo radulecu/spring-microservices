@@ -3,16 +3,15 @@ package ro.rasel.service.contacts;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import ro.rasel.security.client.resource.ResourceSecurity;
+import ro.rasel.service.bookmarks.EurekaClientConfgurer;
 import ro.rasel.service.contacts.dao.ContactRepository;
 import ro.rasel.service.contacts.domain.Contact;
 
 import java.util.Arrays;
 
 @SpringBootApplication
-@EnableEurekaClient
 public class ContactServiceApplication {
 
     @Bean
@@ -30,7 +29,8 @@ public class ContactServiceApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{ContactServiceApplication.class, ResourceSecurity.class}, args);
+        SpringApplication.run(new Class<?>[]{ContactServiceApplication.class, EurekaClientConfgurer.class,
+                ResourceSecurity.class}, args);
     }
 
 }

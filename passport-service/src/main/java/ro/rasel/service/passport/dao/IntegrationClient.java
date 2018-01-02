@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import ro.rasel.service.passport.domain.Bookmark;
 import ro.rasel.service.passport.domain.Contact;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 @Component
 public class IntegrationClient {
@@ -20,9 +20,10 @@ public class IntegrationClient {
         this.bookmarkClient = bookmarkClient;
     }
 
+    @SuppressWarnings("unused")
     public Collection<Bookmark> getBookmarksFallback(String userId) {
         System.out.println("getBookmarksFallback");
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @HystrixCommand(fallbackMethod = "getBookmarksFallback")
@@ -30,16 +31,17 @@ public class IntegrationClient {
         return this.bookmarkClient.getBookmarks(userId);
     }
 
+    @SuppressWarnings("unused")
     public Collection<Contact> getContactsFallback(String userId) {
         System.out.println("getContactsFallback");
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @HystrixCommand(fallbackMethod = "getContactsFallback")
     public Collection<Contact> getContacts(String userId) {
         try {
             return this.contactClient.getContacts(userId);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
