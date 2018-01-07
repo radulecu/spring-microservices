@@ -1,0 +1,6 @@
+*.iml
+*.ipr
+.idea/inspectionProfiles
+.idea/libraries
+.idea/.name
+.idea/*.xml

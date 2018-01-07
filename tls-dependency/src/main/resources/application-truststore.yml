@@ -1,0 +1,6 @@
+system:
+  property:
+    server:
+      ssl:
+        trust-store-password: jkspass
+        trust-store-type: jks

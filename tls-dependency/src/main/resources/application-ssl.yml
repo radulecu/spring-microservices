@@ -1,0 +1,8 @@
+server:
+  ssl:
+    key-alias: jksalias
+    key-store-password: jkspass
+    key-store: classpath:my.jks
+    key-store-provider: SUN
+    key-store-type: JKS
+    protocol: TLSv1.2

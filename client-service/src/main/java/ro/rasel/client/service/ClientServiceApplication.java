@@ -15,7 +15,9 @@ import ro.rasel.service.bookmarks.EurekaClientConfgurer;
 public class ClientServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{ClientServiceApplication.class, EurekaClientConfgurer.class, WebSecurity.class}, args);
+        SpringApplication
+                .run(new Class<?>[]{ClientServiceApplication.class, EurekaClientConfgurer.class, WebSecurity.class},
+                        args);
     }
 }
  
