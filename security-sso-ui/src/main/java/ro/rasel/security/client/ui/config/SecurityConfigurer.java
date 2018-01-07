@@ -11,8 +11,6 @@ public class SecurityConfigurer implements IWebSecurityConfigurer {
         // @formatter:off
         http
             .authorizeRequests()
-            .antMatchers("/","/login").permitAll()
-            .antMatchers("/logout").permitAll()
             .antMatchers("/user").authenticated()
             .antMatchers("/test").permitAll()
             .antMatchers("/test/1").authenticated()

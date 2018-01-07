@@ -1,21 +1,25 @@
+server:
+  security:
+   url: https://localhost:9999
 zuul:
   routes:
     user:
       path: /user/**
-      url: http://localhost:9999/uaa/user
+      url: ${server.security.url}/uaa/user
 security:
   user:
     password: password
   oauth2:
     client:
-      accessTokenUri: http://localhost:9999/uaa/oauth/token
-      userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
+      accessTokenUri: ${server.security.url}/uaa/oauth/token
+      userAuthorizationUri: ${server.security.url}/uaa/oauth/authorize
       clientId: acme
       clientSecret: acmesecret
     resource:
-      userInfoUri: http://localhost:9999/uaa/user
+      userInfoUri: ${server.security.url}/uaa/user
   basic:
     enabled: false
+
 #histrix strategy is required to avoid errors caused by the fact that hystrix handles requests in a different thread causing unexpected errors
 hystrix:
   command:
@@ -23,3 +27,21 @@ hystrix:
       execution:
         isolation:
           strategy: SEMAPHORE
+# setup eureka properties will be ignored if eureka unused
+#eureka:
+#  instance:
+#    nonSecurePortEnabled: false
+#    securePortEnabled: true
+#    securePort: ${server.port}
+#    hostname: ${server.hostname:localhost}
+#    statusPageUrl: https://${eureka.instance.hostname}:${server.port}/info
+#    healthCheckUrl: https://${eureka.instance.hostname}:${server.port}/health
+#    homePageUrl: https://${eureka.instance.hostName}:${server.port}/
+#server:
+#  ssl:
+#    key-alias: jksalias
+#    key-store-password: jkspass
+#    key-store: classpath:my.jks
+#    key-store-provider: SUN
+#    key-store-type: JKS
+#    protocol: TLSv1.2

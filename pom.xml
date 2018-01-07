@@ -9,15 +9,16 @@
     <modules>
         <module>starter-parent</module>
         <module>dependency-parent</module>
+        <module>commons</module>
         <module>eureka-service</module>
         <module>eureka-client-dependency</module>
+        <module>security-sso-dependency</module>
         <module>bookmark-service</module>
         <module>contact-service</module>
         <module>passport-service</module>
         <module>client-service</module>
         <module>client-service-light</module>
         <module>hystrix-dashboard-service</module>
-        <module>security-sso-dependency</module>
         <module>security-sso-ui</module>
         <module>security-sso-auth-server</module>
     </modules>

@@ -3,6 +3,8 @@ server:
 spring:
   jpa:
     generate-ddl: true
+  application:
+    name: bookmark-service
 #eureka:
 #  instance:
 #    instanceId: ${random.uuid}

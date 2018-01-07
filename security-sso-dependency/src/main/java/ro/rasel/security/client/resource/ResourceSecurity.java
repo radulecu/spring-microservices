@@ -3,8 +3,9 @@ package ro.rasel.security.client.resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.ComponentScan;
 import ro.rasel.security.client.configuration.OAuth2FeignAutoConfiguration;
+import ro.rasel.security.client.utils.TempFileManager;
 
 @ConditionalOnProperty(value = "security.enabled", matchIfMissing = true)
-@ComponentScan(basePackageClasses = {ResourceSecurity.class, OAuth2FeignAutoConfiguration.class})
+@ComponentScan(basePackageClasses = {ResourceSecurity.class, OAuth2FeignAutoConfiguration.class, TempFileManager.class})
 public class ResourceSecurity {
 }

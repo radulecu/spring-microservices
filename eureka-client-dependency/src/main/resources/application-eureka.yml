@@ -4,6 +4,3 @@ eureka:
       defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 10
-#    hostname: ${APPLICATION_DOMAIN}
-#    nonSecurePort: 80
-
