@@ -1,3 +1,4 @@
+# all interval properties above should be adjusted for performance
 eureka:
   client:
     serviceUrl:
@@ -8,5 +9,12 @@ eureka:
     instance-info-replication-interval-seconds: 10
   instance:
     leaseRenewalIntervalInSeconds: 10
-#    lease-expiration-duration-in-seconds: 30
-# all interval properties above should be adjusted for performance, they were set to 1 because I did not knw which ones are responsible for making server synchronization with eureka.
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    hostname: ${server.host:localhost}
+    # protocol defined under application-ssl.yml file where the decision is made if ssl is enabled or not
+    protocol: ${server.protocol:http}
+    statusPageUrl: ${eureka.instance.protocol}://${eureka.instance.hostname}:${server.port}/info
+    healthCheckUrl: ${eureka.instance.protocol}://${eureka.instance.hostname}:${server.port}/health
+    homePageUrl: ${eureka.instance.protocol}://${eureka.instance.hostName}:${server.port}/

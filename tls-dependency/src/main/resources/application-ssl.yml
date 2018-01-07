@@ -1,4 +1,5 @@
 server:
+  protocol: https
   ssl:
     key-alias: jksalias
     key-store-password: jkspass
