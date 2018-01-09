@@ -4,9 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import ro.rasel.security.client.resource.ResourceSecurity;
+import ro.rasel.security.client.resource.ResourceSecurityComponent;
 import ro.rasel.service.bookmarks.dao.BookmarkRepository;
 import ro.rasel.service.bookmarks.domain.Bookmark;
+import ro.rasel.tls.configuration.SSLComponent;
 
 import java.util.Arrays;
 
@@ -26,8 +27,8 @@ public class BookmarkServiceApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{BookmarkServiceApplication.class, EurekaClientConfgurer.class,
-                ResourceSecurity.class}, args);
+        SpringApplication.run(new Class<?>[]{BookmarkServiceApplication.class, EurekaClientComponent.class,
+                ResourceSecurityComponent.class, SSLComponent.class}, args);
     }
 
 }

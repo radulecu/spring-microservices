@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import ro.rasel.security.client.sso.WebSecurity;
+import ro.rasel.security.client.sso.WebSecurityComponent;
+import ro.rasel.tls.configuration.SSLComponent;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -14,7 +15,9 @@ import ro.rasel.security.client.sso.WebSecurity;
 public class ClientServiceLightApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{ClientServiceLightApplication.class, WebSecurity.class}, args);
+        SpringApplication
+                .run(new Class<?>[]{ClientServiceLightApplication.class, WebSecurityComponent.class,
+                        SSLComponent.class}, args);
     }
 }
  

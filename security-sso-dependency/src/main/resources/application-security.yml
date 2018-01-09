@@ -26,6 +26,3 @@ hystrix:
       execution:
         isolation:
           strategy: SEMAPHORE
-spring:
-  profiles:
-    include: ssl, truststore
