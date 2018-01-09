@@ -1,9 +1,9 @@
 :compat-mode:
-= Client serive light
+= Client service light
 
 This module is a carbon copy of contact-service module.It tries to show that you do noc actually need to create all the mappers to the service by hand.
 
 You can mace any call by using the name of the service and the url.
 For example:
 instead of calling <url>/bookmarks/jlong you can call <url>/bookmark-service/bookmarks/jlong
-This happens thanks to the inverse proxy Zuul and load balancer used by it called Ribbon. In addition Zull brings Hystrix for load balancing.
+This happens thanks to the inverse proxy Zuul and load balancer used by it called Ribbon. In addition Zuul brings Hystrix for load balancing.

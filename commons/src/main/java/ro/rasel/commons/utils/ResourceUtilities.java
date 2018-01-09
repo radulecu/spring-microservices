@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class ResourceUtilities {
 
-    private TempFileManager tempFileManager;
+    private final TempFileManager tempFileManager;
 
     public ResourceUtilities(TempFileManager tempFileManager) {
         this.tempFileManager = tempFileManager;

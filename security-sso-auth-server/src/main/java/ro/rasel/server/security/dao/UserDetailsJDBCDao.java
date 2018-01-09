@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDetailsJDBCDao implements UserDetasDao {
+public class UserDetailsJDBCDao implements UserDetailsDao {
 
     private final JdbcTemplate jdbcTemplate;
 

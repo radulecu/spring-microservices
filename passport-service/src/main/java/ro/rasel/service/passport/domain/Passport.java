@@ -4,11 +4,11 @@ import java.util.Collection;
 
 public class Passport {
 
-    private String userId;
+    private final String userId;
 
-    private Collection<Bookmark> bookmarks;
+    private final Collection<Bookmark> bookmarks;
 
-    private Collection<Contact> contacts;
+    private final Collection<Contact> contacts;
 
     public Passport(String userId, Collection<Contact> contacts,
                     Collection<Bookmark> bookmarks) {

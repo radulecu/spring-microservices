@@ -35,5 +35,5 @@ Open -> <Project Root>/pom.xml -> Open file as project
     * https://www.safaribooksonline.com/library/view/building-microservices-with/9780134192468/10_05.html?autoStart=True
         ** Lesson 8: Choreographing Microservices
             *** Using Microservices is based mostly on this chapter
-        ** The course also goes through other intristing concepts like Spring Cloud Configuration, Batch Processing, Monitoring Microservices, Actuator, Logging
+        ** The course also goes through other interesting concepts like Spring Cloud Configuration, Batch Processing, Monitoring Microservices, Actuator, Logging
     * Git sources: https://github.com/livelessons-spring/building-microservices

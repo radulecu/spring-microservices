@@ -32,7 +32,7 @@ public class SSLConfig {
         //load the 'javax.net.ssl.trustStore' and 'javax.net.ssl.trustStorePassword' from application.properties
         System.setProperty("javax.net.ssl.trustStore", truststoreFile.getAbsolutePath());
         System.setProperty("javax.net.ssl.trustStorePassword",
-                env.getProperty("server.ssl.trust-store-password", "jkspass"));
-        System.setProperty("javax.net.ssl.trustStoreType", env.getProperty("server.ssl.trust-store-type", "jks"));
+                env.getProperty("system.property.server.ssl.trust-store-password", "jkspass"));
+        System.setProperty("javax.net.ssl.trustStoreType", env.getProperty("system.property.server.ssl.trust-store-type", "jks"));
     }
 }
