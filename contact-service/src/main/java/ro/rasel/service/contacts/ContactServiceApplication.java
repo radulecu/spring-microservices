@@ -8,7 +8,7 @@ import ro.rasel.security.client.resource.ResourceSecurityComponent;
 import ro.rasel.service.bookmarks.EurekaClientComponent;
 import ro.rasel.service.contacts.dao.ContactRepository;
 import ro.rasel.service.contacts.domain.Contact;
-import ro.rasel.tls.configuration.SSLComponent;
+import ro.rasel.ssl.configuration.TruststoreComponent;
 
 import java.util.Arrays;
 
@@ -31,7 +31,7 @@ public class ContactServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(new Class<?>[]{ContactServiceApplication.class, EurekaClientComponent.class,
-                ResourceSecurityComponent.class, SSLComponent.class}, args);
+                ResourceSecurityComponent.class, TruststoreComponent.class}, args);
     }
 
 }
