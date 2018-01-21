@@ -9,8 +9,6 @@ eureka:
     instance-info-replication-interval-seconds: 10
   instance:
     leaseRenewalIntervalInSeconds: 10
-    nonSecurePortEnabled: false
-    securePortEnabled: true
     securePort: ${server.port}
     hostname: ${server.host:localhost}
     # protocol defined under application-ssl.yml file where the decision is made if ssl is enabled or not

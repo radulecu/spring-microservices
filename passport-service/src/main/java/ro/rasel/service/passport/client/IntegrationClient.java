@@ -1,4 +1,4 @@
-package ro.rasel.service.passport.dao;
+package ro.rasel.service.passport.client;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.stereotype.Component;
@@ -39,12 +39,6 @@ public class IntegrationClient {
 
     @HystrixCommand(fallbackMethod = "getContactsFallback")
     public Collection<Contact> getContacts(String userId) {
-        try {
-            return this.contactClient.getContacts(userId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+        return this.contactClient.getContacts(userId);
     }
-
 }

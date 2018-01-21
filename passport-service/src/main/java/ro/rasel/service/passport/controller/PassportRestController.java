@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ro.rasel.service.passport.dao.IntegrationClient;
+import ro.rasel.service.passport.client.IntegrationClient;
 import ro.rasel.service.passport.domain.Passport;
 
 @RestController

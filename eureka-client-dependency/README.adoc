@@ -1,0 +1,11 @@
+= Eureka service
+
+== Seeing details about services
+http://localhost:8761/
+
+== How to get details about services via curl
+* get details about all applications
+http://localhost:8761/eureka/apps -H "Accept:application/json"
+* get details about a specific service:
+http://localhost:8761/eureka/apps/bookmark-service -H "Accept:application/json"
+
