@@ -36,7 +36,7 @@ class ClientRestController {
     }
 
     @RequestMapping("/hi")
-    String hi(@PathVariable String userId) {
+    String hi() {
         return "hi";
     }
 
