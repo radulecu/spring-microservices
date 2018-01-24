@@ -3,5 +3,7 @@
 *.iml
 .idea/inspectionProfiles
 .idea/libraries
+.idea/artifacts
+.idea/dictionaries
 .idea/.name
 .idea/*.xml
