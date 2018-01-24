@@ -9,4 +9,4 @@ spring:
 ---
 spring:
   profiles:
-    include: security, eureka, ssl, sslTruststore
+    include: security, eureka, ssl, sslTrustStore
