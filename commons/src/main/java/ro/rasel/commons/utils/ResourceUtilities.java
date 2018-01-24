@@ -6,14 +6,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class ResourceUtilities {
+public class ResourceUtilities implements IResourceUtilities {
 
-    private final TempFileManager tempFileManager;
+    private final ITempFileManager tempFileManager;
 
-    public ResourceUtilities(TempFileManager tempFileManager) {
+    public ResourceUtilities(ITempFileManager tempFileManager) {
         this.tempFileManager = tempFileManager;
     }
 
+    @Override
     public File extractTempFileFromClasspathToTempFile(String name) throws IOException {
         URL input = getClass().getResource("/" + name);
         File output = tempFileManager.creteFile(name);

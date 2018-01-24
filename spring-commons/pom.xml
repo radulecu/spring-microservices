@@ -3,25 +3,31 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>dependency-parent</artifactId>
         <groupId>ro.rasel</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
+
     <description>Contains beans and config files used in multiple projects. Explicit import must be done to use them but
         they can be reused.
     </description>
+
     <artifactId>spring-commons</artifactId>
     <packaging>pom</packaging>
+
+    <description>Module used to define reusable spring beans that can be reused in multiple services</description>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
         <dependency>
             <groupId>ro.rasel</groupId>
             <artifactId>commons</artifactId>
             <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -16,6 +16,8 @@
         <start.class>ro.rasel.service.bookmarks.BookmarkServiceApplication</start.class>
     </properties>
 
+    <description>Basic resource service used for exposing data from database</description>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

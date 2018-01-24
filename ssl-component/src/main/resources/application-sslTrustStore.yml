@@ -1,9 +1,8 @@
+security:
+  service:
+    protocol: https
 truststore:
   enabled: true
-eureka:
-  instance:
-    nonSecurePortEnabled: false
-    securePortEnabled: true
 system:
   property:
     server:

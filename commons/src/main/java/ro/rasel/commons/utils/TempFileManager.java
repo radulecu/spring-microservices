@@ -2,7 +2,7 @@ package ro.rasel.commons.utils;
 
 import java.io.File;
 
-public class TempFileManager {
+public class TempFileManager implements ITempFileManager {
     private final File rootDir;
 
     public TempFileManager(String name) {
@@ -14,8 +14,9 @@ public class TempFileManager {
         rootDir.deleteOnExit();
     }
 
-    public File creteFile(String path) {
-        File file = new File(rootDir, path);
+    @Override
+    public File creteFile(String relativePath) {
+        File file = new File(rootDir, relativePath);
         file.deleteOnExit();
         return file;
     }

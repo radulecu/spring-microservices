@@ -1,3 +1,5 @@
+ssl:
+  enabled: true
 server:
   protocol: https
   ssl:

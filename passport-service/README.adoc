@@ -1,8 +1,9 @@
-= Resource server which uses other resource servers
+= Passport service
 
-This module has few tricks under his belt:
+This service is used to provide details about passports
 
-- The basic function is to provide resources
-- Uses other resource servers to prove that authentication can be forwarded to other resources
-- It is used also as a web client to provide other details (e.g. in this case hystrix details from <url>/hystrix.stream but other actuator tools work the same )
-- Zuul/Hystrix/Ribbon/Feign for resources
+Compared with Bookmark and Client services it does not actually get data from the database. Instead it gets data from other services and aggregates the data (e.g. Passport data represent aggregation between contacts and bookmarks with the same id).
+
+In addition to the functionality provided in the Bookmarks service this module has the following functionality:
+- Authentication token is forwarded to other services that use it (done automatically by enabling resource security)
+- Usage of Zuul/Hystrix/Ribbon/Feign

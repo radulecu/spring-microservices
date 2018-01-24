@@ -1,6 +1,6 @@
 server:
   security:
-   url: https://localhost:9999
+   url: ${security.service.protocol:http}://localhost:9999
 zuul:
   routes:
     user:

@@ -1,5 +1,6 @@
 package ro.rasel.security.client.ui;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +28,21 @@ public class RestExample {
         return new Result("testAdmin");
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/cucurigu")
-    public Object testCucurigu() {
+    @RequestMapping(method = RequestMethod.GET, path = "/user")
+    public Object testUser() {
+        return new Result("testUser");
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(method = RequestMethod.GET, path = "/admin2")
+    public Object testAdmin2() {
         return new Result("testAdmin");
+    }
+
+    @PreAuthorize("hasRole('INEXISTENT_ROLE_USER')")
+    @RequestMapping(method = RequestMethod.GET, path = "/user2")
+    public Object testUser2() {
+        return new Result("testUser");
     }
 
     private static class Result {
