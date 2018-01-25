@@ -3,6 +3,8 @@ package ro.rasel.service.eureka;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import ro.rasel.security.client.resource.ResourceSecurityClientComponent;
+import ro.rasel.service.eureka.config.WebSecurityConfigurer;
 import ro.rasel.ssl.truststore.TrustStoreComponent;
 
 @SpringBootApplication
@@ -10,7 +12,8 @@ import ro.rasel.ssl.truststore.TrustStoreComponent;
 public class EurekaServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{EurekaServerApplication.class, TrustStoreComponent.class}, args);
+        SpringApplication.run(new Class<?>[]{EurekaServerApplication.class, TrustStoreComponent.class,
+                ResourceSecurityClientComponent.class, WebSecurityConfigurer.class}, args);
     }
 
 }

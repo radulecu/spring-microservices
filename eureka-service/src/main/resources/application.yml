@@ -7,7 +7,13 @@ eureka:
   server:
     enable-self-preservation: false
     responseCacheAutoExpirationInSeconds: 10
+#security:
+#  basic:
+#    enabled: true
+#  user:
+#      name: user
+#      password: password
 ---
 spring:
   profiles:
-    include: ssl, sslTrustStore
+    include: sslTrustStore, security
