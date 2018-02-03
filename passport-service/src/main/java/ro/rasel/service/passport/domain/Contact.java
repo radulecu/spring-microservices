@@ -1,6 +1,8 @@
 package ro.rasel.service.passport.domain;
 
-public class Contact {
+import ro.rasel.domain.contact.IContact;
+
+public class Contact implements IContact {
 
     private Long id;
 

@@ -1,11 +1,13 @@
 package ro.rasel.service.bookmarks.domain;
 
+import ro.rasel.domain.bookmark.IBookmark;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Bookmark {
+public class Bookmark implements IBookmark {
 
     @Id
     @GeneratedValue

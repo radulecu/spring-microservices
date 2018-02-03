@@ -1,6 +1,8 @@
 package ro.rasel.client.service.domain;
 
-public class Bookmark {
+import ro.rasel.domain.bookmark.IBookmark;
+
+public class Bookmark implements IBookmark{
 
     private Long id;
 

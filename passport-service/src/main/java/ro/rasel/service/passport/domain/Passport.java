@@ -1,8 +1,10 @@
 package ro.rasel.service.passport.domain;
 
+import ro.rasel.domain.IPassport;
+
 import java.util.Collection;
 
-public class Passport {
+public class Passport implements IPassport{
 
     private final String userId;
 
