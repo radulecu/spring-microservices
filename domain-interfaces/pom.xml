@@ -11,5 +11,5 @@
     </parent>
 
     <artifactId>domain-interfaces</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 </project>

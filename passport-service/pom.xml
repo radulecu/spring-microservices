@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>passport-service</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <start.class>ro.rasel.service.passport.PassportServiceApplication</start.class>

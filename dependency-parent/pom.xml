@@ -75,4 +75,13 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <!--other repositories if any-->
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/../.repo</url>
+        </repository>
+    </distributionManagement>
 </project>
