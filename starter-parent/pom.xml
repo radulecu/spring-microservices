@@ -31,7 +31,6 @@
     </dependencyManagement>
 
     <distributionManagement>
-        <!--other repositories if any-->
         <repository>
             <id>project.local</id>
             <name>project</name>

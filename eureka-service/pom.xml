@@ -18,10 +18,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka-server</artifactId>
-        </dependency>
-        <dependency>
             <groupId>ro.rasel</groupId>
             <artifactId>security-sso-component</artifactId>
             <version>1.0.0-SNAPSHOT</version>
@@ -30,6 +26,12 @@
             <groupId>ro.rasel</groupId>
             <artifactId>ssl-component</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--Spring Cloud-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka-server</artifactId>
         </dependency>
     </dependencies>
 </project>
