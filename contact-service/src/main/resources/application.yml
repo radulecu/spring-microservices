@@ -5,6 +5,9 @@ spring:
     generate-ddl: true
   application:
     name: contact-service
+security:
+  basic:
+    enabled: false
 #eureka:
 #  instance:
 #    instanceId: ${random.uuid}

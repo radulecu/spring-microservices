@@ -4,14 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @EnableHystrixDashboard
 @SpringBootApplication
 public class HystrixDashboardApplication {
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String home() {
         return "forward:/hystrix/index.html";
     }
