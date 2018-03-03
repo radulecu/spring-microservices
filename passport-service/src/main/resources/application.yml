@@ -12,4 +12,4 @@ security:
 ---
 spring:
   profiles:
-    include: security, eureka, ssl, sslTrustStore
+    include: security, eureka, ssl, sslTrustStore, swagger

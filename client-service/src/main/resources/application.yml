@@ -6,15 +6,16 @@ spring:
 security:
   basic:
     enabled: false
-zuul:
-  routes:
-    path: /bookmark-service/*
-    serviceId: bookmark-service
 #eureka:
 #  instance:
 #    instanceId: ${random.uuid}
 ---
+swagger:
+  proxy: true
 spring:
   profiles:
-    include: security, eureka, ssl, sslTrustStore
+    include: security, eureka, ssl, sslTrustStore, swagger
+logging:
+  level:
+    org.springframework: debug
 
