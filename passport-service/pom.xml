@@ -38,7 +38,7 @@
             <groupId>ro.rasel</groupId>
             <artifactId>swagger-component</artifactId>
             <version>1.0.0-SNAPSHOT</version>
-        </dependency>a
+        </dependency>
         <dependency>
             <groupId>ro.rasel</groupId>
             <artifactId>domain-interfaces</artifactId>
