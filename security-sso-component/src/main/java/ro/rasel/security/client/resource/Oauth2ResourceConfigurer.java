@@ -15,11 +15,11 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableResourceServer
-class RestResourceConfigurer extends ResourceServerConfigurerAdapter {
+class Oauth2ResourceConfigurer extends ResourceServerConfigurerAdapter {
     private final IResourceSecurityConfigurer configurer;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public RestResourceConfigurer(@Autowired IResourceSecurityConfigurer configurer) {
+    public Oauth2ResourceConfigurer(@Autowired IResourceSecurityConfigurer configurer) {
         this.configurer = configurer;
     }
 
