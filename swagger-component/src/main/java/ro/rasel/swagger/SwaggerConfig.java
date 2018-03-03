@@ -1,5 +1,6 @@
-package ro.rasel.client.service.config;
+package ro.rasel.swagger;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -10,6 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
+@ConditionalOnProperty(name="swagger.enabled",havingValue = "true")
 public class SwaggerConfig {
     @Bean
     public Docket api() {

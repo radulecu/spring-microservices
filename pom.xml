@@ -17,6 +17,7 @@
         <module>eureka-client-component</module>
         <module>ssl-component</module>
         <module>security-sso-component</module>
+        <module>swagger-component</module>
         <module>security-sso-auth-server</module>
         <module>domain-interfaces</module>
         <module>bookmark-service</module>

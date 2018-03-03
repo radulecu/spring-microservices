@@ -8,6 +8,7 @@ import ro.rasel.security.client.resource.ResourceSecurityClientComponent;
 import ro.rasel.service.bookmarks.dao.BookmarkRepository;
 import ro.rasel.service.bookmarks.domain.Bookmark;
 import ro.rasel.ssl.truststore.TrustStoreComponent;
+import ro.rasel.swagger.SwaggerConfig;
 
 import java.util.Arrays;
 
@@ -28,7 +29,7 @@ public class BookmarkServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(new Class<?>[]{BookmarkServiceApplication.class, EurekaClientComponent.class,
-                ResourceSecurityClientComponent.class, TrustStoreComponent.class}, args);
+                ResourceSecurityClientComponent.class, TrustStoreComponent.class, SwaggerConfig.class}, args);
     }
 
 }
