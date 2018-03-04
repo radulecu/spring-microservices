@@ -53,13 +53,14 @@ public class SwaggerConfig {
 
         @Override
         public List<SwaggerResource> get() {
-            List<SwaggerResource> collect = discoveryClient.getServices().stream().filter(s-> s != null && !s.equals(name)).map(s -> {
-                    SwaggerResource swaggerResource = new SwaggerResource();
-                    swaggerResource.setName(s);
-                    swaggerResource.setLocation("/" + s + "/v2/api-docs");
-                    return swaggerResource;
-            }).collect(Collectors.toList());
-             return collect;
+            List<SwaggerResource> collect =
+                    discoveryClient.getServices().stream().filter(s -> s != null && !s.equals(name)).map(s -> {
+                        SwaggerResource swaggerResource = new SwaggerResource();
+                        swaggerResource.setName(s);
+                        swaggerResource.setLocation("/" + s + "/v2/api-docs");
+                        return swaggerResource;
+                    }).collect(Collectors.toList());
+            return collect;
         }
     }
 }
