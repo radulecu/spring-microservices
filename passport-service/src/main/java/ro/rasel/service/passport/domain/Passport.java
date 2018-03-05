@@ -4,7 +4,7 @@ import ro.rasel.domain.IPassport;
 
 import java.util.Collection;
 
-public class Passport implements IPassport{
+public class Passport implements IPassport {
 
     private final String userId;
 

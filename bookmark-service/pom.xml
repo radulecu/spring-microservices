@@ -56,7 +56,7 @@
         </dependency>
 
         <!--Spring Cloud-->
-         <dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
         </dependency>
