@@ -6,7 +6,7 @@ import ro.rasel.security.client.resource.IResourceSecurityConfigurer;
 
 @Configuration
 public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
-    static final String REGEX_EUREKA_PATTERN = "/eureka";
+    static final String REGEX_EUREKA_PATTERN = "/|/eureka";
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
