@@ -6,6 +6,7 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import ro.rasel.security.client.sso.WebSecurityClientComponent;
+import ro.rasel.service.bookmarks.EurekaClientComponent;
 import ro.rasel.ssl.truststore.TrustStoreComponent;
 import ro.rasel.swagger.SwaggerConfig;
 
@@ -17,8 +18,8 @@ public class ClientServiceLightApplication {
 
     public static void main(String[] args) {
         SpringApplication
-                .run(new Class<?>[]{ClientServiceLightApplication.class, WebSecurityClientComponent.class,
-                        TrustStoreComponent.class, SwaggerConfig.class}, args);
+                .run(new Class<?>[]{ClientServiceLightApplication.class, EurekaClientComponent.class,
+                        WebSecurityClientComponent.class, TrustStoreComponent.class, SwaggerConfig.class}, args);
     }
 }
  

@@ -31,7 +31,7 @@ In this chase we can have 2 types of secured services
     ** security-sso-ui
 
 == Accessing a resource server
-curl -k -X POST -vu acme:acmesecret https://localhost:9999/uaa/oauth/token -H "Accept: application/json" -d "password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme"
+curl -k -X POST -vu acme:acmesecret https://localhost:9999/oauth/token -H "Accept: application/json" -d "password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme"
 
 curl -k http://localhost:8082/bookmarks/jlong -H "Authorization: Bearer <TOKEN>"
 

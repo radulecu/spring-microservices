@@ -19,8 +19,7 @@ public class ClientServiceApplication {
     public static void main(String[] args) {
         SpringApplication
                 .run(new Class<?>[]{ClientServiceApplication.class, EurekaClientComponent.class,
-                                WebSecurityClientComponent.class, TrustStoreComponent.class, SwaggerConfig.class},
-                        args);
+                        WebSecurityClientComponent.class, TrustStoreComponent.class, SwaggerConfig.class}, args);
     }
 }
  

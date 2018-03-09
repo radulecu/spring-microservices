@@ -20,11 +20,14 @@ Used to enable https and provide truststore for self signed certificates.
 
 === Generating keystore, certificate and truststore files command
 
-keytool -genkey -alias jksalias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
+keytool -genkey -alias jkslocalhostalias -keyalg RSA -keystore localhost.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
+keytool -genkey -alias jkscomputernamealias -keyalg RSA -keystore computername.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
 
-keytool -export -alias jksalias -keystore my.jks -file my.cer -storepass jkspass
+keytool -export -alias jkslocalhostalias -keystore localhost.jks -file localhost.cer -storepass jkspass
+keytool -export -alias jkscomputernamealias -keystore computername.jks -file computername.cer -storepass jkspass
 
-keytool -importcert -keystore my.truststore -alias jksalias -storepass jkspass -file my.cer -noprompt
+keytool -importcert -keystore my.truststore -alias jkslocalhostalias -storepass jkspass -file localhost.cer -noprompt
+keytool -importcert -keystore my.truststore -alias jkscomputernamealias -storepass jkspass -file computername.cer -noprompt
 
 The first command is to generate a jks keystore. It will be used to enable the SSL/TSL for the server.
 Next a certificate for the keystore is generated.
