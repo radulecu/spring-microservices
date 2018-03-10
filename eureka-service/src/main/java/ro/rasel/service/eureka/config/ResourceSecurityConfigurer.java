@@ -10,11 +10,11 @@ public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        // formatter:off
+        // @formatter:off
         http
             .regexMatcher(REGEX_EUREKA_PATTERN)
             .authorizeRequests()
                 .anyRequest().authenticated();
-        // formatter:on
+        // @formatter:on
     }
 }

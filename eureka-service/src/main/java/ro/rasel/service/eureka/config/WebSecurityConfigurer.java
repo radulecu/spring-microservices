@@ -8,11 +8,11 @@ import ro.rasel.security.client.sso.IWebSecurityConfigurer;
 public class WebSecurityConfigurer implements IWebSecurityConfigurer {
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        // formatter:off
+        // @formatter:off
         http.regexMatcher(regetNot(ResourceSecurityConfigurer.REGEX_EUREKA_PATTERN))
             .authorizeRequests()
                 .anyRequest().authenticated();
-        // formatter:on
+        // @formatter:on
     }
 
     private String regetNot(String s) {
