@@ -18,10 +18,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>ro.rasel</groupId>
-            <artifactId>security-sso-component</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-security</artifactId>
         </dependency>
+
         <dependency>
             <groupId>ro.rasel</groupId>
             <artifactId>ssl-component</artifactId>
