@@ -3,6 +3,7 @@ package ro.rasel.security.client.sso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @EnableOAuth2Sso
 @Configuration
+@Order(3)
 public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private final List<IWebSecurityConfigurer> configurers;
 
