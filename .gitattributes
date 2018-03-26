@@ -1,5 +1,8 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
-*.java text=auto eol=crlf
+# *.java text=auto eol=crlf # pull as crlf and push them as lf
+# *.java text=auto eol=lf # pull as lf and save them as lf
+# *.java text=auto # pull depending on OS and push them as lf
+*.java text=auto eol=lf
 *.properties text=auto eol=lf
 
 # Denote all files that are truly binary and should not be modified.
