@@ -2,10 +2,10 @@ package ro.rasel.ssl.truststore;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.ComponentScan;
-import ro.rasel.spring.commons.SpringCommonComponent;
-import ro.rasel.ssl.truststore.configuration.TrustStoreConfig;
+import ro.rasel.spring.commons.EnableSpringCommonsComponent;
 
 @ConditionalOnProperty(name = "truststore.enabled", havingValue = "true")
-@ComponentScan(basePackageClasses = {SpringCommonComponent.class, TrustStoreConfig.class})
+@EnableSpringCommonsComponent
+@ComponentScan
 public class TrustStoreComponent {
 }

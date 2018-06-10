@@ -3,17 +3,17 @@ package ro.rasel.security.client.ui;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import ro.rasel.security.client.sso.WebSecurityClientComponent;
-import ro.rasel.ssl.truststore.TrustStoreComponent;
+import ro.rasel.security.client.sso.EnableWebSecurityClientComponent;
+import ro.rasel.ssl.truststore.EnableTruststoreComponent;
 
 @SpringBootApplication
 @EnableZuulProxy
+@EnableTruststoreComponent
+@EnableWebSecurityClientComponent
 public class SsoUiApplication {
 
     public static void main(String[] args) {
-        SpringApplication
-                .run(new Class<?>[]{SsoUiApplication.class, WebSecurityClientComponent.class,
-                        TrustStoreComponent.class}, args);
+        SpringApplication.run(SsoUiApplication.class, args);
     }
 
 }

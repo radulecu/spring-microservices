@@ -4,16 +4,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import ro.rasel.security.client.resource.ResourceSecurityClientComponent;
-import ro.rasel.service.bookmarks.EurekaClientComponent;
+import ro.rasel.security.client.resource.EnableResourceSecurityClientComponent;
+import ro.rasel.service.bookmarks.EnableEurekaClientComponent;
 import ro.rasel.service.contacts.dao.ContactRepository;
 import ro.rasel.service.contacts.domain.Contact;
-import ro.rasel.ssl.truststore.TrustStoreComponent;
-import ro.rasel.swagger.SwaggerConfig;
+import ro.rasel.ssl.truststore.EnableTruststoreComponent;
+import ro.rasel.swagger.EnableSwaggerComponent;
 
 import java.util.Arrays;
 
 @SpringBootApplication
+@EnableSwaggerComponent
+@EnableTruststoreComponent
+@EnableResourceSecurityClientComponent
+@EnableEurekaClientComponent
 public class ContactServiceApplication {
 
     @Bean
@@ -31,8 +35,7 @@ public class ContactServiceApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{ContactServiceApplication.class, EurekaClientComponent.class,
-                ResourceSecurityClientComponent.class, TrustStoreComponent.class, SwaggerConfig.class}, args);
+        SpringApplication.run(ContactServiceApplication.class, args);
     }
 
 }
