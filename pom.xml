@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ro.rasel</groupId>
-    <artifactId>microservices-test</artifactId>
+    <artifactId>spring-microservices</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
