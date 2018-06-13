@@ -43,12 +43,12 @@
         <snapshotRepository>
             <id>project.local</id>
             <name>project</name>
-            <url>file:${project.basedir}/../snasphot/.repo</url>
+            <url>file:${project.basedir}/../.repo/snasphot</url>
         </snapshotRepository>
         <repository>
             <id>project.local</id>
             <name>project</name>
-            <url>file:${project.basedir}/../release/.repo</url>
+            <url>file:${project.basedir}/../.repo/release</url>
         </repository>
     </distributionManagement>
 </project>
