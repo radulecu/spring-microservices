@@ -1,4 +1,4 @@
-package ro.rasel.service.bookmarks;
+package ro.rasel.eureka.client.component.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;

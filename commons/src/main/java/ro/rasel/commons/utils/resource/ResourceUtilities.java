@@ -1,4 +1,4 @@
-package ro.rasel.commons.utils;
+package ro.rasel.commons.utils.resource;
 
 import org.apache.commons.io.FileUtils;
 
@@ -15,7 +15,7 @@ public class ResourceUtilities implements IResourceUtilities {
     }
 
     @Override
-    public File extractTempFileFromClasspathToTempFile(String name) throws IOException {
+    public File extractTempFileFromClasspath(String name) throws IOException {
         URL input = getClass().getResource("/" + name);
         File output = tempFileManager.creteFile(name);
         FileUtils.copyURLToFile(input, output);

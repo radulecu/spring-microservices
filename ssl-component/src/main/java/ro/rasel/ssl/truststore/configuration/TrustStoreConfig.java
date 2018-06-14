@@ -3,8 +3,8 @@ package ro.rasel.ssl.truststore.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import ro.rasel.commons.utils.ITempFileManager;
-import ro.rasel.commons.utils.ResourceUtilities;
+import ro.rasel.commons.utils.resource.ITempFileManager;
+import ro.rasel.commons.utils.resource.ResourceUtilities;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -27,7 +27,7 @@ public class TrustStoreConfig {
         System.setProperty("https.protocols", "TLSv1.2");
 
         File truststoreFile =
-                new ResourceUtilities(tempFileManager).extractTempFileFromClasspathToTempFile("my.truststore");
+                new ResourceUtilities(tempFileManager).extractTempFileFromClasspath("my.truststore");
 
         //load the 'javax.net.ssl.trustStore' and 'javax.net.ssl.trustStorePassword' from application.properties
         System.setProperty("javax.net.ssl.trustStore", truststoreFile.getAbsolutePath());

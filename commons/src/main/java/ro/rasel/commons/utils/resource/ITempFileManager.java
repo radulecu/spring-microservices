@@ -1,4 +1,4 @@
-package ro.rasel.commons.utils;
+package ro.rasel.commons.utils.resource;
 
 import java.io.File;
 

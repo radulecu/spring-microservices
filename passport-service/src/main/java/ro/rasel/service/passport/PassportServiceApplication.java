@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import ro.rasel.security.client.resource.EnableResourceSecurityClientComponent;
-import ro.rasel.service.bookmarks.EnableEurekaClientComponent;
+import ro.rasel.eureka.client.component.config.EnableEurekaClientComponent;
 import ro.rasel.ssl.truststore.EnableTruststoreComponent;
 import ro.rasel.swagger.EnableSwaggerComponent;
 
