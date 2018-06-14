@@ -1,4 +1,4 @@
-package ro.rasel.service.bookmarks;
+package ro.rasel.eureka.client.component.config;
 
 import org.springframework.context.annotation.Import;
 
