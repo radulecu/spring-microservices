@@ -1,10 +1,10 @@
 package ro.rasel.eureka.client.component.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.ComponentScan;
 
 @EnableEurekaClient
-@ConditionalOnProperty(name = "eureka.client.enabled", havingValue = "true")
+@ComponentScan
 public class EurekaClientComponent {
 
 }
