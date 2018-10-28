@@ -35,4 +35,59 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>generateKeystore</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>generate</id>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <scripts>
+                                        <script>
+                                            <![CDATA[
+                                                def execute (String s){
+                                                    final File file = new File("${workingDir}/src/main/resources")
+                                                    def strings = ["path="+System.getenv().get("Path"),"COMPUTERNAME="+System.getenv().get("COMPUTERNAME")]
+                                                    def proc = s.execute(strings, file)
+                                                    proc.consumeProcessOutput(System.out,System.err)
+                                                    proc.waitFor()
+                                                }
+
+
+                                                execute "cmd /c del computername.cer"
+                                                execute "cmd /c del computername.jks"
+                                                execute "cmd /c del localhost.cer"
+                                                execute "cmd /c del localhost.jks"
+                                                execute "cmd /c del my.truststore"
+
+                                                execute "cmd /c keytool -genkey -alias jkslocalhostalias -keyalg RSA -keystore localhost.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
+                                                execute "cmd /c keytool -genkey -alias jkscomputernamealias -keyalg RSA -keystore computername.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
+                                                execute "cmd /c keytool -export -alias jkslocalhostalias -keystore localhost.jks -file localhost.cer -storepass jkspass"
+                                                execute "cmd /c keytool -export -alias jkscomputernamealias -keystore computername.jks -file computername.cer -storepass jkspass"
+                                                execute "cmd /c keytool -importcert -keystore my.truststore -alias jkslocalhostalias -storepass jkspass -file localhost.cer -noprompt"
+                                                execute "cmd /c keytool -importcert -keystore my.truststore -alias jkscomputernamealias -storepass jkspass -file computername.cer -noprompt"
+                                            ]]>
+                                        </script>
+                                    </scripts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
