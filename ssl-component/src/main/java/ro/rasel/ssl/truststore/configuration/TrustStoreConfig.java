@@ -2,9 +2,9 @@ package ro.rasel.ssl.truststore.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import ro.rasel.commons.utils.resource.ITempFileManager;
 import ro.rasel.commons.utils.resource.ResourceUtilities;
+import ro.rasel.ssl.truststore.configuration.properties.SystemPropertySslProps;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -12,12 +12,14 @@ import java.io.IOException;
 
 @Configuration
 public class TrustStoreConfig {
-    private final Environment env;
+    private final SystemPropertySslProps systemPropertySslProps;
     private final ITempFileManager tempFileManager;
 
     @Autowired
-    public TrustStoreConfig(Environment env, ITempFileManager tempFileManager) {
-        this.env = env;
+    public TrustStoreConfig(
+            SystemPropertySslProps systemPropertySslProps,
+            ITempFileManager tempFileManager) {
+        this.systemPropertySslProps = systemPropertySslProps;
         this.tempFileManager = tempFileManager;
     }
 
@@ -31,9 +33,7 @@ public class TrustStoreConfig {
 
         //load the 'javax.net.ssl.trustStore' and 'javax.net.ssl.trustStorePassword' from application.properties
         System.setProperty("javax.net.ssl.trustStore", truststoreFile.getAbsolutePath());
-        System.setProperty("javax.net.ssl.trustStorePassword",
-                env.getProperty("system.property.server.ssl.trust-store-password", "jkspass"));
-        System.setProperty("javax.net.ssl.trustStoreType",
-                env.getProperty("system.property.server.ssl.trust-store-type", "jks"));
+        System.setProperty("javax.net.ssl.trustStorePassword", systemPropertySslProps.getPassword());
+        System.setProperty("javax.net.ssl.trustStoreType", systemPropertySslProps.getType());
     }
 }

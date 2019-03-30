@@ -1,7 +1,7 @@
-package ro.rasel.server.security.dao;
+package ro.rasel.server.security.repository;
 
 import org.springframework.security.core.userdetails.User;
 
-public interface UserDetailsDao {
+public interface UserDetailsRepository {
     User findUserByName(String username);
 }

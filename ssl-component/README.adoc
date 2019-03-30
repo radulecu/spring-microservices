@@ -20,11 +20,11 @@ Used to enable https and provide truststore for self signed certificates.
 
 === Generating keystore, certificate and truststore files command (for this demo it is automatically done by maven and groovy plugin)
 
-keytool -genkey -alias jkslocalhostalias -keyalg RSA -keystore localhost.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias jkscomputernamealias -keyalg RSA -keystore computername.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
+keytool -genkey -alias jkslocalhostalias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
+keytool -genkey -alias jkscomputernamealias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
 
-keytool -export -alias jkslocalhostalias -keystore localhost.jks -file localhost.cer -storepass jkspass
-keytool -export -alias jkscomputernamealias -keystore computername.jks -file computername.cer -storepass jkspass
+keytool -export -alias jkslocalhostalias -keystore my.jks -file localhost.cer -storepass jkspass
+keytool -export -alias jkscomputernamealias -keystore my.jks -file computername.cer -storepass jkspass
 
 keytool -importcert -keystore my.truststore -alias jkslocalhostalias -storepass jkspass -file localhost.cer -noprompt
 keytool -importcert -keystore my.truststore -alias jkscomputernamealias -storepass jkspass -file computername.cer -noprompt
@@ -36,6 +36,11 @@ Using the certificate we can nou create the truststore. The role of the trustore
 === Viewing  keystore details
 
 keytool -list -v -alias jksalias -keystore ./my.jks -storepass jkspass
+
+openssl x509 -inform DER -outform PEM -in computername.cer -out computername.cer.pem
+
+keytool -importkeystore -srckeystore my.jks -destkeystore computername.p12 -srcalias jkscomputernamealias -srcstoretype jks -deststoretype pkcs8 -keypass jkspass -storepass jkspass
+openssl pkcs12 -in computername.p12 -out computername.pem
 
 
 
