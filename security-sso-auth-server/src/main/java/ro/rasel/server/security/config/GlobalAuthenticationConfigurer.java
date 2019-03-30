@@ -3,16 +3,16 @@ package ro.rasel.server.security.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
-import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 @EnableGlobalAuthentication
-public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
+public class GlobalAuthenticationConfigurer extends GlobalAuthenticationConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public GlobalAuthenticationConfigurer(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 

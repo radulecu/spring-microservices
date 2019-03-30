@@ -56,6 +56,7 @@
                                 <phase>compile</phase>
                                 <configuration>
                                     <scripts>
+                                        <!--suppress UnresolvedMavenProperty -->
                                         <script>
                                             <![CDATA[
                                                 def execute (String s){

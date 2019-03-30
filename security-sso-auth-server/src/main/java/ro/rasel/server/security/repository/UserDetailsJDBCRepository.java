@@ -1,4 +1,4 @@
-package ro.rasel.server.security.dao;
+package ro.rasel.server.security.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserDetailsJDBCDao implements UserDetailsDao {
+public class UserDetailsJDBCRepository implements UserDetailsRepository {
 
     public static final String GET_USER_SQL = "SELECT * FROM users WHERE user_name = ?";
     public static final String GET_USER_ROLES_SQL = "SELECT role FROM user_roles WHERE user_name = ?";
     private final JdbcTemplate jdbcTemplate;
 
-    UserDetailsJDBCDao(JdbcTemplate jdbcTemplate) {
+    UserDetailsJDBCRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

@@ -3,10 +3,10 @@ package ro.rasel.client.service;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import ro.rasel.security.client.sso.EnableWebSecurityClientComponent;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import ro.rasel.eureka.client.component.config.EnableEurekaClientComponent;
+import ro.rasel.security.client.sso.EnableWebSecurityClientComponent;
 import ro.rasel.ssl.truststore.EnableTruststoreComponent;
 import ro.rasel.swagger.EnableSwaggerComponent;
 
