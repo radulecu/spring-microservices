@@ -43,6 +43,12 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
+        <!--Spring Boot-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!--Spring Cloud-->
         <!--Server is used to be able to render eureka UI-->
         <dependency>

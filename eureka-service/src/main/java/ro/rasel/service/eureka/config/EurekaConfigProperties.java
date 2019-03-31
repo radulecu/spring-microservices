@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("eureka")
 public class EurekaConfigProperties {
-    String user;
-    String password;
+    private String user;
+    private String password;
 
     public String getUser() {
         return user;

@@ -7,7 +7,7 @@ public class ConnectionConfigImpl implements ConnectionConfig {
     private String hostname;
     private short port;
 
-    public ConnectionConfigImpl(){
+    public ConnectionConfigImpl() {
     }
 
     public ConnectionConfigImpl(String protocol, String hostname, short port) {
@@ -45,17 +45,20 @@ public class ConnectionConfigImpl implements ConnectionConfig {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ConnectionConfigImpl that = (ConnectionConfigImpl) o;
         return port == that.port &&
-                protocol == that.protocol &&
+                Objects.equals(protocol, that.protocol) &&
                 Objects.equals(hostname, that.hostname);
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(protocol, hostname, port);
     }
 

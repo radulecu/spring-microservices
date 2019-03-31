@@ -11,6 +11,7 @@ public class SecurityConfigurer implements IWebSecurityConfigurer {
         http
                 .authorizeRequests()
                 .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }
 }
