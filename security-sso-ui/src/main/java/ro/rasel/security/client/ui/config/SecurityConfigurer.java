@@ -15,9 +15,8 @@ public class SecurityConfigurer implements IWebSecurityConfigurer {
             .antMatchers("/test").permitAll()
             .antMatchers("/test/1").authenticated()
             .antMatchers("/test/admin").hasAnyAuthority("ROLE_ADMIN")
-            .antMatchers("/test/user").hasAnyAuthority("INEXISTENT_ROLE_USER")
-            .anyRequest().authenticated()
-        ;
+            .antMatchers("/test/user").hasAnyAuthority("INEXISTENT_ROLE_USER").antMatchers("/actuator/**").hasRole("ACTUATOR")
+            .anyRequest().authenticated();
         // @formatter:on
     }
 }

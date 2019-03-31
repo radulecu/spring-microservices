@@ -22,7 +22,7 @@ public class TempFileManager implements ITempFileManager {
         return file;
     }
 
-    public void cleanAll() {
+    protected void cleanAll() {
         cleanAll(rootDir);
     }
 

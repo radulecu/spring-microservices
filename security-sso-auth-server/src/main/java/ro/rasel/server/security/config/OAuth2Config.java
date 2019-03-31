@@ -5,18 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.endpoint.RedirectResolver;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -43,20 +38,23 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        super.configure(endpoints);
         endpoints
                 .authenticationManager(authenticationManager)
                 .userDetailsService(s -> userDetailsRepository.findUserByName(s))
                 .tokenStore(tokenStore())
                 .accessTokenConverter(accessTokenConverter())
                 .redirectResolver(getRedirectResolver());
-        super.configure(endpoints);
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient("acme").secret("acmesecret").autoApprove(true)
+        clients.inMemory()
+                .withClient("acme")
+                .secret("acmesecret")
                 .authorizedGrantTypes("authorization_code", "refresh_token", "password")
-                .scopes("read", "write", "openid");
+                .scopes("read", "write", "openid")
+                .autoApprove(true);
     }
 
     public RedirectResolver getRedirectResolver() {
@@ -82,22 +80,6 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
-    }
-
-    @Bean
-    public ResourceServerTokenServices getResourceServerTokenServices() {
-        return new ResourceServerTokenServices() {
-            @Override
-            public OAuth2Authentication loadAuthentication(String s)
-                    throws AuthenticationException, InvalidTokenException {
-                return null;
-            }
-
-            @Override
-            public OAuth2AccessToken readAccessToken(String s) {
-                return null;
-            }
-        };
     }
 
 }

@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ConditionalOnProperty(name = "security.enabled", havingValue = "true")
 @Order(1)
 public class InternalWebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private EurekaConfigProperties eurekaConfigProperties;
+    private final EurekaConfigProperties eurekaConfigProperties;
 
     @Autowired
     public InternalWebSecurityConfig(EurekaConfigProperties eurekaConfigProperties) {

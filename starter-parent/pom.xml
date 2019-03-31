@@ -66,7 +66,7 @@
         <snapshotRepository>
             <id>project.local</id>
             <name>project</name>
-            <url>file:${project.basedir}/../.repo/snasphot</url>
+            <url>file:${project.basedir}/../.repo/snapshot</url>
         </snapshotRepository>
         <repository>
             <id>project.local</id>

@@ -5,15 +5,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import ro.rasel.security.client.sso.EnableWebSecurityClientComponent;
+import ro.rasel.ssl.truststore.EnableTruststoreComponent;
 
 @Controller
 @EnableHystrixDashboard
+@EnableTruststoreComponent
+@EnableWebSecurityClientComponent
 @SpringBootApplication
 public class HystrixDashboardApplication {
 
     @GetMapping("/")
     public String home() {
-        return "forward:/hystrix/index.html";
+        return "forward:/hystrix";
     }
 
     public static void main(String[] args) {

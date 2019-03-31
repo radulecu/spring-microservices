@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public class UserDetailsJDBCRepository implements UserDetailsRepository {
 
-    public static final String GET_USER_SQL = "SELECT * FROM users WHERE user_name = ?";
-    public static final String GET_USER_ROLES_SQL = "SELECT role FROM user_roles WHERE user_name = ?";
+    private static final String GET_USER_SQL = "SELECT * FROM users WHERE user_name = ?";
+    private static final String GET_USER_ROLES_SQL = "SELECT role FROM user_roles WHERE user_name = ?";
     private final JdbcTemplate jdbcTemplate;
 
     UserDetailsJDBCRepository(JdbcTemplate jdbcTemplate) {

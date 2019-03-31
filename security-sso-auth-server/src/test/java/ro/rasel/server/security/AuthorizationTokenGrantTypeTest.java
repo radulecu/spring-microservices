@@ -27,20 +27,20 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"ssl.certificate.name=localhost","spring.profiles.include=sslTrustStore"})
 @EnableTruststoreComponent
-public class UserInfoEndpointLiveTest {
+public class AuthorizationTokenGrantTypeTest {
 
-    public static final String USER = "jlong";
-    public static final String SECRET = "spring";
-    public static final String CLIENT_ID = "acme";
-    public static final String CLIENT_SECRET = "acmesecret";
-    public static final String REDIRECT_URL = "http://localhost:8082/ui/login";
+    private static final String USER = "jlong";
+    private static final String SECRET = "spring";
+    private static final String CLIENT_ID = "acme";
+    private static final String CLIENT_SECRET = "acmesecret";
+    private static final String REDIRECT_URL = "http://localhost:8082/login";
 
-    public static final String LOGIN_URL = "/login?username={username}&password={password}";
-    public static final String AUTHORIZATION_TOKEN_URL =
-            "/oauth/token?client_id={client_id}&redirect_uri={redirectUri}&grant_type=authorization_code&code={code}";
-    public static final String USER_URL = "/user";
-    public static final String GET_AUTHORIZATION_CODE_URL =
+    private static final String LOGIN_URL = "/login?username={username}&password={password}";
+    private static final String GET_AUTHORIZATION_CODE_URL =
             "/oauth/authorize?client_id={clientId}&redirect_uri={redirectUri}&response_type=code";
+    private static final String AUTHORIZATION_TOKEN_URL =
+            "/oauth/token?client_id={client_id}&redirect_uri={redirectUri}&grant_type=authorization_code&code={code}";
+    private static final String USER_URL = "/user";
 
     @Autowired
     TestRestTemplate testRestTemplate;
@@ -64,7 +64,7 @@ public class UserInfoEndpointLiveTest {
     }
 
     private String login(String username, String password) {
-        // curl -v -X POST http://localhost:9999/login -H "Cookie: JSESSIONID=FA77B9C7A7BDB71B40C872BCE06CD11E" -H "Content-Type: application/x-www-form-urlencoded" -d "username=jlong" -d "password=spring"
+        // curl -k -v -X POST https://localhost:9999/sso/login -H "Content-Type: application/x-www-form-urlencoded" -d "username=jlong" -d "password=spring"
         final ResponseEntity<Void> loginResponseEntity =
                 testRestTemplate
                         .postForEntity(LOGIN_URL, null, Void.class, username,
@@ -74,7 +74,7 @@ public class UserInfoEndpointLiveTest {
     }
 
     private String getAuthorizationCode(String cookieValue) {
-        // curl -v -X GET "http://localhost:9999/oauth/authorize?client_id=acme&redirect_uri=http://localhost:8082/ui/login&response_type=code&state=KSnb6S" -H "Cookie: JSESSIONID=02B70F057CB0C960F3417DEAEF528E4D"
+        // curl -k -v -X GET "https://localhost:9999/sso/oauth/authorize?client_id=acme&redirect_uri=http://localhost:8082/ui/login&response_type=code&state=KSnb6S" -H "Cookie: JSESSIONID=02B70F057CB0C960F3417DEAEF528E4D"
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Cookie", "JSESSIONID=" + cookieValue);
         final ResponseEntity<Void> authorizeResponse =
@@ -88,13 +88,12 @@ public class UserInfoEndpointLiveTest {
     }
 
     private String getAuthorizationToken(String code) {
-        // curl -v -X POST -u acme:acmesecret "http://localhost:9999/oauth/token?client_id=acme&redirect_uri=http://localhost:8082/ui/login&grant_type=authorization_code&code=R5S0kI"
+        // curl -k -v -X POST -u acme:acmesecret "https://localhost:9999/sso/oauth/token?client_id=acme&redirect_uri=http://localhost:8082/ui/login&grant_type=authorization_code&code=85k67t"
         final ResponseEntity<AuthorizationTokenResponse> responseEntity =
                 testRestTemplate.withBasicAuth(CLIENT_ID, CLIENT_SECRET).postForEntity(
                         AUTHORIZATION_TOKEN_URL,
                         null, AuthorizationTokenResponse.class, CLIENT_ID, REDIRECT_URL, code);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        //noinspection unchecked
         return responseEntity.getBody().getAccessToken();
     }
 
@@ -107,7 +106,7 @@ public class UserInfoEndpointLiveTest {
     }
 
     private static class AuthorizationTokenResponse {
-        private String accessToken;
+        private final String accessToken;
 
         private AuthorizationTokenResponse(@JsonProperty("access_token") String accessToken) {
             this.accessToken = accessToken;

@@ -45,14 +45,15 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-        .and()
-            .authorizeRequests()
-            .antMatchers("/user","/login","/hystrix.stream").permitAll()
-        .and()
-            .csrf()
-                .csrfTokenRepository(csrfTokenRepository())
-        .and()
-            .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+            .and()
+                .authorizeRequests()
+                .antMatchers("/user","/login").permitAll()
+                .anyRequest().authenticated()
+            .and()
+                .csrf()
+                    .csrfTokenRepository(csrfTokenRepository())
+            .and()
+                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
 
         // @formatter:on
         for (IWebSecurityConfigurer configurer : configurers) {
@@ -65,7 +66,7 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
             @Override
             protected void doFilterInternal(HttpServletRequest request,
-                                            HttpServletResponse response, FilterChain filterChain)
+                    HttpServletResponse response, FilterChain filterChain)
                     throws ServletException, IOException {
                 CsrfToken csrf = (CsrfToken) request
                         .getAttribute(CsrfToken.class.getName());

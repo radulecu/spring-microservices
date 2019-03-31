@@ -5,9 +5,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import ro.rasel.security.client.resource.IResourceSecurityConfigurer;
 import ro.rasel.security.client.sso.IWebSecurityConfigurer;
 
-// iplements both configurers so that the service works no matter which security service is loaded:
+// implements both configurers so that the service works no matter which security service is loaded:
 // - ResourceSecurityClientComponent.class to be called as proxy
-// - WebSecurityClientComponent.class for dirrect authentication and authorization
+// - WebSecurityClientComponent.class for direct authentication and authorization
 @Configuration
 public class SecurityConfigurer implements IResourceSecurityConfigurer, IWebSecurityConfigurer {
     @Override
@@ -16,6 +16,7 @@ public class SecurityConfigurer implements IResourceSecurityConfigurer, IWebSecu
         http
             .authorizeRequests()
                 .antMatchers("/eureka/**").anonymous()
+                .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
         // @formatter:on
     }

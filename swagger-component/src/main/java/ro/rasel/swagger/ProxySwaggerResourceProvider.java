@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Primary
 @ConditionalOnProperty(name = "swagger.proxy", havingValue = "true")
 class ProxySwaggerResourceProvider implements SwaggerResourcesProvider {
-    private SwaggerConfigProperties swaggerConfigProperties;
+    private final SwaggerConfigProperties swaggerConfigProperties;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
@@ -27,7 +27,7 @@ class ProxySwaggerResourceProvider implements SwaggerResourcesProvider {
         this.discoveryClient = discoveryClient;
     }
 
-    private DiscoveryClient discoveryClient;
+    private final DiscoveryClient discoveryClient;
 
     @Override
     public List<SwaggerResource> get() {

@@ -46,7 +46,7 @@ public class RestExample {
     }
 
     private static class Result {
-        private String message;
+        private final String message;
 
         Result(String message) {
             this.message = message;

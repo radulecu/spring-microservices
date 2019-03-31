@@ -13,9 +13,10 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception { // @formatter:off
         http.requestMatchers()
-                .antMatchers("/login", "/oauth/authorize")
+                .antMatchers("/login", "/oauth/authorize","/actuator/**")
             .and()
                 .authorizeRequests()
+                .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest()
                 .authenticated()
             .and()

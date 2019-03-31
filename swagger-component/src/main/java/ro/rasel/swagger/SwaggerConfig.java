@@ -14,14 +14,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ComponentScan
 public class SwaggerConfig {
-    private SwaggerConfigProperties swaggerConfigProperties;
+    private final SwaggerConfigProperties swaggerConfigProperties;
 
     @Autowired
     public SwaggerConfig(SwaggerConfigProperties swaggerConfigProperties) {
         this.swaggerConfigProperties = swaggerConfigProperties;
     }
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)

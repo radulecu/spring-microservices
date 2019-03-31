@@ -12,6 +12,7 @@ public class SecurityConfigurer implements IResourceSecurityConfigurer {
                 .regexMatcher("/passport/.*")
                 .authorizeRequests()
                 .regexMatchers("/passport/[a-zA-Z0-9]+").access("#oauth2.hasScope('openid')")
+                .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }
 }

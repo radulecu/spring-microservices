@@ -1,4 +1,4 @@
-package ro.rasel.client.service.light.config;
+package ro.rasel.service.hystrix.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,8 +10,6 @@ public class SecurityConfigurer implements IWebSecurityConfigurer {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }
 }
