@@ -1,9 +1,13 @@
 package ro.rasel.service.passport.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import ro.rasel.domain.IPassport;
 
 import java.util.Collection;
+import java.util.StringJoiner;
 
+@ApiModel(description = "User Passport")
 public class Passport implements IPassport {
 
     private final String userId;
@@ -19,22 +23,28 @@ public class Passport implements IPassport {
         this.bookmarks = bookmarks;
     }
 
+    @ApiModelProperty(value = "Passport user id")
     public String getUserId() {
         return userId;
     }
 
+    @ApiModelProperty(value = "Passport contacts")
     public Collection<Contact> getContacts() {
         return contacts;
     }
 
+    @ApiModelProperty(value = "Passport passports")
     public Collection<Bookmark> getBookmarks() {
         return bookmarks;
     }
 
     @Override
     public String toString() {
-        return "Passport{" + "userId='" + userId + '\'' + ", bookmarks=" + bookmarks
-                + ", contacts=" + contacts + '}';
+        return new StringJoiner(", ", Passport.class.getSimpleName() + "[", "]")
+                .add("userId='" + userId + "'")
+                .add("bookmarks=" + bookmarks)
+                .add("contacts=" + contacts)
+                .toString();
     }
 
 }

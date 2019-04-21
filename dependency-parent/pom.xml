@@ -122,8 +122,42 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+                <plugin>
+                    <groupId>com.github.kongchen</groupId>
+                    <artifactId>swagger-maven-plugin</artifactId>
+                    <version>3.1.6</version>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <apiSources>
+                            <apiSource>
+                                <springmvc>true</springmvc>
+                                <swaggerDirectory>${build.directory}/generated/swagger</swaggerDirectory>
+                                <swaggerFileName>${project.artifactId}-swagger</swaggerFileName>
+                                <info>
+                                    <title>${project.name}</title>
+                                    <version>${project.version}</version>
+                                    <description>${project.description}</description>
+                                </info>
+                            </apiSource>
+                        </apiSources>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 
     <repositories>
