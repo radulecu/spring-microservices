@@ -12,7 +12,7 @@ import ro.rasel.service.bookmarks.domain.Bookmark;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/bookmarks/{userId}")
+@RequestMapping("/users/{userId}/bookmarks")
 public class BookmarkRestController {
 
     private final BookmarkRepository bookmarkRepository;
@@ -21,7 +21,7 @@ public class BookmarkRestController {
         this.bookmarkRepository = bookmarkRepository;
     }
 
-    @GetMapping()
+    @GetMapping
     public Collection<Bookmark> getBookmarks(@PathVariable String userId) {
         return this.bookmarkRepository.findByUserId(userId);
     }

@@ -20,17 +20,17 @@ class ClientRestController {
         this.integrationClient = integrationClient;
     }
 
-    @GetMapping("/passport/{userId}")
+    @GetMapping("/users/{userId}/passport")
     Passport passport(@PathVariable String userId) {
         return integrationClient.getPassport(userId);
     }
 
-    @GetMapping("/bookmarks/{userId}")
+    @GetMapping("/users/{userId}/bookmarks")
     String bookmarks(@PathVariable String userId) {
         return integrationClient.getBookmarks(userId);
     }
 
-    @GetMapping("/contacts/{userId}")
+    @GetMapping("/users/{userId}/contacts")
     Collection<Contact> contacts(@PathVariable String userId) {
         return integrationClient.getContacts(userId);
     }

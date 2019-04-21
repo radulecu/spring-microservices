@@ -10,7 +10,7 @@ import java.util.Collection;
 @FeignClient("contact-service")
 interface ContactClient {
 
-    @GetMapping(value = "/contacts/{userId}")
+    @GetMapping(value = "/users/{userId}/contacts")
     Collection<Contact> getContacts(@PathVariable("userId") String userId);
 
 }

@@ -12,7 +12,7 @@ import ro.rasel.service.contacts.domain.Contact;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/contacts/{userId}")
+@RequestMapping("/users/{userId}/contacts")
 public class ContactRestController {
 
     private final ContactRepository contactRepository;

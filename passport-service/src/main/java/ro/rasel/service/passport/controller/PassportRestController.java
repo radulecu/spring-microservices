@@ -8,7 +8,7 @@ import ro.rasel.service.passport.client.IntegrationClient;
 import ro.rasel.service.passport.domain.Passport;
 
 @RestController
-@RequestMapping("/passport/{userId}")
+@RequestMapping("/users/{userId}/passport")
 class PassportRestController {
 
     private final IntegrationClient integrationClient;
@@ -18,7 +18,7 @@ class PassportRestController {
     }
 
     @GetMapping
-    Passport passport(@PathVariable String userId) {
+    Passport passport(@PathVariable("userId") String userId) {
         return new Passport(userId, this.integrationClient.getContacts(userId),
                 this.integrationClient.getBookmarks(userId));
     }
