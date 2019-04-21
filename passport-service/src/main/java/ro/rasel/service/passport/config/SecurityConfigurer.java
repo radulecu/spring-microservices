@@ -9,9 +9,9 @@ public class SecurityConfigurer implements IResourceSecurityConfigurer {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .regexMatcher("/passport/.*")
+                .regexMatcher("/users/.*/passport")
                 .authorizeRequests()
-                .regexMatchers("/passport/[a-zA-Z0-9]+").access("#oauth2.hasScope('openid')")
+                .regexMatchers("/users/.*").access("#oauth2.hasScope('openid')")
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }

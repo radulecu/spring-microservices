@@ -10,7 +10,7 @@ import java.util.Collection;
 @FeignClient("bookmark-service")
 public interface BookmarkClient {
 
-    @GetMapping(value = "/bookmarks/{userId}")
+    @GetMapping(value = "/users/{userId}/bookmarks")
     Collection<Bookmark> getBookmarks(@PathVariable("userId") String userId);
 
 }

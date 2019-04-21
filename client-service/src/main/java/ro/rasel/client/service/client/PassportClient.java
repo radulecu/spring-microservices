@@ -8,7 +8,7 @@ import ro.rasel.client.service.domain.Passport;
 @FeignClient("passport-service")
 public interface PassportClient {
 
-    @GetMapping(value = "/passport/{userId}")
+    @GetMapping(value = "/users/{userId}/passport")
     Passport getPassport(@PathVariable("userId") String userId);
 
 }

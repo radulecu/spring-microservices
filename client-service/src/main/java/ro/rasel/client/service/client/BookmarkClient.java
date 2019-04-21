@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("bookmark-service")
 public interface BookmarkClient {
 
-    @GetMapping(value = "/bookmarks/{userId}")
+    @GetMapping(value = "/users/{userId}/bookmarks")
     String getBookmarks(@PathVariable("userId") String userId);
 
 }
