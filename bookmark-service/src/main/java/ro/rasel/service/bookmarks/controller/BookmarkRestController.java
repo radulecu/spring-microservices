@@ -1,4 +1,4 @@
-package ro.rasel.service.contacts.controller;
+package ro.rasel.service.bookmarks.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -9,54 +9,54 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ro.rasel.service.contacts.dao.ContactRepository;
-import ro.rasel.service.contacts.domain.Contact;
+import ro.rasel.service.bookmarks.dao.BookmarkRepository;
+import ro.rasel.service.bookmarks.domain.Bookmark;
 
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/users/{userId}/contacts", produces = "application/json")
-public class ContactRestController {
+@RequestMapping(value = "/users/{userId}/bookmarks", produces = "application/json")
+public class BookmarkRestController {
 
-    private final ContactRepository contactRepository;
+    private final BookmarkRepository bookmarkRepository;
 
-    public ContactRestController(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    public BookmarkRestController(BookmarkRepository bookmarkRepository) {
+        this.bookmarkRepository = bookmarkRepository;
     }
 
     @GetMapping
-    @ApiOperation(value = "Get a list of contacts")
+    @ApiOperation(value = "Get a list of bookmarks")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    public Collection<Contact> getContacts(@PathVariable String userId) {
-        return this.contactRepository.findByUserId(userId);
+    public Collection<Bookmark> getBookmarks(@PathVariable String userId) {
+        return this.bookmarkRepository.findByUserId(userId);
     }
 
-    @GetMapping(value = "/{contactId}")
-    @ApiOperation("Get a contact")
+    @GetMapping(value = "/{bookmarkId}")
+    @ApiOperation("Get a bookmark")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    public Contact getContact(@PathVariable String userId, @PathVariable Long contactId) {
-        return this.contactRepository.findByUserIdAndId(userId, contactId);
+    public Bookmark getBookmark(@PathVariable String userId, @PathVariable Long bookmarkId) {
+        return this.bookmarkRepository.findByUserIdAndId(userId, bookmarkId);
     }
 
     @PostMapping
-    @ApiOperation("Create a new contact and return it")
+    @ApiOperation("Create a new bookmark and return it")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    public Contact createContact(@PathVariable String userId,
-            @RequestBody Contact contact) {
-        return this.contactRepository.save(new Contact(userId, contact.getFirstName(),
-                contact.getLastName(), contact.getEmail(), contact.getRelationship()));
+    public Bookmark createBookmark(@PathVariable String userId, @RequestBody Bookmark bookmark) {
+        Bookmark bookmarkInstance = new Bookmark(userId, bookmark.getHref(),
+                bookmark.getDescription(), bookmark.getLabel());
+        return this.bookmarkRepository.save(bookmarkInstance);
     }
 
 }

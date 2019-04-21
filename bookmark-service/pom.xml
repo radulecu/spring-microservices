@@ -7,6 +7,7 @@
         <groupId>ro.rasel</groupId>
         <artifactId>starter-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <artifactId>bookmark-service</artifactId>
@@ -61,4 +62,29 @@
             <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <locations>ro.rasel.service.bookmarks.controller</locations>
+                            <schemes>https</schemes>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
