@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = {"ssl.certificate.name=localhost","spring.profiles.include=sslTrustStore"})
+@TestPropertySource(properties = {"ssl.certificate.name=localhost"})
 @EnableTruststoreComponent
 public class AuthorizationTokenGrantTypeTest {
 

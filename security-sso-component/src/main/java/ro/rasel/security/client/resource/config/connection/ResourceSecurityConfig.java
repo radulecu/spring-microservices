@@ -1,4 +1,4 @@
-package ro.rasel.security.client.resource.connection;
+package ro.rasel.security.client.resource.config.connection;
 
 import ro.rasel.commons.utils.connection.ConnectionConfig;
 

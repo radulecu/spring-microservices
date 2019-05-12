@@ -1,10 +1,11 @@
-package ro.rasel.swagger;
+package ro.rasel.swagger.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import ro.rasel.swagger.config.properties.SwaggerConfigProperties;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 

@@ -1,4 +1,4 @@
-package ro.rasel.spring.commons.configuration.file.manager;
+package ro.rasel.spring.commons.config.file.manager;
 
 import java.io.File;
 

@@ -4,10 +4,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import ro.rasel.eureka.client.component.config.EnableEurekaClientComponent;
+import ro.rasel.eureka.client.component.EnableEurekaClientComponent;
 import ro.rasel.security.client.resource.EnableResourceSecurityClientComponent;
 import ro.rasel.service.contacts.dao.ContactRepository;
 import ro.rasel.service.contacts.domain.Contact;
+import ro.rasel.ssl.keystore.EnableKeystoreComponent;
 import ro.rasel.ssl.truststore.EnableTruststoreComponent;
 import ro.rasel.swagger.EnableSwaggerComponent;
 
@@ -15,6 +16,7 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @EnableSwaggerComponent
+@EnableKeystoreComponent
 @EnableTruststoreComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent

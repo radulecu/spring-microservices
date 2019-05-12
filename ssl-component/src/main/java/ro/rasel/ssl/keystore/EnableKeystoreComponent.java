@@ -1,4 +1,4 @@
-package ro.rasel.eureka.client.component.config;
+package ro.rasel.ssl.keystore;
 
 import org.springframework.context.annotation.Import;
 
@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(EurekaClientComponent.class)
-public @interface EnableEurekaClientComponent {
+@Import(KeyStoreComponent.class)
+public @interface EnableKeystoreComponent {
 }

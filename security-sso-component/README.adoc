@@ -33,11 +33,11 @@ In this chase we can have 2 types of secured services
 == Accessing a resource server
 curl -k -X POST -vu acme:acmesecret https://localhost:9999/sso/oauth/token -H "Accept: application/json" -d "password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme"
 
-curl -k https://localhost:8082/bookmarks/jlong -H "Authorization: Bearer <TOKEN>"
+curl -k https://localhost:8082/users/jlong/bookmarks -H "Authorization: Bearer <TOKEN>"
 
-curl -k https://localhost:8083/contacts/jlong -H "Authorization: Bearer <TOKEN>"
+curl -k https://localhost:8083/users/jlong/contacts -H "Authorization: Bearer <TOKEN>"
 
-curl -k https://localhost:8084/passport/jlong -H "Authorization: Bearer <TOKEN>"
+curl -k https://localhost:8084/users/jlong/passport -H "Authorization: Bearer <TOKEN>"
 
 == Further read
 - Securing Your Cloud-native Microservice Architecture in Spring

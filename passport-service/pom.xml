@@ -80,6 +80,30 @@
                     </apiSources>
                 </configuration>
             </plugin>
+<!--            <plugin>-->
+<!--                <groupId>io.swagger</groupId>-->
+<!--                <artifactId>swagger-codegen-maven-plugin</artifactId>-->
+<!--                <version>2.4.5</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <inputSpec>${project.basedir}/src/main/resources/client/bookmark-service-swagger.json</inputSpec>-->
+<!--                            <language>java</language>-->
+<!--                            <output>${project.build.directory}/generated-sources/swagger</output>-->
+<!--                            <library>jersey2</library>-->
+<!--                            <library>spring-cloud</library>-->
+<!--                            <configurationFile>${project.basedir}\src\main\resources\swaggerConfig.json</configurationFile>-->
+<!--                            <templateDirectory>${project.basedir}\src\main\resources\swaggerTemplates\codegen</templateDirectory>-->
+<!--                            <configurationFile>-->
+<!--                                ${project.basedir}/src/main/resources/swaggerConfig.json-->
+<!--                            </configurationFile>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>

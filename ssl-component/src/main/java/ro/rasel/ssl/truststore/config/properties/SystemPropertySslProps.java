@@ -1,4 +1,4 @@
-package ro.rasel.ssl.truststore.configuration.properties;
+package ro.rasel.ssl.truststore.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
