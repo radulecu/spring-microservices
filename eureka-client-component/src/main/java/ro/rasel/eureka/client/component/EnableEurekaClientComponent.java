@@ -1,4 +1,4 @@
-package ro.rasel.swagger;
+package ro.rasel.eureka.client.component;
 
 import org.springframework.context.annotation.Import;
 
@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(SwaggerComponent.class)
-public @interface EnableSwaggerComponent {
+@Import(EurekaClientComponent.class)
+public @interface EnableEurekaClientComponent {
 }

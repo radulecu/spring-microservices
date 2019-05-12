@@ -4,10 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import ro.rasel.security.client.sso.EnableWebSecurityClientComponent;
+import ro.rasel.ssl.keystore.EnableKeystoreComponent;
 import ro.rasel.ssl.truststore.EnableTruststoreComponent;
 
 @SpringBootApplication
 @EnableZuulProxy
+@EnableKeystoreComponent
 @EnableTruststoreComponent
 @EnableWebSecurityClientComponent
 public class SsoUiApplication {

@@ -4,8 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import ro.rasel.eureka.client.component.config.EnableEurekaClientComponent;
+import ro.rasel.eureka.client.component.EnableEurekaClientComponent;
 import ro.rasel.security.client.resource.EnableResourceSecurityClientComponent;
+import ro.rasel.ssl.keystore.EnableKeystoreComponent;
 import ro.rasel.ssl.truststore.EnableTruststoreComponent;
 import ro.rasel.swagger.EnableSwaggerComponent;
 
@@ -13,6 +14,7 @@ import ro.rasel.swagger.EnableSwaggerComponent;
 @EnableFeignClients
 @EnableCircuitBreaker
 @EnableSwaggerComponent
+@EnableKeystoreComponent
 @EnableTruststoreComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent

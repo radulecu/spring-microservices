@@ -1,4 +1,4 @@
-package ro.rasel.security.client.resource.connection;
+package ro.rasel.security.client.resource.config.connection;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

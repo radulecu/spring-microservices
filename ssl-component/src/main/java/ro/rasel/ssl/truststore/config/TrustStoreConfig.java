@@ -1,10 +1,10 @@
-package ro.rasel.ssl.truststore.configuration;
+package ro.rasel.ssl.truststore.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import ro.rasel.commons.utils.resource.ITempFileManager;
 import ro.rasel.commons.utils.resource.ResourceUtilities;
-import ro.rasel.ssl.truststore.configuration.properties.SystemPropertySslProps;
+import ro.rasel.ssl.truststore.config.properties.SystemPropertySslProps;
 
 import javax.annotation.PostConstruct;
 import java.io.File;

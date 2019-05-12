@@ -1,4 +1,4 @@
-package ro.rasel.security.client.configuration;
+package ro.rasel.security.client.common.config;
 
 import feign.Feign;
 import feign.RequestInterceptor;

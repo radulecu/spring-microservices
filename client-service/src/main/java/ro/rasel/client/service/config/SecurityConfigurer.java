@@ -2,7 +2,7 @@ package ro.rasel.client.service.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import ro.rasel.security.client.sso.IWebSecurityConfigurer;
+import ro.rasel.security.client.sso.config.IWebSecurityConfigurer;
 
 @Configuration
 public class SecurityConfigurer implements IWebSecurityConfigurer {
