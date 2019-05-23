@@ -5,13 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import ro.rasel.eureka.client.component.EnableEurekaClientComponent;
 import ro.rasel.security.client.resource.EnableResourceSecurityClientComponent;
-import ro.rasel.ssl.keystore.EnableKeystoreComponent;
-import ro.rasel.ssl.truststore.EnableTruststoreComponent;
+import ro.rasel.ssl.server.EnableSslServerComponent;
+import ro.rasel.ssl.client.EnableSslClientComponent;
 
 @SpringBootApplication
 @EnableEurekaServer
-@EnableKeystoreComponent
-@EnableTruststoreComponent
+@EnableSslServerComponent
+@EnableSslClientComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
 public class EurekaServerApplication {

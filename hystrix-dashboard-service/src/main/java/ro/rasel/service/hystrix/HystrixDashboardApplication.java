@@ -6,13 +6,13 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import ro.rasel.security.client.sso.EnableWebSecurityClientComponent;
-import ro.rasel.ssl.keystore.EnableKeystoreComponent;
-import ro.rasel.ssl.truststore.EnableTruststoreComponent;
+import ro.rasel.ssl.server.EnableSslServerComponent;
+import ro.rasel.ssl.client.EnableSslClientComponent;
 
 @Controller
 @EnableHystrixDashboard
-@EnableKeystoreComponent
-@EnableTruststoreComponent
+@EnableSslServerComponent
+@EnableSslClientComponent
 @EnableWebSecurityClientComponent
 @SpringBootApplication
 public class HystrixDashboardApplication {

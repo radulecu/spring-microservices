@@ -1,4 +1,4 @@
-package ro.rasel.ssl.truststore;
+package ro.rasel.ssl.client;
 
 import org.springframework.context.annotation.Import;
 
@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(TrustStoreComponent.class)
-public @interface EnableTruststoreComponent {
+@Import(SslClientComponent.class)
+public @interface EnableSslClientComponent {
 }
