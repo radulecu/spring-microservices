@@ -1,4 +1,4 @@
-package ro.rasel.ssl.keystore;
+package ro.rasel.ssl.server;
 
 import org.springframework.context.annotation.Import;
 
@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(KeyStoreComponent.class)
-public @interface EnableKeystoreComponent {
+@Import(SslClientComponent.class)
+public @interface EnableSslServerComponent {
 }

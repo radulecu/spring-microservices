@@ -6,16 +6,16 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import ro.rasel.eureka.client.component.EnableEurekaClientComponent;
 import ro.rasel.security.client.resource.EnableResourceSecurityClientComponent;
-import ro.rasel.ssl.keystore.EnableKeystoreComponent;
-import ro.rasel.ssl.truststore.EnableTruststoreComponent;
+import ro.rasel.ssl.server.EnableSslServerComponent;
+import ro.rasel.ssl.client.EnableSslClientComponent;
 import ro.rasel.swagger.EnableSwaggerComponent;
 
 @SpringBootApplication
 @EnableFeignClients
 @EnableCircuitBreaker
 @EnableSwaggerComponent
-@EnableKeystoreComponent
-@EnableTruststoreComponent
+@EnableSslServerComponent
+@EnableSslClientComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
 public class PassportServiceApplication {

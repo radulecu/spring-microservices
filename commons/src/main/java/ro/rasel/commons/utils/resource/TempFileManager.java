@@ -1,6 +1,12 @@
 package ro.rasel.commons.utils.resource;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 
 public class TempFileManager implements ITempFileManager {
@@ -12,12 +18,26 @@ public class TempFileManager implements ITempFileManager {
 
     public TempFileManager(File rootDir) {
         this.rootDir = rootDir;
+        rootDir.mkdirs();
         rootDir.deleteOnExit();
     }
 
     @Override
-    public File creteFile(String relativePath) {
-        File file = new File(rootDir, relativePath);
+    public File copyToTempFile(String uri, String name) throws URISyntaxException, IOException {
+        return copyToTempFile(new URI(uri), name);
+    }
+
+    @Override
+    public File copyToTempFile(URI uri, String name) throws IOException {
+        URL input = uri.toURL();
+        File output = creteTempFile(name);
+        FileUtils.copyURLToFile(input, output);
+        return output;
+    }
+
+    @Override
+    public File creteTempFile(String name) throws IOException {
+        File file = File.createTempFile("tmp", name, rootDir);
         file.deleteOnExit();
         return file;
     }

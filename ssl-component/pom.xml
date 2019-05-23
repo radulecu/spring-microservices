@@ -30,6 +30,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.7</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -64,18 +75,19 @@
                                                 }
 
 
-                                                execute "cmd /c del computername.cer"
-                                                execute "cmd /c del computername.jks"
+                                                execute "cmd /c del localhost-identity.jks"
+                                                execute "cmd /c del computername-identity.jks"
                                                 execute "cmd /c del localhost.cer"
+                                                execute "cmd /c del computername.cer"
                                                 execute "cmd /c del localhost.jks"
-                                                execute "cmd /c del my.truststore"
+                                                execute "cmd /c del truststore.jks"
 
-                                                execute "cmd /c keytool -genkey -alias jkslocalhostalias -keyalg RSA -keystore localhost.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
-                                                execute "cmd /c keytool -genkey -alias jkscomputernamealias -keyalg RSA -keystore computername.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
-                                                execute "cmd /c keytool -export -alias jkslocalhostalias -keystore localhost.jks -file localhost.cer -storepass jkspass"
-                                                execute "cmd /c keytool -export -alias jkscomputernamealias -keystore computername.jks -file computername.cer -storepass jkspass"
-                                                execute "cmd /c keytool -importcert -keystore my.truststore -alias jkslocalhostalias -storepass jkspass -file localhost.cer -noprompt"
-                                                execute "cmd /c keytool -importcert -keystore my.truststore -alias jkscomputernamealias -storepass jkspass -file computername.cer -noprompt"
+                                                // execute "cmd /c keytool -genkey -alias localhost -keyalg RSA -keystore localhost-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
+                                                execute "cmd /c keytool -genkey -alias desktop-1gn7l5l -keyalg RSA -keystore computername-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
+                                                // execute "cmd /c keytool -export -alias localhost -keystore localhost-identity.jks -file localhost.cer -storepass jkspass"
+                                                execute "cmd /c keytool -export -alias desktop-1gn7l5l -keystore computername-identity.jks -file computername.cer -storepass jkspass"
+                                                // execute "cmd /c keytool -importcert -keystore identity.jks -alias localhost -storepass jkspass -file localhost.cer -noprompt"
+                                                execute "cmd /c keytool -importcert -keystore truststore.jks -alias desktop-1gn7l5l -storepass jkspass -file computername.cer -noprompt"
                                             ]]>
                                         </script>
                                     </scripts>
