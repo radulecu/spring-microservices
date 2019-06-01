@@ -67,7 +67,7 @@
                         <apiSources>
                             <apiSource>
                                 <springmvc>true</springmvc>
-                                <swaggerDirectory>${project.basedir}/generated/swagger</swaggerDirectory>
+                                <swaggerDirectory>${project.build.directory}/generated/swagger</swaggerDirectory>
                                 <swaggerFileName>${project.artifactId}-swagger</swaggerFileName>
                                 <info>
                                     <title>${project.name}</title>
