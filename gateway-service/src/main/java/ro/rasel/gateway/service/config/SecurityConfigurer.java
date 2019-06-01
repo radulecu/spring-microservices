@@ -1,4 +1,4 @@
-package ro.rasel.client.service.light.config;
+package ro.rasel.gateway.service.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

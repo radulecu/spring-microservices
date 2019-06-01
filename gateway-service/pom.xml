@@ -9,11 +9,11 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>client-service-light</artifactId>
+    <artifactId>gateway-service</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <start.class>ro.rasel.client.service.light.ClientServiceLightApplication</start.class>
+        <start.class>ro.rasel.client.service.light.GatewayServiceApplication</start.class>
     </properties>
 
     <dependencies>

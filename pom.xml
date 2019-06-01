@@ -24,7 +24,7 @@
         <module>contact-service</module>
         <module>passport-service</module>
         <module>client-service</module>
-        <module>client-service-light</module>
+        <module>gateway-service</module>
         <module>hystrix-dashboard-service</module>
         <module>security-sso-ui</module>
     </modules>

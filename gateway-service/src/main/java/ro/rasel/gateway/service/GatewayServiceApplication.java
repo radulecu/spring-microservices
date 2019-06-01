@@ -1,4 +1,4 @@
-package ro.rasel.client.service.light;
+package ro.rasel.gateway.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,10 +20,10 @@ import ro.rasel.swagger.EnableSwaggerComponent;
 @EnableSslClientComponent
 @EnableWebSecurityClientComponent
 @EnableEurekaClientComponent
-public class ClientServiceLightApplication {
+public class GatewayServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ClientServiceLightApplication.class, args);
+        SpringApplication.run(GatewayServiceApplication.class, args);
     }
 }
  
