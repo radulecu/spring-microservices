@@ -1,0 +1,182 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Basic resource service used for exposing data from database",
+    "version" : "1.0.0-SNAPSHOT",
+    "title" : "bookmark-service"
+  },
+  "tags" : [ {
+    "name" : "bookmark"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/v1/users/{userId}/bookmarks" : {
+      "get" : {
+        "tags" : [ "bookmark" ],
+        "summary" : "get bookmarks",
+        "description" : "Get a list of bookmarks",
+        "operationId" : "getBookmarks",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Bookmark"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "bookmark" ],
+        "summary" : "add bookmark",
+        "description" : "Create a new bookmark and return it",
+        "operationId" : "createBookmark",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Bookmark"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "$ref" : "#/definitions/Bookmark"
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/users/{userId}/bookmarks/{bookmarkId}" : {
+      "get" : {
+        "tags" : [ "bookmark" ],
+        "summary" : "get bookmark",
+        "description" : "Get a bookmark",
+        "operationId" : "getBookmark",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "bookmarkId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "$ref" : "#/definitions/Bookmark"
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "bookmark" ],
+        "summary" : "delete bookmarks",
+        "description" : "Delete a bookmark",
+        "operationId" : "deleteBookmark",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "bookmarkId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "No content"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Bookmark" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Bookmark id"
+        },
+        "userId" : {
+          "type" : "string",
+          "description" : "Used id"
+        },
+        "href" : {
+          "type" : "string",
+          "description" : "Bookmark href"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Bookmark description"
+        },
+        "label" : {
+          "type" : "string",
+          "description" : "Bookmark label"
+        }
+      },
+      "description" : "User Bookmark"
+    }
+  }
+}

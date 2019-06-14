@@ -1,62 +1,48 @@
 package ro.rasel.service.bookmarks.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ro.rasel.service.bookmarks.dao.BookmarkRepository;
 import ro.rasel.service.bookmarks.domain.Bookmark;
+import ro.rasel.service.bookmarks.service.BookmarkService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/users/{userId}/bookmarks", produces = "application/json")
-public class BookmarkRestController {
+public class BookmarkRestController implements BookmarkApi {
 
-    private final BookmarkRepository bookmarkRepository;
+    private final BookmarkService bookmarkService;
 
-    public BookmarkRestController(BookmarkRepository bookmarkRepository) {
-        this.bookmarkRepository = bookmarkRepository;
+    public BookmarkRestController(BookmarkService bookmarkService) {
+        this.bookmarkService = bookmarkService;
     }
 
-    @GetMapping
-    @ApiOperation(value = "Get a list of bookmarks")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
-    public Collection<Bookmark> getBookmarks(@PathVariable String userId) {
-        return this.bookmarkRepository.findByUserId(userId);
+    @Override
+    public ResponseEntity<Collection<Bookmark>> getBookmarks(@PathVariable String userId) {
+        final List<Bookmark> bookmarks = bookmarkService.getBookmarks(userId);
+        return bookmarks.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(bookmarks);
     }
 
-    @GetMapping(value = "/{bookmarkId}")
-    @ApiOperation("Get a bookmark")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
-    public Bookmark getBookmark(@PathVariable String userId, @PathVariable Long bookmarkId) {
-        return this.bookmarkRepository.findByUserIdAndId(userId, bookmarkId);
+    @Override
+    public ResponseEntity<Bookmark> getBookmark(@PathVariable String userId, @PathVariable long bookmarkId) {
+        final Bookmark bookmark = this.bookmarkService.getBookmark(userId, bookmarkId);
+        return bookmark == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(bookmark);
     }
 
-    @PostMapping
-    @ApiOperation("Create a new bookmark and return it")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
+    @Override
     public Bookmark createBookmark(@PathVariable String userId, @RequestBody Bookmark bookmark) {
         Bookmark bookmarkInstance = new Bookmark(userId, bookmark.getHref(),
                 bookmark.getDescription(), bookmark.getLabel());
-        return this.bookmarkRepository.save(bookmarkInstance);
+        return bookmarkService.createBookmark(bookmarkInstance);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteBookmark(@PathVariable String userId, @PathVariable long bookmarkId) {
+        return bookmarkService.deleteBookmark(userId, bookmarkId) ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.notFound().build();
     }
 
 }

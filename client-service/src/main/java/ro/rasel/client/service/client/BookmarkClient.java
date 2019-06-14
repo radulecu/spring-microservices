@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface BookmarkClient {
 
     @GetMapping(value = "/users/{userId}/bookmarks")
-    String getBookmarks(@PathVariable("userId") String userId);
+    String getBookmarksAsString(@PathVariable("userId") String userId);
 
 }

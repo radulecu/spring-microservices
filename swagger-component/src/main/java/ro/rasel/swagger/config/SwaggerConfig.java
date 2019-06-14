@@ -9,6 +9,12 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+
 @Configuration
 public class SwaggerConfig {
     private final SwaggerConfigProperties swaggerConfigProperties;
@@ -20,8 +26,11 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
+        Set<String> applicationJson = new HashSet<>(Arrays.asList(APPLICATION_JSON_VALUE));
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(swaggerConfigProperties.isEnabled())
+                .consumes(applicationJson)
+                .produces(applicationJson)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("ro.rasel"))
                 .paths(PathSelectors.any())

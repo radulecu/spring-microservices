@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>ro.rasel</groupId>
-            <artifactId>domain-interfaces</artifactId>
+            <artifactId>spring-commons</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 

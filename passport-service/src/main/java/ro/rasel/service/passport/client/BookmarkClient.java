@@ -1,16 +1,9 @@
 package ro.rasel.service.passport.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import ro.rasel.service.passport.domain.Bookmark;
-
-import java.util.Collection;
+import ro.rasel.bookmark.api.BookmarkApi;
 
 @FeignClient("bookmark-service")
-public interface BookmarkClient {
-
-    @GetMapping(value = "/users/{userId}/bookmarks")
-    Collection<Bookmark> getBookmarks(@PathVariable("userId") String userId);
+public interface BookmarkClient extends BookmarkApi {
 
 }
