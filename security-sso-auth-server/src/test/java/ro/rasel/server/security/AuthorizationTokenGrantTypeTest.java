@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import ro.rasel.ssl.client.EnableSslClientComponent;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,8 +24,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = {"ssl.certificate.name=localhost"})
-@EnableSslClientComponent
+@TestPropertySource(properties = {"ssl.enabled=false"})
 public class AuthorizationTokenGrantTypeTest {
 
     private static final String USER = "jlong";
