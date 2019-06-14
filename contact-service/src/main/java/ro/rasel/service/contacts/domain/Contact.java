@@ -2,7 +2,6 @@ package ro.rasel.service.contacts.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ro.rasel.domain.contact.IContact;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,7 @@ import java.util.StringJoiner;
 
 @Entity
 @ApiModel(description = "User Contacts")
-public class Contact implements IContact {
+public class Contact {
 
     @Id
     @GeneratedValue

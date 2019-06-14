@@ -2,8 +2,8 @@ package ro.rasel.client.service.client;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.stereotype.Component;
-import ro.rasel.client.service.domain.Contact;
 import ro.rasel.client.service.domain.Passport;
+import ro.rasel.contact.domain.Contact;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -33,7 +33,7 @@ public class IntegrationClient {
     // you can return directly the rest as string when you do not need it in the object format (e.g. you just forward it to other service) ...
     @HystrixCommand(fallbackMethod = "getBookmarksFallback")
     public String getBookmarks(String userId) {
-        return this.bookmarkClient.getBookmarks(userId);
+        return this.bookmarkClient.getBookmarksAsString(userId);
     }
 
     @SuppressWarnings("unused")
@@ -45,7 +45,7 @@ public class IntegrationClient {
     // ... or you can use a collection of objects ...
     @HystrixCommand(fallbackMethod = "getContactsFallback")
     public Collection<Contact> getContacts(String userId) {
-        return this.contactClient.getContacts(userId);
+        return this.contactClient.getContacts(userId).getBody();
     }
 
     // ... or just a single object

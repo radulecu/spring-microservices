@@ -2,7 +2,6 @@ package ro.rasel.service.bookmarks.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ro.rasel.domain.bookmark.IBookmark;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,7 @@ import java.util.StringJoiner;
 
 @Entity
 @ApiModel(description = "User Bookmark")
-public class Bookmark implements IBookmark {
+public class Bookmark {
 
     @Id
     @GeneratedValue

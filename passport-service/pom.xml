@@ -40,11 +40,6 @@
             <artifactId>swagger-component</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>ro.rasel</groupId>
-            <artifactId>domain-interfaces</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
 
         <!--Spring Boot-->
         <dependency>
@@ -56,6 +51,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
     </dependencies>
 
@@ -80,30 +80,42 @@
                     </apiSources>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>io.swagger</groupId>-->
-<!--                <artifactId>swagger-codegen-maven-plugin</artifactId>-->
-<!--                <version>2.4.5</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>generate</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <inputSpec>${project.basedir}/src/main/resources/client/bookmark-service-swagger.json</inputSpec>-->
-<!--                            <language>java</language>-->
-<!--                            <output>${project.build.directory}/generated-sources/swagger</output>-->
-<!--                            <library>jersey2</library>-->
-<!--                            <library>spring-cloud</library>-->
-<!--                            <configurationFile>${project.basedir}\src\main\resources\swaggerConfig.json</configurationFile>-->
-<!--                            <templateDirectory>${project.basedir}\src\main\resources\swaggerTemplates\codegen</templateDirectory>-->
-<!--                            <configurationFile>-->
-<!--                                ${project.basedir}/src/main/resources/swaggerConfig.json-->
-<!--                            </configurationFile>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>bookmark-api-generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>
+                            <apiPackage>ro.rasel.bookmark.api</apiPackage>
+                            <modelPackage>ro.rasel.bookmark.domain</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>contact-api-generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/swagger/contact-service-swagger.json</inputSpec>
+                            <apiPackage>ro.rasel.contact.api</apiPackage>
+                            <modelPackage>ro.rasel.contact.domain</modelPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <language>spring</language>
+                    <library>spring-cloud</library>
+                    <generateSupportingFiles>false</generateSupportingFiles>
+                    <configOptions>
+                        <interfaceOnly>true</interfaceOnly>
+                    </configOptions>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

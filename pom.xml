@@ -19,7 +19,6 @@
         <module>security-sso-component</module>
         <module>swagger-component</module>
         <module>security-sso-auth-server</module>
-        <module>domain-interfaces</module>
         <module>bookmark-service</module>
         <module>contact-service</module>
         <module>passport-service</module>

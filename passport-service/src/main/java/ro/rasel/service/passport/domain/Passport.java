@@ -2,13 +2,14 @@ package ro.rasel.service.passport.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ro.rasel.domain.IPassport;
+import ro.rasel.bookmark.domain.Bookmark;
+import ro.rasel.contact.domain.Contact;
 
 import java.util.Collection;
 import java.util.StringJoiner;
 
 @ApiModel(description = "User Passport")
-public class Passport implements IPassport {
+public class Passport {
 
     private final String userId;
 
@@ -16,8 +17,9 @@ public class Passport implements IPassport {
 
     private final Collection<Contact> contacts;
 
-    public Passport(String userId, Collection<Contact> contacts,
-                    Collection<Bookmark> bookmarks) {
+    public Passport(
+            String userId, Collection<Contact> contacts,
+            Collection<Bookmark> bookmarks) {
         this.userId = userId;
         this.contacts = contacts;
         this.bookmarks = bookmarks;

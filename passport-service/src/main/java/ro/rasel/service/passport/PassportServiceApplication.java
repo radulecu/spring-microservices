@@ -6,8 +6,8 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import ro.rasel.eureka.client.component.EnableEurekaClientComponent;
 import ro.rasel.security.client.resource.EnableResourceSecurityClientComponent;
-import ro.rasel.ssl.server.EnableSslServerComponent;
 import ro.rasel.ssl.client.EnableSslClientComponent;
+import ro.rasel.ssl.server.EnableSslServerComponent;
 import ro.rasel.swagger.EnableSwaggerComponent;
 
 @SpringBootApplication

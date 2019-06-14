@@ -8,6 +8,7 @@ import ro.rasel.eureka.client.component.EnableEurekaClientComponent;
 import ro.rasel.security.client.resource.EnableResourceSecurityClientComponent;
 import ro.rasel.service.contacts.dao.ContactRepository;
 import ro.rasel.service.contacts.domain.Contact;
+import ro.rasel.spring.commons.EnableSpringCommonsComponent;
 import ro.rasel.ssl.server.EnableSslServerComponent;
 import ro.rasel.ssl.client.EnableSslClientComponent;
 import ro.rasel.swagger.EnableSwaggerComponent;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 @EnableSslClientComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
+@EnableSpringCommonsComponent
 public class ContactServiceApplication {
 
     @Bean

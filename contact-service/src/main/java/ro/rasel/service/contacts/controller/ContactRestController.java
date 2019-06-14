@@ -1,62 +1,48 @@
 package ro.rasel.service.contacts.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ro.rasel.service.contacts.dao.ContactRepository;
 import ro.rasel.service.contacts.domain.Contact;
+import ro.rasel.service.contacts.service.ContactService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/users/{userId}/contacts", produces = "application/json")
-public class ContactRestController {
+public class ContactRestController implements ContactApi {
 
-    private final ContactRepository contactRepository;
+    private final ContactService contactService;
 
-    public ContactRestController(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    public ContactRestController(ContactService contactService) {
+        this.contactService = contactService;
     }
 
-    @GetMapping
-    @ApiOperation(value = "Get a list of contacts")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
-    public Collection<Contact> getContacts(@PathVariable String userId) {
-        return this.contactRepository.findByUserId(userId);
+    @Override
+    public ResponseEntity<Collection<Contact>> getContacts(@PathVariable String userId) {
+        final List<Contact> contacts = contactService.getContacts(userId);
+        return contacts.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(contacts);
     }
 
-    @GetMapping(value = "/{contactId}")
-    @ApiOperation("Get a contact")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
-    public Contact getContact(@PathVariable String userId, @PathVariable Long contactId) {
-        return this.contactRepository.findByUserIdAndId(userId, contactId);
+    @Override
+    public ResponseEntity<Contact> getContact(@PathVariable String userId, @PathVariable long contactId) {
+        final Contact contact = contactService.getContact(userId, contactId);
+        return contact == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(contact);
     }
 
-    @PostMapping
-    @ApiOperation("Create a new contact and return it")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
-    public Contact createContact(@PathVariable String userId,
-            @RequestBody Contact contact) {
-        return this.contactRepository.save(new Contact(userId, contact.getFirstName(),
-                contact.getLastName(), contact.getEmail(), contact.getRelationship()));
+    @Override
+    public Contact createContact(@PathVariable String userId, @RequestBody Contact contact) {
+        final Contact contactInstance = new Contact(userId, contact.getFirstName(),
+                contact.getLastName(), contact.getEmail(), contact.getRelationship());
+        return this.contactService.createContact(contactInstance);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteContact(@PathVariable String userId, @RequestBody long contactId) {
+        return contactService.deleteContact(userId, contactId) ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.notFound().build();
     }
 
 }

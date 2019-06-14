@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ro.rasel.client.service.client.IntegrationClient;
-import ro.rasel.client.service.domain.Contact;
 import ro.rasel.client.service.domain.Passport;
+import ro.rasel.contact.domain.Contact;
 
 import java.util.Collection;
 
