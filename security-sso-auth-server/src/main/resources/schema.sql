@@ -1,17 +1,17 @@
-DROP TABLE users
-IF EXISTS;
-DROP TABLE user_roles
-IF EXISTS;
+DROP TABLE role IF EXISTS;
+DROP TABLE user_info IF EXISTS;
 
-CREATE TABLE users (
-  user_name VARCHAR(255) NOT NULL,
-  password  VARCHAR(255) NOT NULL,
-  enabled   BOOLEAN DEFAULT TRUE
+CREATE TABLE user_info
+(
+    user_name VARCHAR(255) NOT NULL PRIMARY KEY,
+    password  VARCHAR(255) NOT NULL,
+    enabled   BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE user_roles (
-  user_name VARCHAR(255) NOT NULL,
-  role      VARCHAR(255) NOT NULL,
+CREATE TABLE role
+(
+    user_name VARCHAR(255) NOT NULL foreign key REFERENCES user_info (user_name),
+    role      VARCHAR(255) NOT NULL,
 );
 
 -- create table client_details(
