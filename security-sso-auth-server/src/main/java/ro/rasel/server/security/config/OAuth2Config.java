@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -15,19 +16,22 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import ro.rasel.server.security.repository.UserDetailsRepository;
 
 @Configuration
 @EnableAuthorizationServer
 class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsRepository userDetailsRepository;
+    private final UserDetailsService userDetailsService;
+    private final SecurityAuthorizationConfig securityAuthorizationConfig;
 
     @Autowired
-    public OAuth2Config(AuthenticationManager authenticationManager,
-            UserDetailsRepository userDetailsRepository) {
+    public OAuth2Config(
+            AuthenticationManager authenticationManager,
+            UserDetailsService userDetailsService,
+            SecurityAuthorizationConfig securityAuthorizationConfig) {
         this.authenticationManager = authenticationManager;
-        this.userDetailsRepository = userDetailsRepository;
+        this.userDetailsService = userDetailsService;
+        this.securityAuthorizationConfig = securityAuthorizationConfig;
     }
 
     @Override
@@ -41,7 +45,7 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
         super.configure(endpoints);
         endpoints
                 .authenticationManager(authenticationManager)
-                .userDetailsService(s -> userDetailsRepository.findUserByName(s))
+                .userDetailsService(userDetailsService)
                 .tokenStore(tokenStore())
                 .accessTokenConverter(accessTokenConverter())
                 .redirectResolver(getRedirectResolver());
@@ -50,8 +54,8 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("acme")
-                .secret("acmesecret")
+                .withClient(securityAuthorizationConfig.getClientUser())
+                .secret(securityAuthorizationConfig.getClientPassword())
                 .authorizedGrantTypes("authorization_code", "refresh_token", "password")
                 .scopes("read", "write", "openid")
                 .autoApprove(true);
@@ -69,7 +73,7 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
+        converter.setSigningKey(securityAuthorizationConfig.getSigningKey());
         return converter;
     }
 
