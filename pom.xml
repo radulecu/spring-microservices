@@ -24,6 +24,7 @@
         <module>passport-service</module>
         <module>client-service</module>
         <module>gateway-service</module>
+        <module>resource-gateway-service</module>
         <module>hystrix-dashboard-service</module>
         <module>security-sso-ui</module>
     </modules>
