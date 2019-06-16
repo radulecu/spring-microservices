@@ -33,11 +33,18 @@ In this chase we can have 2 types of secured services
 == Accessing a resource server
 curl -k -X POST -vu acme:acmesecret https://localhost:9999/sso/oauth/token -H "Accept: application/json" -d "password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme"
 
-curl -k https://localhost:8082/users/jlong/bookmarks -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTc3Mzc1OTAsInVzZXJfbmFtZSI6Impsb25nIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiIsIlJPTEVfQUNUVUFUT1IiXSwianRpIjoiYjAwODI2MDAtZjZlYy00OWU3LTgyMTgtNTJhZWYwNmExOWU0IiwiY2xpZW50X2lkIjoiYWNtZSIsInNjb3BlIjpbIm9wZW5pZCJdfQ.1NLtp0K6Z7y5433729x-40QjPPrcybeCtrHIjdvdGwY"
+curl -k https://localhost:8082/v1/users/jlong/bookmarks -H "Authorization: Bearer <TOKEN>"
+curl -k https://localhost:8083/v1/users/jlong/contacts -H "Authorization: Bearer <TOKEN>"
+curl -k https://localhost:8084/v1/users/jlong/passport -H "Authorization: Bearer <TOKEN>"
 
-curl -k https://localhost:8083/users/jlong/contacts -H "Authorization: Bearer <TOKEN>"
+Since mutual tls is enabled you need to disable it for this to work. alternatively you just need to set it to simple TLS (using property server.ssl.client-auth set to none or want on targeting server). Alternatively you can try to use curl providing the appropriate certificates.
 
-curl -k https://localhost:8084/users/jlong/passport -H "Authorization: Bearer <TOKEN>"
+Alternatively resource-gateway-service can be used.
+
+curl -k https://localhost:9025/bookmark-service/v1/users/jlong/bookmarks -H "Authorization: Bearer <TOKEN>"
+curl -k https://localhost:9025/contact-service/v1/users/jlong/contacts -H "Authorization: Bearer <TOKEN>"
+curl -k https://localhost:9025/passport-service/v1/users/jlong/passport -H "Authorization: Bearer <TOKEN>"
+
 
 == Further read
 - Securing Your Cloud-native Microservice Architecture in Spring
