@@ -57,6 +57,8 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .withClient(securityAuthorizationConfig.getClientUser())
                 .secret(securityAuthorizationConfig.getClientPassword())
                 .authorizedGrantTypes("authorization_code", "refresh_token", "password")
+                .accessTokenValiditySeconds(securityAuthorizationConfig.getAccessTokenValiditySeconds())
+                .refreshTokenValiditySeconds(securityAuthorizationConfig.getRefreshTokenValiditySeconds())
                 .scopes("read", "write", "openid")
                 .autoApprove(true);
     }

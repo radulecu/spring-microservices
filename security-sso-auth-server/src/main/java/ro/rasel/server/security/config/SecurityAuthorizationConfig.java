@@ -6,4 +6,8 @@ public interface SecurityAuthorizationConfig {
     String getClientPassword();
 
     String getSigningKey();
+
+    int getAccessTokenValiditySeconds();
+
+    int getRefreshTokenValiditySeconds();
 }
