@@ -30,12 +30,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .orElse(new User(username, "", true, true, true, true, Collections.emptyList()));
     }
 
-    private static UserDetails toUserDetails(UserInfo userInfo1) {
+    private static UserDetails toUserDetails(UserInfo userInfo) {
         final List<String> roles =
-                userInfo1.getRoles().stream().map(Role::getRole).collect(Collectors.toList());
-        return new User(userInfo1.getUserName(), userInfo1.getPassword(),
-                userInfo1.isEnabled(), userInfo1.isEnabled(), userInfo1.isEnabled(),
-                userInfo1.isEnabled(),
+                userInfo.getRoles().stream().map(Role::getRole).collect(Collectors.toList());
+        return new User(userInfo.getUserName(), userInfo.getPassword(),
+                userInfo.isEnabled(), userInfo.isEnabled(), userInfo.isEnabled(),
+                userInfo.isEnabled(),
                 AuthorityUtils.createAuthorityList(roles.toArray(new String[roles.size()])));
     }
 }
