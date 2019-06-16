@@ -20,6 +20,6 @@ public interface PassportApi {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    @GetMapping(value = "/users/{userId}/passport", produces = "application/json")
+    @GetMapping(value = "/v1/users/{userId}/passport", produces = "application/json")
     ResponseEntity<Passport> passport(@PathVariable String userId);
 }
