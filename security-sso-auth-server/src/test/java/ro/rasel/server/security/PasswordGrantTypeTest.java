@@ -59,7 +59,7 @@ public class PasswordGrantTypeTest {
         return responseEntity.getBody().getAccessToken();
     }
 
-        private static class AuthorizationTokenResponse {
+    private static class AuthorizationTokenResponse {
         private final String accessToken;
 
         private AuthorizationTokenResponse(@JsonProperty("access_token") String accessToken) {
