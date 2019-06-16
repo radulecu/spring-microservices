@@ -33,11 +33,17 @@ In this chase we can have 2 types of secured services
 == Accessing a resource server
 curl -k -X POST -vu acme:acmesecret https://localhost:9999/sso/oauth/token -H "Accept: application/json" -d "password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme"
 
+You can request a new access token using the refresh token.
+
+curl -k -X POST -vu acme:acmesecret https://localhost:9999/sso/oauth/token -H "Accept: application/json" -d "username=jlong&grant_type=refresh_token&refresh_token=<REFRESH_TOKEN>"
+
+You can access a resource by running:
+
 curl -k https://localhost:8082/v1/users/jlong/bookmarks -H "Authorization: Bearer <TOKEN>"
 curl -k https://localhost:8083/v1/users/jlong/contacts -H "Authorization: Bearer <TOKEN>"
 curl -k https://localhost:8084/v1/users/jlong/passport -H "Authorization: Bearer <TOKEN>"
 
-Since mutual tls is enabled you need to disable it for this to work. alternatively you just need to set it to simple TLS (using property server.ssl.client-auth set to none or want on targeting server). Alternatively you can try to use curl providing the appropriate certificates.
+If mutual tls is enabled you need to disable it for this test to work. alternatively you just need to set it to simple TLS (using property server.ssl.client-auth set to none or want on targeting server). Alternatively you can try to use curl providing the appropriate certificates.
 
 Alternatively resource-gateway-service can be used.
 

@@ -9,9 +9,11 @@ import java.util.StringJoiner;
 @Configuration
 @ConfigurationProperties("security.authorization")
 class SecurityAuthorizationProperties implements SecurityAuthorizationConfig {
-    private String clientUser = "acme";
-    private String clientPassword = "acmesecret";
-    private String signingKey = "123";
+    private String clientUser;
+    private String clientPassword;
+    private String signingKey;
+    private int accessTokenValiditySeconds = 1800;
+    private int refreshTokenValiditySeconds = 21600;
 
     @Override
     public String getClientUser() {
@@ -36,6 +38,24 @@ class SecurityAuthorizationProperties implements SecurityAuthorizationConfig {
         return signingKey;
     }
 
+    public void setAccessTokenValiditySeconds(int accessTokenValiditySeconds) {
+        this.accessTokenValiditySeconds = accessTokenValiditySeconds;
+    }
+
+    @Override
+    public int getAccessTokenValiditySeconds() {
+        return accessTokenValiditySeconds;
+    }
+
+    public void setRefreshTokenValiditySeconds(int refreshTokenValiditySeconds) {
+        this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
+    }
+
+    @Override
+    public int getRefreshTokenValiditySeconds() {
+        return refreshTokenValiditySeconds;
+    }
+
     public void setSigningKey(String signingKey) {
         this.signingKey = signingKey;
     }
@@ -46,6 +66,8 @@ class SecurityAuthorizationProperties implements SecurityAuthorizationConfig {
                 .add("clientUser='" + clientUser + "'")
                 .add("clientPassword='" + clientPassword + "'")
                 .add("signingKey='" + signingKey + "'")
+                    .add("accessTokenValiditySeconds=" + accessTokenValiditySeconds)
+                .add("refreshTokenValiditySeconds=" + refreshTokenValiditySeconds)
                 .toString();
     }
 }
