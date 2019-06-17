@@ -17,8 +17,6 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-
-        <dependency-check-maven.failBuildOnCVSS>8</dependency-check-maven.failBuildOnCVSS>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -58,7 +56,6 @@
                     <artifactId>dependency-check-maven</artifactId>
                     <version>5.0.0</version>
                     <configuration>
-                        <failBuildOnCVSS>${dependency-check-maven.failBuildOnCVSS}</failBuildOnCVSS>
                         <versionCheckEnabled>true</versionCheckEnabled>
                     </configuration>
                     <executions>

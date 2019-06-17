@@ -66,7 +66,7 @@ class SecurityAuthorizationProperties implements SecurityAuthorizationConfig {
                 .add("clientUser='" + clientUser + "'")
                 .add("clientPassword='" + clientPassword + "'")
                 .add("signingKey='" + signingKey + "'")
-                    .add("accessTokenValiditySeconds=" + accessTokenValiditySeconds)
+                .add("accessTokenValiditySeconds=" + accessTokenValiditySeconds)
                 .add("refreshTokenValiditySeconds=" + refreshTokenValiditySeconds)
                 .toString();
     }
