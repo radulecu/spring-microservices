@@ -20,8 +20,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <dependency-check-maven.failBuildOnCVSS>8</dependency-check-maven.failBuildOnCVSS>
-
         <spring-cloud-dependencies.version>Greenwich.SR1</spring-cloud-dependencies.version>
 
         <spring-security-oauth2-autoconfigure.version>2.1.5.RELEASE</spring-security-oauth2-autoconfigure.version>
@@ -129,7 +127,6 @@
                     <artifactId>dependency-check-maven</artifactId>
                     <version>5.0.0</version>
                     <configuration>
-                        <failBuildOnCVSS>${dependency-check-maven.failBuildOnCVSS}</failBuildOnCVSS>
                         <versionCheckEnabled>true</versionCheckEnabled>
                     </configuration>
                     <executions>
