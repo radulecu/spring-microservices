@@ -2,40 +2,43 @@ package ro.rasel.service.contacts.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import ro.rasel.commons.utils.validators.Validator;
+import ro.rasel.commons.utils.validators.Validators;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.util.StringJoiner;
 
 @Entity
 @ApiModel(description = "User Contacts")
-public class Contact {
+public class Contact extends ContactDetails {
+    private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidateor("userId");
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @NotBlank
     private String userId;
-
-    private String relationship;
-
-    private String firstName;
-
-    private String lastName;
-
-    private String email;
 
     public Contact() {
     }
 
-    public Contact(String userId, String firstName, String lastName, String email,
+    public Contact(
+            Long id, String userId, String firstName, String lastName, String email,
             String relationship) {
+        this(userId, firstName, lastName, email, relationship);
+        this.id = id;
+    }
+
+    public Contact(String userId, String firstName, String lastName, String email, String relationship) {
+        super(firstName, lastName, email, relationship);
+
+        USER_ID_VALIDATOR.validate(userId);
+
         this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.relationship = relationship;
     }
 
     @ApiModelProperty(value = "Contact id")
@@ -48,35 +51,15 @@ public class Contact {
         return userId;
     }
 
-    @ApiModelProperty(value = "Relationship")
-    public String getRelationship() {
-        return relationship;
-    }
-
-    @ApiModelProperty(value = "First name")
-    public String getFirstName() {
-        return firstName;
-    }
-
-    @ApiModelProperty(value = "Last name")
-    public String getLastName() {
-        return lastName;
-    }
-
-    @ApiModelProperty(value = "Email")
-    public String getEmail() {
-        return email;
-    }
-
     @Override
     public String toString() {
         return new StringJoiner(", ", Contact.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("userId='" + userId + "'")
-                .add("relationship='" + relationship + "'")
-                .add("firstName='" + firstName + "'")
-                .add("lastName='" + lastName + "'")
-                .add("email='" + email + "'")
+                .add("relationship='" + getRelationship() + "'")
+                .add("firstName='" + getFirstName() + "'")
+                .add("lastName='" + getLastName() + "'")
+                .add("email='" + getEmail() + "'")
                 .toString();
     }
 }

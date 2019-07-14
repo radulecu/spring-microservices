@@ -49,11 +49,24 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user","/login").permitAll()
                 .anyRequest().authenticated()
+             .and()
+                .headers()
+                    .httpStrictTransportSecurity()
+                    .includeSubDomains(true)
+                    .maxAgeInSeconds(31536000)
+                .and()
+                    .xssProtection()
+                .and()
+            .and()
+                .rememberMe()
+                .alwaysRemember(true)
             .and()
                 .csrf()
                     .csrfTokenRepository(csrfTokenRepository())
             .and()
-                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
+            .requestCache()
+                .disable();
 
         // @formatter:on
         for (IWebSecurityConfigurer configurer : configurers) {
@@ -65,7 +78,8 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new OncePerRequestFilter() {
 
             @Override
-            protected void doFilterInternal(HttpServletRequest request,
+            protected void doFilterInternal(
+                    HttpServletRequest request,
                     HttpServletResponse response, FilterChain filterChain)
                     throws ServletException, IOException {
                 CsrfToken csrf = (CsrfToken) request

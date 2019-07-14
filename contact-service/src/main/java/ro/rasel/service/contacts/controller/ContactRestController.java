@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ro.rasel.service.contacts.domain.Contact;
+import ro.rasel.service.contacts.domain.ContactDetails;
 import ro.rasel.service.contacts.service.ContactService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ContactRestController implements ContactApi {
@@ -27,19 +29,30 @@ public class ContactRestController implements ContactApi {
 
     @Override
     public ResponseEntity<Contact> getContact(@PathVariable String userId, @PathVariable long contactId) {
-        final Contact contact = contactService.getContact(userId, contactId);
-        return contact == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(contact);
+        final Optional<Contact> contact = contactService.getContact(userId, contactId);
+        return contact.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
-    public Contact createContact(@PathVariable String userId, @RequestBody Contact contact) {
-        final Contact contactInstance = new Contact(userId, contact.getFirstName(),
-                contact.getLastName(), contact.getEmail(), contact.getRelationship());
-        return this.contactService.createContact(contactInstance);
+    public Contact createContact(@PathVariable String userId, @RequestBody ContactDetails contactDetails) {
+        final Contact contactInstance =
+                new Contact(userId, contactDetails.getFirstName(), contactDetails.getLastName(),
+                        contactDetails.getEmail(), contactDetails.getRelationship());
+        return contactService.createContact(contactInstance);
     }
 
     @Override
-    public ResponseEntity<Void> deleteContact(@PathVariable String userId, @RequestBody long contactId) {
+    public ResponseEntity<Contact> updateContact(
+            @PathVariable String userId, @PathVariable long contactId, @RequestBody ContactDetails contactDetails) {
+        Contact contact =
+                new Contact(contactId, userId, contactDetails.getRelationship(), contactDetails.getFirstName(),
+                        contactDetails.getLastName(), contactDetails.getEmail());
+        return contactService.updateContact(contact).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteContact(@PathVariable String userId, @PathVariable long contactId) {
         return contactService.deleteContact(userId, contactId) ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.notFound().build();
