@@ -5,13 +5,12 @@ import ro.rasel.service.bookmarks.domain.Bookmark;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     List<Bookmark> findByUserId(String userId);
 
-    Bookmark findByIdAndUserId(long id, String userId);
-
-    int deleteByIdAndUserId(long id, String userId);
+    Optional<Bookmark> findByIdAndUserId(long id, String userId);
 }

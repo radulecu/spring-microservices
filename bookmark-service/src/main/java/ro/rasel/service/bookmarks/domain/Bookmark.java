@@ -2,36 +2,41 @@ package ro.rasel.service.bookmarks.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import ro.rasel.commons.utils.validators.Validator;
+import ro.rasel.commons.utils.validators.Validators;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.util.StringJoiner;
 
 @Entity
 @ApiModel(description = "User Bookmark")
-public class Bookmark {
+public class Bookmark extends BookmarkDetails {
+    private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidateor("userId");
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @NotBlank
     private String userId;
-
-    private String href;
-
-    private String description;
-
-    private String label;
 
     Bookmark() {
     }
 
+    public Bookmark(long id, String userId, String href, String description, String label) {
+        this(userId, href, description, label);
+        this.id = id;
+    }
+
     public Bookmark(String userId, String href, String description, String label) {
+        super(href, description, label);
+
+        USER_ID_VALIDATOR.validate(userId);
+
         this.userId = userId;
-        this.href = href;
-        this.description = description;
-        this.label = label;
     }
 
     @ApiModelProperty(value = "Bookmark id")
@@ -44,29 +49,14 @@ public class Bookmark {
         return userId;
     }
 
-    @ApiModelProperty(value = "Bookmark description")
-    public String getDescription() {
-        return description;
-    }
-
-    @ApiModelProperty(value = "Bookmark href")
-    public String getHref() {
-        return href;
-    }
-
-    @ApiModelProperty(value = "Bookmark label")
-    public String getLabel() {
-        return label;
-    }
-
     @Override
     public String toString() {
         return new StringJoiner(", ", Bookmark.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("userId='" + userId + "'")
-                .add("href='" + href + "'")
-                .add("description='" + description + "'")
-                .add("label='" + label + "'")
+                .add("href='" + getHref() + "'")
+                .add("description='" + getDescription() + "'")
+                .add("label='" + getLabel() + "'")
                 .toString();
     }
 }

@@ -58,7 +58,7 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/Bookmark"
+            "$ref" : "#/definitions/BookmarkDetails"
           }
         } ],
         "responses" : {
@@ -83,7 +83,6 @@
         "summary" : "get bookmark",
         "description" : "Get a bookmark",
         "operationId" : "getBookmark",
-        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "userId",
           "in" : "path",
@@ -114,13 +113,55 @@
           }
         }
       },
+      "put" : {
+        "tags" : [ "bookmark" ],
+        "summary" : "add bookmark",
+        "description" : "Update a bookmark and return it",
+        "operationId" : "updateBookmark",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "bookmarkId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/BookmarkDetails"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "$ref" : "#/definitions/Bookmark"
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      },
       "delete" : {
         "tags" : [ "bookmark" ],
         "summary" : "delete bookmarks",
         "description" : "Delete a bookmark",
         "operationId" : "deleteBookmark",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "userId",
           "in" : "path",
@@ -153,7 +194,20 @@
   "definitions" : {
     "Bookmark" : {
       "type" : "object",
+      "required" : [ "description", "href", "label" ],
       "properties" : {
+        "href" : {
+          "type" : "string",
+          "description" : "Bookmark href"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Bookmark description"
+        },
+        "label" : {
+          "type" : "string",
+          "description" : "Bookmark label"
+        },
         "id" : {
           "type" : "integer",
           "format" : "int64",
@@ -162,7 +216,14 @@
         "userId" : {
           "type" : "string",
           "description" : "Used id"
-        },
+        }
+      },
+      "description" : "User Bookmark"
+    },
+    "BookmarkDetails" : {
+      "type" : "object",
+      "required" : [ "description", "href", "label" ],
+      "properties" : {
         "href" : {
           "type" : "string",
           "description" : "Bookmark href"
