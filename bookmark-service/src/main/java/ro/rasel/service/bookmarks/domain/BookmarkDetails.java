@@ -22,17 +22,12 @@ public class BookmarkDetails {
     private String label;
 
     BookmarkDetails() {
-        System.out.println();
     }
 
     public BookmarkDetails(String href, String description, String label) {
-        Objects.requireNonNull("href argument should not be null");
-        Objects.requireNonNull("description argument should not be null");
-        Objects.requireNonNull("label argument should not be null");
-
-        this.href = href;
-        this.description = description;
-        this.label = label;
+        this.href = Objects.requireNonNull(href, "href argument should not be null");
+        this.description = Objects.requireNonNull(description, "description argument should not be null");
+        this.label = Objects.requireNonNull(label, "label argument should not be null");
     }
 
     @ApiModelProperty(value = "Bookmark href", required = true)
@@ -41,9 +36,7 @@ public class BookmarkDetails {
     }
 
     public void setHref(String href) {
-        Objects.requireNonNull(href, "href argument should not be null");
-
-        this.href = href;
+        this.href = Objects.requireNonNull(href, "href argument should not be null");
     }
 
     @ApiModelProperty(value = "Bookmark description", required = true)
@@ -52,9 +45,7 @@ public class BookmarkDetails {
     }
 
     public void setDescription(String description) {
-        Objects.requireNonNull(description, "description argument should not be null");
-
-        this.description = description;
+        this.description = Objects.requireNonNull(description, "description argument should not be null");
     }
 
     @ApiModelProperty(value = "Bookmark label", required = true)
@@ -63,9 +54,26 @@ public class BookmarkDetails {
     }
 
     public void setLabel(String label) {
-        Objects.requireNonNull(label, "label argument should not be null");
+        this.label = Objects.requireNonNull(label, "label argument should not be null");
+    }
 
-        this.label = label;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BookmarkDetails that = (BookmarkDetails) o;
+        return Objects.equals(href, that.href) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(label, that.label);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(href, description, label);
     }
 
     @Override

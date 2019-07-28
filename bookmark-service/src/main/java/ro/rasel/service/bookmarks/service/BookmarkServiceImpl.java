@@ -3,6 +3,7 @@ package ro.rasel.service.bookmarks.service;
 import org.springframework.stereotype.Service;
 import ro.rasel.service.bookmarks.dao.BookmarkRepository;
 import ro.rasel.service.bookmarks.domain.Bookmark;
+import ro.rasel.service.bookmarks.domain.BookmarkDetails;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,31 +23,38 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public Optional<Bookmark> getBookmark(String userId, Long bookmarkId) {
+    public Optional<Bookmark> getBookmark(String userId, long bookmarkId) {
         return bookmarkRepository.findByIdAndUserId(bookmarkId, userId);
     }
 
     @Override
-    public Bookmark createBookmark(Bookmark bookmark) {
+    public Bookmark createBookmark(String userId, BookmarkDetails bookmarkDetails) {
+        Bookmark bookmark = new Bookmark(userId, bookmarkDetails.getHref(), bookmarkDetails.getDescription(),
+                bookmarkDetails.getLabel());
         return bookmarkRepository.save(bookmark);
     }
 
     @Override
     @Transactional
-    public Optional<Bookmark> updateBookmark(Bookmark bookmark) {
-        final Optional<Bookmark> currentBookmark = bookmarkRepository.findByIdAndUserId(bookmark.getId(),bookmark.getUserId());
+    public Optional<Bookmark> updateBookmark(
+            String userId, long bookmarkId, BookmarkDetails bookmarkDetails) {
+        Bookmark bookmark =
+                new Bookmark(bookmarkId, userId, bookmarkDetails.getHref(), bookmarkDetails.getDescription(),
+                        bookmarkDetails.getLabel());
+        final Optional<Bookmark> currentBookmark =
+                bookmarkRepository.findByIdAndUserId(bookmark.getId(), bookmark.getUserId());
 
         return currentBookmark.map(b -> {
             b.setDescription(bookmark.getDescription());
             b.setHref(bookmark.getHref());
-            b.setLabel(bookmark.getHref());
+            b.setLabel(bookmark.getLabel());
             return bookmarkRepository.save(b);
         });
     }
 
     @Override
     @Transactional
-    public boolean deleteBookmark(long bookmarkId, String userId) {
+    public boolean deleteBookmark(String userId, long bookmarkId) {
         final Optional<Bookmark> bookmark = bookmarkRepository.findByIdAndUserId(bookmarkId, userId);
         bookmark.ifPresent(bookmarkRepository::delete);
         return bookmark.isPresent();

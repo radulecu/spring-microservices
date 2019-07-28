@@ -14,7 +14,7 @@ import java.util.StringJoiner;
 @Entity
 @ApiModel(description = "User Contacts")
 public class Contact extends ContactDetails {
-    private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidateor("userId");
+    private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidator("userId");
 
     @Id
     @GeneratedValue
@@ -36,9 +36,7 @@ public class Contact extends ContactDetails {
     public Contact(String userId, String firstName, String lastName, String email, String relationship) {
         super(firstName, lastName, email, relationship);
 
-        USER_ID_VALIDATOR.validate(userId);
-
-        this.userId = userId;
+        this.userId = USER_ID_VALIDATOR.validate(userId);
     }
 
     @ApiModelProperty(value = "Contact id")
