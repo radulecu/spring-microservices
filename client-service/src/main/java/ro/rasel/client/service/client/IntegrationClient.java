@@ -1,6 +1,8 @@
 package ro.rasel.client.service.client;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ro.rasel.client.service.domain.Passport;
 import ro.rasel.contact.domain.Contact;
@@ -10,6 +12,7 @@ import java.util.Collections;
 
 @Component
 public class IntegrationClient {
+    private static final Logger LOG = LoggerFactory.getLogger(IntegrationClient.class);
 
     private final ContactClient contactClient;
 
@@ -17,8 +20,9 @@ public class IntegrationClient {
 
     private final PassportClient passportClient;
 
-    public IntegrationClient(ContactClient contactClient, BookmarkClient bookmarkClient,
-                             PassportClient passportClient) {
+    public IntegrationClient(
+            ContactClient contactClient, BookmarkClient bookmarkClient,
+            PassportClient passportClient) {
         this.contactClient = contactClient;
         this.bookmarkClient = bookmarkClient;
         this.passportClient = passportClient;
@@ -26,7 +30,7 @@ public class IntegrationClient {
 
     @SuppressWarnings("unused")
     public String getBookmarksFallback(String userId) {
-        System.out.println("getBookmarksFallback");
+        LOG.info("getBookmarksFallback");
         return Collections.emptyList().toString();
     }
 
@@ -38,7 +42,7 @@ public class IntegrationClient {
 
     @SuppressWarnings("unused")
     public Collection<Contact> getContactsFallback(String userId) {
-        System.out.println("getContactsFallback");
+        LOG.info("getContactsFallback");
         return Collections.emptyList();
     }
 
@@ -51,7 +55,7 @@ public class IntegrationClient {
     // ... or just a single object
     @SuppressWarnings("unused")
     public Passport getPassportFallback(String userId) {
-        System.out.println("getPassportFallback");
+        LOG.info("getPassportFallback");
         return null;
     }
 

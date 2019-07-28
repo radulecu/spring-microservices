@@ -1,6 +1,7 @@
 package ro.rasel.service.bookmarks.service;
 
 import ro.rasel.service.bookmarks.domain.Bookmark;
+import ro.rasel.service.bookmarks.domain.BookmarkDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +9,11 @@ import java.util.Optional;
 public interface BookmarkService {
     List<Bookmark> getBookmarks(String userId);
 
-    Optional<Bookmark> getBookmark(String userId, Long bookmarkId);
+    Optional<Bookmark> getBookmark(String userId, long bookmarkId);
 
-    Bookmark createBookmark(Bookmark bookmark);
+    Bookmark createBookmark(String userId, BookmarkDetails bookmarkDetails);
 
-    Optional<Bookmark> updateBookmark(Bookmark bookmark);
+    Optional<Bookmark> updateBookmark(String userId, long bookmarkId, BookmarkDetails bookmarkDetails);
 
-    boolean deleteBookmark(long bookmarkId, String userId);
+    boolean deleteBookmark(String userId, long bookmarkId);
 }

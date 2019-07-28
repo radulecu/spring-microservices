@@ -35,25 +35,19 @@ public class BookmarkRestController implements BookmarkApi {
 
     @Override
     public Bookmark createBookmark(@PathVariable String userId, @RequestBody BookmarkDetails bookmarkDetails) {
-        Bookmark bookmark =
-                new Bookmark(userId, bookmarkDetails.getHref(), bookmarkDetails.getDescription(),
-                        bookmarkDetails.getLabel());
-        return bookmarkService.createBookmark(bookmark);
+        return bookmarkService.createBookmark(userId, bookmarkDetails);
     }
 
     @Override
     public ResponseEntity<Bookmark> updateBookmark(
             @PathVariable String userId, @PathVariable long bookmarkId, @RequestBody BookmarkDetails bookmarkDetails) {
-        Bookmark bookmark =
-                new Bookmark(bookmarkId, userId, bookmarkDetails.getHref(), bookmarkDetails.getDescription(),
-                        bookmarkDetails.getLabel());
-        return bookmarkService.updateBookmark(bookmark).map(ResponseEntity::ok)
+        return bookmarkService.updateBookmark(userId, bookmarkId, bookmarkDetails).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
     public ResponseEntity<Void> deleteBookmark(@PathVariable String userId, @PathVariable long bookmarkId) {
-        return bookmarkService.deleteBookmark(bookmarkId, userId) ?
+        return bookmarkService.deleteBookmark(userId, bookmarkId) ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.notFound().build();
     }

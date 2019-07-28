@@ -9,12 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity
 @ApiModel(description = "User Bookmark")
 public class Bookmark extends BookmarkDetails {
-    private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidateor("userId");
+    private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidator("userId");
 
     @Id
     @GeneratedValue
@@ -23,6 +24,7 @@ public class Bookmark extends BookmarkDetails {
     @NotBlank
     private String userId;
 
+    @SuppressWarnings("unused") // used by hibernate
     Bookmark() {
     }
 
@@ -34,9 +36,7 @@ public class Bookmark extends BookmarkDetails {
     public Bookmark(String userId, String href, String description, String label) {
         super(href, description, label);
 
-        USER_ID_VALIDATOR.validate(userId);
-
-        this.userId = userId;
+        this.userId = USER_ID_VALIDATOR.validate(userId);
     }
 
     @ApiModelProperty(value = "Bookmark id")
@@ -47,6 +47,25 @@ public class Bookmark extends BookmarkDetails {
     @ApiModelProperty(value = "Used id")
     public String getUserId() {
         return userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Bookmark bookmark = (Bookmark) o;
+        return super.equals(o) &&
+                Objects.equals(id, bookmark.id) &&
+                Objects.equals(userId, bookmark.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, userId);
     }
 
     @Override
