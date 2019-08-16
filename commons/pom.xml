@@ -7,6 +7,7 @@
         <groupId>ro.rasel.spring.microservices</groupId>
         <artifactId>dependency-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../dependency-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>commons</artifactId>

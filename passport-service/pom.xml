@@ -7,7 +7,7 @@
         <groupId>ro.rasel.spring.microservices</groupId>
         <artifactId>starter-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../starter-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>passport-service</artifactId>
