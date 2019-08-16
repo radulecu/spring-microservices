@@ -56,11 +56,19 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
                     .maxAgeInSeconds(31536000)
                 .and()
                     .httpPublicKeyPinning()
-                        .addSha256Pins("iB3JG2L6auIhuHkRmF/Kb6NQ3qKMX13Bx/yjSDpqmBE=", "uAFOwqG0suu8SJHSt7xdLJSE4LIA0oFL8wOzk7Bk3EU=")
-				        .reportOnly(false)
-				        .includeSubDomains(true)
+                    .addSha256Pins("1YVSjz202T4i0VlJ7Shv2NqhFSpNaadt8eqNsjHsC0w=")
+                    .reportOnly(false)
+                    .includeSubDomains(false)
+                .and()
+                    .contentSecurityPolicy("script-src 'self'")
                 .and()
                     .xssProtection()
+                .and()
+                    .contentTypeOptions()
+                .and()
+                    .cacheControl()
+                .and()
+                    .frameOptions()
                 .and()
             .and()
                 .rememberMe()
@@ -69,9 +77,7 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .csrf()
                     .csrfTokenRepository(csrfTokenRepository())
             .and()
-                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
-            .requestCache()
-                .disable();
+                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
 
         // @formatter:on
         for (IWebSecurityConfigurer configurer : configurers) {
@@ -83,9 +89,8 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new OncePerRequestFilter() {
 
             @Override
-            protected void doFilterInternal(
-                    HttpServletRequest request,
-                    HttpServletResponse response, FilterChain filterChain)
+            protected void doFilterInternal(HttpServletRequest request,
+                                            HttpServletResponse response, FilterChain filterChain)
                     throws ServletException, IOException {
                 CsrfToken csrf = (CsrfToken) request
                         .getAttribute(CsrfToken.class.getName());

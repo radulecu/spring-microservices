@@ -51,6 +51,13 @@ curl -k https://localhost:9025/bookmark-service/v1/users/jlong/bookmarks -H "Aut
 curl -k https://localhost:9025/contact-service/v1/users/jlong/contacts -H "Authorization: Bearer <TOKEN>"
 curl -k https://localhost:9025/passport-service/v1/users/jlong/passport -H "Authorization: Bearer <TOKEN>"
 
+== Configuring HPKP
+
+For the certificate (.cer file) from ssl-component run following commands
+openssl x509 -inform DER -in computername.cer -out computername.crt
+openssl x509 -in computername.crt -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+
+Returned value represents the pinning value
 
 == Further read
 - Securing Your Cloud-native Microservice Architecture in Spring
@@ -72,3 +79,6 @@ curl -k https://localhost:9025/passport-service/v1/users/jlong/passport -H "Auth
 - Authentication and Authorisation
     * OAuth: https://oauth.net/
     * OpenID vs OAuth2 vs SAML https://spin.atomicobject.com/2016/05/30/openid-oauth-saml/
+- HPKP (HTTP Public Key Pinning)
+    * https://ordina-jworks.github.io/spring/2016/03/05/HTTP-Public-Key-Pinning-with-Spring-Security.html
+
