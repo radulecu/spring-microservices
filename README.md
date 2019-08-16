@@ -1,5 +1,5 @@
 # Spring Microservices
-[![travis-ci](https://travis-ci.org/lecu-radu/spring-microservices.svg?branch=master])](https://travis-ci.org/lecu-radu/spring-microservices])
+[![travis-ci](https://travis-ci.org/lecu-radu/spring-microservices.svg?branch=master)](https://travis-ci.org/lecu-radu/spring-microservices)
 ## Using Microservices
 
 This code demonstrates:
