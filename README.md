@@ -1,5 +1,5 @@
-# spring-microservices
-
+# Spring Microservices
+[![travis-ci](https://travis-ci.org/lecu-radu/spring-microservices.svg?branch=master])](https://travis-ci.org/lecu-radu/spring-microservices])
 ## Using Microservices
 
 This code demonstrates:
@@ -13,18 +13,6 @@ This code demonstrates:
 * ResourceServersSecurity for resource servers
 
 ## How to run :
-
-cd dependency-parent
-
-mvn clean install
-
-cd ..
-
-cd starter-parent
-
-mvn clean install
-
-cd ..
 
 mvn clean install
 

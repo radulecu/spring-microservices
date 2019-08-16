@@ -7,7 +7,7 @@
         <groupId>ro.rasel.spring.microservices</groupId>
         <artifactId>starter-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../starter-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>client-service</artifactId>
@@ -112,8 +112,6 @@
                 <configuration>
                     <language>spring</language>
                     <library>spring-cloud</library>
-                    <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>
-                    <configurationFile>${project.basedir}/swagger/swaggerConfig.json</configurationFile>
                     <generateSupportingFiles>false</generateSupportingFiles>
                     <configOptions>
                         <interfaceOnly>true</interfaceOnly>

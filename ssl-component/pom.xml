@@ -7,6 +7,7 @@
         <groupId>ro.rasel.spring.microservices</groupId>
         <artifactId>dependency-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../dependency-parent</relativePath>
     </parent>
 
     <artifactId>ssl-component</artifactId>
@@ -47,7 +48,9 @@
         <profile>
             <id>generateKeystore</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <os>
+                    <family>Windows</family>
+                </os>
             </activation>
             <build>
                 <plugins>
