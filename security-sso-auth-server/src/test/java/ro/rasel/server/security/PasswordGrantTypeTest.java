@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = {"ssl.enabled=false"})
+@TestPropertySource(properties = {"ssl.enabled=false", "server.ssl.client-auth="})
 public class PasswordGrantTypeTest {
 
     private static final String USER = "jlong";
