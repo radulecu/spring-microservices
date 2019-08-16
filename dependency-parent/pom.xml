@@ -9,9 +9,9 @@
         <version>2.1.6.RELEASE</version>
     </parent>
 
-    <groupId>ro.rasel</groupId>
+    <groupId>ro.rasel.spring.microservices</groupId>
     <artifactId>dependency-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>Parent pom which defines maven configuration common to all modules.</description>

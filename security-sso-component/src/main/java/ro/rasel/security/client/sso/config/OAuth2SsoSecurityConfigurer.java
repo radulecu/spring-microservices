@@ -89,8 +89,9 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new OncePerRequestFilter() {
 
             @Override
-            protected void doFilterInternal(HttpServletRequest request,
-                                            HttpServletResponse response, FilterChain filterChain)
+            protected void doFilterInternal(
+                    HttpServletRequest request,
+                    HttpServletResponse response, FilterChain filterChain)
                     throws ServletException, IOException {
                 CsrfToken csrf = (CsrfToken) request
                         .getAttribute(CsrfToken.class.getName());

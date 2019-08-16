@@ -6,10 +6,10 @@
     <parent>
         <groupId>ro.rasel.spring.microservices</groupId>
         <artifactId>starter-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gateway-service</artifactId>
+    <artifactId>resource-gateway-service</artifactId>
     <packaging>jar</packaging>
 
     <properties>
@@ -20,22 +20,22 @@
         <dependency>
             <groupId>ro.rasel.spring.microservices</groupId>
             <artifactId>security-sso-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices</groupId>
             <artifactId>eureka-client-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices</groupId>
             <artifactId>swagger-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices</groupId>
             <artifactId>ssl-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!--Spring Boot-->
