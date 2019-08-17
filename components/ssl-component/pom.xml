@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ro.rasel.spring.microservices</groupId>
+        <artifactId>dependency-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../parents/dependency-parent</relativePath>
+    </parent>
+
+    <groupId>ro.rasel.spring.microservices.components</groupId>
+    <artifactId>ssl-component</artifactId>
+    <packaging>jar</packaging>
+
+    <description>Enable https and provide truststore for self signed certificates</description>
+
+    <properties>
+        <wro4j.version>1.7.6</wro4j.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.commons</groupId>
+            <artifactId>spring-commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!--Spring Boot-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.7</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>generateKeystore</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>generate</id>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <scripts>
+                                        <!--suppress UnresolvedMavenProperty -->
+                                        <script>
+                                            <![CDATA[
+                                                def execute (String s){
+                                                    final File file = new File("${workingDir}/src/main/resources")
+                                                    def strings = ["path="+System.getenv().get("Path"),"COMPUTERNAME="+System.getenv().get("COMPUTERNAME")]
+                                                    def proc = s.execute(strings, file)
+                                                    proc.consumeProcessOutput(System.out,System.err)
+                                                    proc.waitFor()
+                                                }
+
+
+                                                execute "cmd /c del localhost-identity.jks"
+                                                execute "cmd /c del computername-identity.jks"
+                                                execute "cmd /c del localhost.cer"
+                                                execute "cmd /c del computername.cer"
+                                                execute "cmd /c del localhost.jks"
+                                                execute "cmd /c del truststore.jks"
+
+                                                // execute "cmd /c keytool -genkey -alias localhost -keyalg RSA -keystore localhost-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
+                                                execute "cmd /c keytool -genkey -alias desktop-1gn7l5l -keyalg RSA -keystore computername-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
+                                                // execute "cmd /c keytool -export -alias localhost -keystore localhost-identity.jks -file localhost.cer -storepass jkspass"
+                                                execute "cmd /c keytool -export -alias desktop-1gn7l5l -keystore computername-identity.jks -file computername.cer -storepass jkspass"
+                                                // execute "cmd /c keytool -importcert -keystore identity.jks -alias localhost -storepass jkspass -file localhost.cer -noprompt"
+                                                execute "cmd /c keytool -importcert -keystore truststore.jks -alias desktop-1gn7l5l -storepass jkspass -file computername.cer -noprompt"
+                                            ]]>
+                                        </script>
+                                    </scripts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

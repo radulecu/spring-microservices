@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ro.rasel.spring.microservices</groupId>
+        <artifactId>starter-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../parents/starter-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>passport-service</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <start.class>ro.rasel.spring.microserivces.passportservice.PassportServiceApplication</start.class>
+    </properties>
+
+    <description>Basic resource service used for exposing data by aggregating it from other rest services.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>sso-client-component</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>eureka-client-component</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>ssl-component</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>swagger-component</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!--Spring Boot-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!--Spring Cloud-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <locations>ro.rasel.service.passport.controller</locations>
+                            <schemes>https</schemes>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>bookmark-api-generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>
+                            <apiPackage>ro.rasel.spring.microserivces.api.bookmark</apiPackage>
+                            <modelPackage>ro.rasel.spring.microserivces.api.bookmark.domain</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>contact-api-generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/swagger/contact-service-swagger.json</inputSpec>
+                            <apiPackage>ro.rasel.spring.microserivces.api.contact</apiPackage>
+                            <modelPackage>ro.rasel.spring.microserivces.api.contact.domain</modelPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <language>spring</language>
+                    <library>spring-cloud</library>
+                    <generateSupportingFiles>false</generateSupportingFiles>
+                    <configOptions>
+                        <interfaceOnly>true</interfaceOnly>
+                    </configOptions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
