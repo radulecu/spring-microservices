@@ -9,24 +9,28 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>starter-parent</module>
-        <module>dependency-parent</module>
-        <module>commons</module>
-        <module>spring-commons</module>
-        <module>eureka-client-component</module>
-        <module>ssl-component</module>
-        <module>security-sso-component</module>
-        <module>swagger-component</module>
-        <module>eureka-service</module>
-        <module>security-sso-auth-server</module>
-        <module>bookmark-service</module>
-        <module>contact-service</module>
-        <module>passport-service</module>
-        <module>client-service</module>
-        <module>gateway-service</module>
-        <module>resource-gateway-service</module>
-        <module>hystrix-dashboard-service</module>
-        <module>security-sso-ui</module>
+        <!--Parents-->
+        <module>parents/starter-parent</module>
+        <module>parents/dependency-parent</module>
+        <!--Commons-->
+        <module>commons/commons</module>
+        <module>commons/spring-commons</module>
+        <!--Components-->
+        <module>components/eureka-client-component</module>
+        <module>components/ssl-component</module>
+        <module>components/sso-client-component</module>
+        <module>components/swagger-component</module>
+        <!--Services-->
+        <module>services/eureka-service</module>
+        <module>services/sso-auth-service</module>
+        <module>services/gateway-service</module>
+        <module>services/resource-gateway-service</module>
+        <module>services/bookmark-service</module>
+        <module>services/contact-service</module>
+        <module>services/passport-service</module>
+        <module>services/hystrix-dashboard-service</module>
+        <module>services/client-service</module>
+        <module>services/sso-ui-test-service</module>
     </modules>
 
     <distributionManagement>
