@@ -1,4 +1,4 @@
-package ro.rasel.spring.microserivces.component.securityclient.common.config;
+package ro.rasel.spring.microserivces.component.securityclient.sso.config;
 
 import feign.Feign;
 import feign.RequestInterceptor;
