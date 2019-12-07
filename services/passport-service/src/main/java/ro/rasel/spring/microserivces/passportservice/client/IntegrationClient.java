@@ -31,6 +31,7 @@ public class IntegrationClient {
 
     @HystrixCommand(fallbackMethod = "getBookmarksFallback")
     public Collection<Bookmark> getBookmarks(String userId) {
+        LOG.info("getting bookmarks form bookmark service for userId={}", userId);
         return this.bookmarkClient.getBookmarks(userId).getBody();
     }
 
@@ -42,6 +43,7 @@ public class IntegrationClient {
 
     @HystrixCommand(fallbackMethod = "getContactsFallback")
     public Collection<Contact> getContacts(String userId) {
+        LOG.info("getting contacts form bookmark service for userId={}", userId);
         return this.contactClient.getContacts(userId).getBody();
     }
 }

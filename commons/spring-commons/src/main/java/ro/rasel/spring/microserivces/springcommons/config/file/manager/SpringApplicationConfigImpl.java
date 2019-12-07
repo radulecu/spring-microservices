@@ -9,7 +9,6 @@ import java.io.File;
 @ConfigurationProperties("spring.application")
 public class SpringApplicationConfigImpl implements SpringApplicationConfig {
     private File tempDir;
-    private String group="spring";
 
     @Override
     public File getTempDir() {
@@ -18,14 +17,5 @@ public class SpringApplicationConfigImpl implements SpringApplicationConfig {
 
     public void setTempDir(File tempDir) {
         this.tempDir = tempDir;
-    }
-
-    @Override
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
     }
 }

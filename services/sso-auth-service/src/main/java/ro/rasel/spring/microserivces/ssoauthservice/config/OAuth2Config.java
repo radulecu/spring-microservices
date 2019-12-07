@@ -85,6 +85,7 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
+        defaultTokenServices.setRefreshTokenValiditySeconds(Integer.MAX_VALUE);
         return defaultTokenServices;
     }
 
