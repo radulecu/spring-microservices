@@ -17,6 +17,7 @@
         <module>commons/spring-commons</module>
         <!--Components-->
         <module>components/eureka-client-component</module>
+        <module>components/hystrix-component</module>
         <module>components/ssl-component</module>
         <module>components/sso-client-component</module>
         <module>components/swagger-component</module>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ro.rasel.spring.microservices</groupId>
+        <artifactId>dependency-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../parents/dependency-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>ro.rasel.spring.microservices.components</groupId>
+    <artifactId>hystrix-component</artifactId>
+    <packaging>jar</packaging>
+
+    <description>Enable hystrix</description>
+
+    <properties>
+        <wro4j.version>1.7.6</wro4j.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.commons</groupId>
+            <artifactId>spring-commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!--Spring Boot-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+    </dependencies>
+</project>

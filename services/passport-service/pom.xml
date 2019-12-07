@@ -32,6 +32,11 @@
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>hystrix-component</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>ssl-component</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -49,12 +54,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
-        </dependency>
-
-        <!--Spring Cloud-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
 
         <dependency>

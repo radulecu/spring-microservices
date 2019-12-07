@@ -30,6 +30,11 @@
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>hystrix-component</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>swagger-component</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -58,10 +63,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
     </dependencies>
 
