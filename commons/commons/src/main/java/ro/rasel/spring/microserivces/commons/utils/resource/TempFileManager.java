@@ -8,6 +8,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 
 public class TempFileManager implements ITempFileManager {
     private final File rootDir;
@@ -17,7 +19,8 @@ public class TempFileManager implements ITempFileManager {
     }
 
     public TempFileManager(File rootDir) {
-        this.rootDir = rootDir;
+        this.rootDir = Objects.requireNonNull(rootDir);
+        //noinspection ResultOfMethodCallIgnored
         rootDir.mkdirs();
         rootDir.deleteOnExit();
     }
@@ -46,10 +49,12 @@ public class TempFileManager implements ITempFileManager {
         cleanAll(rootDir);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void cleanAll(File file) {
         if (file.isDirectory()) {
-            Arrays.asList(file.listFiles()).parallelStream().forEach(this::cleanAll);
+            Arrays.asList(Optional.ofNullable(file.listFiles()).orElse(new File[0])).parallelStream().forEach(this::cleanAll);
         } else {
+            //noinspection ResultOfMethodCallIgnored
             file.delete();
         }
     }

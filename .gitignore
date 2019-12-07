@@ -1,6 +1,5 @@
 *.iml
 *.ipr
-*.iml
 .idea/*
 .repo/*
 **/tmp/**

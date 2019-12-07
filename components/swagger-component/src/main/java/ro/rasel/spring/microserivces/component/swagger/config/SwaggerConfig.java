@@ -9,7 +9,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +26,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
-        Set<String> applicationJson = new HashSet<>(Arrays.asList(APPLICATION_JSON_VALUE));
+        Set<String> applicationJson = new HashSet<>(Collections.singletonList(APPLICATION_JSON_VALUE));
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(swaggerConfigProperties.isEnabled())
                 .consumes(applicationJson)

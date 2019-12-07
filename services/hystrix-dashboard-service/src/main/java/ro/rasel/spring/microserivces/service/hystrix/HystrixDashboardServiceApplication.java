@@ -17,6 +17,7 @@ import ro.rasel.spring.microserivces.component.ssl.client.EnableSslClientCompone
 @SpringBootApplication
 public class HystrixDashboardServiceApplication {
 
+    @SuppressWarnings("SameReturnValue")
     @GetMapping("/")
     public String home() {
         return "forward:/hystrix";

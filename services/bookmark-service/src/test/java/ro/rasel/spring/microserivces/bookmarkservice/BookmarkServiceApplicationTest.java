@@ -7,6 +7,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class BookmarkServiceApplicationTest {
+    @SuppressWarnings("EmptyMethod")
     @Test
     void serverLoadProperly(){
     }

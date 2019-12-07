@@ -2,6 +2,7 @@ package ro.rasel.spring.microserivces.commons.utils.connection;
 
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class ConnectionConfigImpl implements ConnectionConfig {
     private String protocol;
     private String hostname;

@@ -30,7 +30,6 @@ import java.util.List;
 public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private final List<IWebSecurityConfigurer> configurers;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public OAuth2SsoSecurityConfigurer(@Autowired(required = false) List<IWebSecurityConfigurer> configurers) {
         configurers = configurers == null ? new ArrayList<>() : configurers;
         this.configurers = configurers;
