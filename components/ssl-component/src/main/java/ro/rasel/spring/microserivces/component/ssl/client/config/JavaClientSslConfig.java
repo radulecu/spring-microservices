@@ -63,11 +63,6 @@ public class JavaClientSslConfig {
         }
 
         javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
-                (hostname, sslSession) -> {
-                    if (hostname.equals("localhost")) {
-                        return true;
-                    }
-                    return false;
-                });
+                (hostname, sslSession) -> hostname.equals("localhost"));
     }
 }

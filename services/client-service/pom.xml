@@ -95,6 +95,7 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <!--suppress MavenModelInspection -->
                         <configuration>
                             <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>
                             <apiPackage>ro.rasel.spring.microserivces.api.bookmark</apiPackage>
@@ -106,6 +107,7 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <!--suppress MavenModelInspection -->
                         <configuration>
                             <inputSpec>${project.basedir}/swagger/contact-service-swagger.json</inputSpec>
                             <apiPackage>ro.rasel.spring.microserivces.api.contact</apiPackage>
@@ -113,6 +115,7 @@
                         </configuration>
                     </execution>
                 </executions>
+                <!--suppress MavenModelInspection -->
                 <configuration>
                     <language>spring</language>
                     <library>spring-cloud</library>

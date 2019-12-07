@@ -1,6 +1,5 @@
 package ro.rasel.spring.microserivces.component.securityclient.resource.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -22,8 +21,7 @@ class Oauth2ResourceConfigurer extends ResourceServerConfigurerAdapter {
     private final IResourceSecurityConfigurer configurer;
     private final ResourceSecurityConfig resourceSecurityConfig;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public Oauth2ResourceConfigurer(@Autowired IResourceSecurityConfigurer configurer,
+    public Oauth2ResourceConfigurer(IResourceSecurityConfigurer configurer,
                                     ResourceSecurityConfig resourceSecurityConfig) {
         this.configurer = configurer;
         this.resourceSecurityConfig = resourceSecurityConfig;

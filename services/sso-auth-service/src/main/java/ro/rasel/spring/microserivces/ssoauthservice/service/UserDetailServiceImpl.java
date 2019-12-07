@@ -12,8 +12,6 @@ import ro.rasel.spring.microserivces.ssoauthservice.repository.model.Role;
 import ro.rasel.spring.microserivces.ssoauthservice.repository.model.UserInfo;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -31,11 +29,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     private static UserDetails toUserDetails(UserInfo userInfo) {
-        final List<String> roles =
-                userInfo.getRoles().stream().map(Role::getRole).collect(Collectors.toList());
         return new User(userInfo.getUserName(), userInfo.getPassword(),
                 userInfo.isEnabled(), userInfo.isEnabled(), userInfo.isEnabled(),
                 userInfo.isEnabled(),
-                AuthorityUtils.createAuthorityList(roles.toArray(new String[roles.size()])));
+                AuthorityUtils.createAuthorityList(
+                        userInfo.getRoles().stream().map(Role::getRole).toArray(String[]::new)));
     }
 }

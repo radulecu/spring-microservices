@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 class ProxySwaggerResourceProvider implements SwaggerResourcesProvider {
     private final SwaggerConfigProperties swaggerConfigProperties;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public ProxySwaggerResourceProvider(SwaggerConfigProperties swaggerConfigProperties,
                                         DiscoveryClient discoveryClient) {
@@ -33,16 +32,14 @@ class ProxySwaggerResourceProvider implements SwaggerResourcesProvider {
     @Override
     public List<SwaggerResource> get() {
         Set<String> blacklist = swaggerConfigProperties.getBlacklist();
-        List<SwaggerResource> collect =
-                discoveryClient.getServices().stream()
-                        .filter(s -> s != null && !blacklist.contains(s))
-                        .map(s -> {
-                            SwaggerResource swaggerResource = new SwaggerResource();
-                            swaggerResource.setName(s);
-                            swaggerResource.setLocation("/" + s + "/v2/api-docs");
-                            return swaggerResource;
-                        }).sorted(Comparator.comparing(SwaggerResource::getName))
-                        .collect(Collectors.toList());
-        return collect;
+        return discoveryClient.getServices().stream()
+                .filter(s -> s != null && !blacklist.contains(s))
+                .map(s -> {
+                    SwaggerResource swaggerResource = new SwaggerResource();
+                    swaggerResource.setName(s);
+                    swaggerResource.setLocation("/" + s + "/v2/api-docs");
+                    return swaggerResource;
+                }).sorted(Comparator.comparing(SwaggerResource::getName))
+                .collect(Collectors.toList());
     }
 }

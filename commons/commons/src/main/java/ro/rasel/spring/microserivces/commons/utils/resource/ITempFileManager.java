@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+@SuppressWarnings("unused")
 public interface ITempFileManager {
     File copyToTempFile(String uri, String name) throws URISyntaxException, IOException;
 

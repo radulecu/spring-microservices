@@ -2,6 +2,7 @@ package ro.rasel.spring.microserivces.commons.utils.connection;
 
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class SecuredConnectionConfigImpl extends ConnectionConfigImpl
         implements SecuredConnectionConfig {
     private String user;

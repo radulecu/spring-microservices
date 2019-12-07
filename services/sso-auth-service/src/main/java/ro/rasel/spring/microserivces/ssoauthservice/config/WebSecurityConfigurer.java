@@ -25,6 +25,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             .and().csrf().disable();
     } // @formatter:on
 
+    @SuppressWarnings("EmptyMethod")
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

@@ -53,7 +53,7 @@ public class IntegrationClient {
     }
 
     // ... or just a single object
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "SameReturnValue"})
     public Passport getPassportFallback(String userId) {
         LOG.info("getPassportFallback");
         return null;
