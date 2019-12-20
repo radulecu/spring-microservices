@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ro.rasel.spring.microserivces.component.ssl.client.config.properties.ClientSslContextProperties;
 
+/**
+ * Required for apache http client used by Zuul
+ */
 @Configuration
 public class HttpClientConfiguration {
 

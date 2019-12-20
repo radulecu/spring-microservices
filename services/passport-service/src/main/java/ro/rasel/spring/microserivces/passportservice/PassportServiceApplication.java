@@ -10,6 +10,7 @@ import ro.rasel.spring.microserivces.component.ssl.client.EnableSslClientCompone
 import ro.rasel.spring.microserivces.component.ssl.server.EnableSslServerComponent;
 import ro.rasel.spring.microserivces.component.swagger.EnableSwaggerComponent;
 import ro.rasel.spring.microservices.component.hystrix.EnableHystrixClientComponent;
+import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponent;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -20,6 +21,7 @@ import ro.rasel.spring.microservices.component.hystrix.EnableHystrixClientCompon
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
 @EnableHystrixClientComponent
+@EnableZipkinClientComponent
 public class PassportServiceApplication {
 
     public static void main(String[] args) {

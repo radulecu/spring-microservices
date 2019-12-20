@@ -10,6 +10,7 @@ import ro.rasel.spring.microserivces.component.securityclient.sso.EnableWebSecur
 import ro.rasel.spring.microserivces.component.ssl.client.EnableSslClientComponent;
 import ro.rasel.spring.microserivces.component.ssl.server.EnableSslServerComponent;
 import ro.rasel.spring.microserivces.component.swagger.EnableSwaggerComponent;
+import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponent;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -20,6 +21,7 @@ import ro.rasel.spring.microserivces.component.swagger.EnableSwaggerComponent;
 @EnableSslClientComponent
 @EnableWebSecurityClientComponent
 @EnableEurekaClientComponent
+@EnableZipkinClientComponent
 public class GatewayServiceApplication {
 
     public static void main(String[] args) {

@@ -41,8 +41,8 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>ro.rasel.spring.microservices.commons</groupId>
-            <artifactId>spring-commons</artifactId>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>zipkin-component</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

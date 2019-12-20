@@ -45,8 +45,8 @@ public class ContactRestController implements ContactApi {
     public ResponseEntity<Contact> updateContact(
             @PathVariable String userId, @PathVariable long contactId, @RequestBody ContactDetails contactDetails) {
         Contact contact =
-                new Contact(contactId, userId, contactDetails.getRelationship(), contactDetails.getFirstName(),
-                        contactDetails.getLastName(), contactDetails.getEmail());
+                new Contact(contactId, userId, contactDetails.getFirstName(), contactDetails.getLastName(),
+                        contactDetails.getEmail(), contactDetails.getRelationship());
         return contactService.updateContact(contact).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

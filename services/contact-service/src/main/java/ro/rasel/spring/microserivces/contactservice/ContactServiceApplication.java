@@ -12,6 +12,7 @@ import ro.rasel.spring.microserivces.springcommons.EnableSpringCommonsComponent;
 import ro.rasel.spring.microserivces.component.ssl.server.EnableSslServerComponent;
 import ro.rasel.spring.microserivces.component.ssl.client.EnableSslClientComponent;
 import ro.rasel.spring.microserivces.component.swagger.EnableSwaggerComponent;
+import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponent;
 
 import java.util.Arrays;
 
@@ -22,6 +23,7 @@ import java.util.Arrays;
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
 @EnableSpringCommonsComponent
+@EnableZipkinClientComponent
 public class ContactServiceApplication {
 
     @Bean
