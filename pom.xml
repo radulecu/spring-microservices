@@ -21,6 +21,7 @@
         <module>components/ssl-component</module>
         <module>components/sso-client-component</module>
         <module>components/swagger-component</module>
+        <module>components/zipkin-component</module>
         <!--Services-->
         <module>services/eureka-service</module>
         <module>services/sso-auth-service</module>
@@ -29,6 +30,7 @@
         <module>services/bookmark-service</module>
         <module>services/contact-service</module>
         <module>services/passport-service</module>
+        <module>services/zipkin-service</module>
         <module>services/hystrix-dashboard-service</module>
         <module>services/client-service</module>
         <module>services/sso-ui-test-service</module>

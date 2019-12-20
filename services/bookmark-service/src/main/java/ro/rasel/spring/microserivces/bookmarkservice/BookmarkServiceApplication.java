@@ -11,6 +11,7 @@ import ro.rasel.spring.microserivces.bookmarkservice.domain.Bookmark;
 import ro.rasel.spring.microserivces.component.ssl.client.EnableSslClientComponent;
 import ro.rasel.spring.microserivces.component.ssl.server.EnableSslServerComponent;
 import ro.rasel.spring.microserivces.component.swagger.EnableSwaggerComponent;
+import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponent;
 
 import java.util.Arrays;
 
@@ -20,6 +21,7 @@ import java.util.Arrays;
 @EnableSslServerComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
+@EnableZipkinClientComponent
 public class BookmarkServiceApplication {
 
     @Bean
