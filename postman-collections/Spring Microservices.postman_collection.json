@@ -1,0 +1,1242 @@
+{
+	"info": {
+		"_postman_id": "7841b64a-18eb-4714-b9c1-2ce400f103aa",
+		"name": "Spring Microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth Service",
+			"item": [
+				{
+					"name": "OauthCert",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6cb8d1f-dbe0-4e92-a550-09baea4c6b67",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.access_token).to.be.a('string');",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.token_type).to.eql('bearer');",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.refresh_token).to.be.a('string');",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.scope).to.eql('openid');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "acmesecret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "acme",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:9999/sso/oauth/token?password={{password}}&username={{user}}&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"sso",
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "{{password}}"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}"
+								},
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "scope",
+									"value": "openid"
+								},
+								{
+									"key": "client_secret",
+									"value": "acmesecret"
+								},
+								{
+									"key": "client_id",
+									"value": "acme"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Bookmark Service",
+			"item": [
+				{
+					"name": "PostBookmark",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "80638bcc-4bb1-4b63-9a90-44b01ba234a6",
+								"exec": [
+									"postman.setNextRequest('GetBookmark')",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData.id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"description is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.description).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"href is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.href).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"label is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.label).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.userId).is.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"href\": \"http://some-other-host-for-dexter.com\",\r\n    \"description\": \"A description for dexter's link\",\r\n    \"label\": \"dexterLabel\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:9025/bookmark-service/v1/users/{{userId}}/bookmarks",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"bookmark-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"bookmarks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBookmark",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4841edfb-4461-40f5-b425-1dfc4d318921",
+								"exec": [
+									"postman.setNextRequest('PutBookmark')",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData.id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"href is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.href).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"description is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.description).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"label is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.label).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.userId).is.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9025/bookmark-service/v1/users/{{userId}}/bookmarks/{{bookmarkId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"bookmark-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"bookmarks",
+								"{{bookmarkId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutBookmark",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ae6d1932-b35f-4e47-82ba-9774c9f3c585",
+								"exec": [
+									"postman.setNextRequest('GetBookmarks')",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData.id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"href is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.href).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"description is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.description).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"label is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.label).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.userId).is.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"href\": \"http://some-other-host-for-dexter2.com\",\r\n    \"description\": \"A description for dexter's link2\",\r\n    \"label\": \"dexterLabel2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:9025/bookmark-service/v1/users/{{userId}}/bookmarks/{{bookmarkId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"bookmark-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"bookmarks",
+								"{{bookmarkId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBookmarks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "44f21827-2a89-471c-83d5-78f6baf9a623",
+								"exec": [
+									"postman.setNextRequest('DelBookmark')",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData[0].id);",
+									"}",
+									"    ",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"href is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].href).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"description is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].description).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"label is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].label).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].userId).is.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9025/bookmark-service/v1/users/dexter/bookmarks",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"bookmark-service",
+								"v1",
+								"users",
+								"dexter",
+								"bookmarks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DelBookmark",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1523a334-e024-49a8-acf7-2a42899e6cde",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"href\": \"http://some-other-host-for-dexter.com\",\r\n    \"description\": \"A description for dexter's link\",\r\n    \"label\": \"dexterLabel\",\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:9025/bookmark-service/v1/users/{{userId}}/bookmarks/{{bookmarkId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"bookmark-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"bookmarks",
+								"{{bookmarkId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "80d86a42-226a-4b0f-8ae2-7917316a4020",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"userId\",\"dexter\");",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a851bbae-626a-4e15-9074-2a8aa8bf4d8a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Contact Service",
+			"item": [
+				{
+					"name": "PostContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "80638bcc-4bb1-4b63-9a90-44b01ba234a6",
+								"exec": [
+									"postman.setNextRequest('GetContact')",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData.id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"firstName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.firstName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"lastName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.lastName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"email matches '.+@.+\\..+'\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.match(/^.+@.+\\..+$/);",
+									"});",
+									"",
+									"pm.test(\"relationship is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.relationship).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.userId).is.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Stéphane\",\n    \"lastName\": \"Maldini\",\n    \"email\": \"stéphane@email.com\",\n    \"relationship\": \"coleague\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:9025/contact-service/v1/users/{{userId}}/contacts",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"contact-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4841edfb-4461-40f5-b425-1dfc4d318921",
+								"exec": [
+									"postman.setNextRequest('PutContact')",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData.id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"firstName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.firstName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"lastName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.lastName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"email matches '.+@.+\\..+'\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.match(/^.+@.+\\..+$/);",
+									"});",
+									"",
+									"pm.test(\"relationship is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.relationship).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.userId).is.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9025/contact-service/v1/users/{{userId}}/contacts/{{bookmarkId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"contact-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"contacts",
+								"{{bookmarkId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ae6d1932-b35f-4e47-82ba-9774c9f3c585",
+								"exec": [
+									"postman.setNextRequest('GetContacts')",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData.id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"firstName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.firstName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"lastName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.lastName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"email matches '.+@.+\\..+'\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.match(/^.+@.+\\..+$/);",
+									"});",
+									"",
+									"pm.test(\"relationship is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.relationship).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.userId).is.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Stéphane2\",\r\n    \"lastName\": \"Maldini2\",\r\n    \"email\": \"stephane@email.com\",\r\n    \"relationship\": \"friend\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:9025/contact-service/v1/users/{{userId}}/contacts/{{bookmarkId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"contact-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"contacts",
+								"{{bookmarkId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetContacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "44f21827-2a89-471c-83d5-78f6baf9a623",
+								"exec": [
+									"postman.setNextRequest('DelContact')",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData[0].id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"firstName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].firstName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"lastName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].lastName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"email matches '.+@.+\\..+'\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].email).to.match(/^.+@.+\\..+$/);",
+									"});",
+									"",
+									"pm.test(\"relationship is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].relationship).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].userId).is.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9025/contact-service/v1/users/{{userId}}/contacts",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"contact-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DelContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1523a334-e024-49a8-acf7-2a42899e6cde",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"href\": \"http://some-other-host-for-dexter.com\",\r\n    \"description\": \"A description for dexter's link\",\r\n    \"label\": \"dexterLabel\",\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:9025/contact-service/v1/users/{{userId}}/contacts/{{bookmarkId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"contact-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"contacts",
+								"{{bookmarkId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "af648cd3-44ff-4816-b317-8f347f4a9bc2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"userId\",\"dexter\");",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ac9daa5-ae43-427d-aab1-e81d69b828c8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Passport Service",
+			"item": [
+				{
+					"name": "GetPassports",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4bb32341-3e06-4410-8fca-b52519c8ca95",
+								"exec": [
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"    postman.setEnvironmentVariable('bookmarkId',jsonData.id);",
+									"    postman.setEnvironmentVariable('userId','dexter');",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"href is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.bookmarks[0].href).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"label is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.bookmarks[0].label).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.bookmarks[0].id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.bookmarks[0].userId).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"firstName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.contacts[0].firstName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"lastName is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.contacts[0].lastName).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"email matches '.+@.+\\..+'\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.contacts[0].email).to.match(/^.+@.+\\..+$/);",
+									"});",
+									"",
+									"pm.test(\"relationship is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.contacts[0].relationship).is.a('string');",
+									"});",
+									"",
+									"pm.test(\"id is a Number\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.contacts[0].id).is.a('Number');",
+									"});",
+									"",
+									"pm.test(\"userId is a string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.contacts[0].userId).is.a('string');",
+									"});",
+									"",
+									"",
+									"if (pm.response.code==200){",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.sendRequest({",
+									"        url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+									"        method: \"POST\",",
+									"        header: {",
+									"            'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
+									"        },",
+									"        request: {",
+									"            \"href\": \"http://some-other-host-for-dexter.com\",",
+									"            \"description\": \"A description for dexter's link\",",
+									"            \"label\": \"dexterLabel\"",
+									"        }",
+									"    }, function (err, res){",
+									"        jsonData.bookmarks.forEach(function (value){",
+									"            pm.sendRequest({",
+									"                url: \"https://localhost:9025/bookmark-service/v1/users/\"+pm.environment.get('userId')+\"/bookmarks/\"+value.id,",
+									"                method: \"DELETE\",",
+									"                header: {",
+									"                    'Authorization': \"Bearer \"+res.json().access_token,",
+									"                    'Content-Type': 'application/json'",
+									"                },",
+									"                request: {",
+									"                    \"href\": \"http://some-other-host-for-dexter.com\",",
+									"                    \"description\": \"A description for dexter's link\",",
+									"                    \"label\": \"dexterLabel\"",
+									"                }",
+									"            });",
+									"        });",
+									"        jsonData.contacts.forEach(function (value){",
+									"            pm.sendRequest({",
+									"                url: \"https://localhost:9025/contact-service/v1/users/\"+pm.environment.get('userId')+\"/contacts/\"+value.id,",
+									"                method: \"DELETE\",",
+									"                header: {",
+									"                    'Authorization': \"Bearer \"+res.json().access_token,",
+									"                    'Content-Type': 'application/json',",
+									"                },",
+									"                request: {",
+									"                    \"href\": \"http://some-other-host-for-dexter.com\",",
+									"                    \"description\": \"A description for dexter's link\"",
+									"                }",
+									"            });",
+									"        });",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6fc72883-7785-4c65-bfeb-74f01a4dacca",
+								"exec": [
+									"pm.environment.set(\"userId\",\"dexter\");",
+									"",
+									"pm.sendRequest({",
+									"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+									"    method: \"POST\",",
+									"    header: {",
+									"        'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
+									"    },",
+									"    request: {",
+									"        \"href\": \"http://some-other-host-for-dexter.com\",",
+									"        \"description\": \"A description for dexter's link\",",
+									"        \"label\": \"dexterLabel\"",
+									"    }",
+									"}, function (err, res){",
+									"    pm.sendRequest({",
+									"        url: \"https://localhost:9025/bookmark-service/v1/users/\"+pm.environment.get('userId')+\"/bookmarks\",",
+									"        method: \"POST\",",
+									"        header: {",
+									"            'Authorization': \"Bearer \"+res.json().access_token,",
+									"            'Content-Type': 'application/json'",
+									"        },",
+									"        body: {",
+									"            mode: 'jow',",
+									"            raw: JSON.stringify({",
+									"                        \"href\": \"http://some-other-host-for-dexter.com\",",
+									"                        \"description\": \"A description for dexter's link\",",
+									"                        \"label\": \"dexterLabel\",",
+									"                        \"id\": 34,",
+									"                        \"userId\": \"dexter\"",
+									"                    })",
+									"        },",
+									"        request: {",
+									"            \"href\": \"http://some-other-host-for-dexter.com\",",
+									"            \"description\": \"A description for dexter's link\",",
+									"            \"label\": \"dexterLabel\"",
+									"        }",
+									"    });",
+									"    pm.sendRequest({",
+									"        url: \"https://localhost:9025/contact-service/v1/users/\"+pm.environment.get('userId')+\"/contacts\",",
+									"        method: \"POST\",",
+									"        header: {",
+									"            'Authorization': \"Bearer \"+res.json().access_token,",
+									"            'Content-Type': 'application/json'",
+									"        },",
+									"        body: {",
+									"            mode: 'jow',",
+									"            raw: JSON.stringify({",
+									"                        \"firstName\": \"Stéphane\",",
+									"                        \"lastName\": \"Maldini\",",
+									"                        \"email\": \"stéphane@email.com\",",
+									"                        \"relationship\": \"coleague\"",
+									"                    })",
+									"        },",
+									"        request: {",
+									"            \"href\": \"http://some-other-host-for-dexter.com\",",
+									"            \"description\": \"A description for dexter's link\",",
+									"            \"label\": \"dexterLabel\"",
+									"        }",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9025/passport-service/v1/users/{{userId}}/passport",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9025",
+							"path": [
+								"passport-service",
+								"v1",
+								"users",
+								"{{userId}}",
+								"passport"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "62a593c4-7c6a-497b-a13e-d69ee4db7125",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b4370456-1944-4979-80cf-29abf8c59431",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7f2ae4c5-5157-4823-b148-42fa14f59bc7",
+				"type": "text/javascript",
+				"exec": [
+					"pm.environment.set(\"userId\",\"dexter\");",
+					"",
+					"pm.sendRequest({",
+					"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+					"    method: \"POST\",",
+					"    header: {",
+					"        'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
+					"    },",
+					"    request: {",
+					"        \"href\": \"http://some-other-host-for-dexter.com\",",
+					"        \"description\": \"A description for dexter's link\",",
+					"        \"label\": \"dexterLabel\"",
+					"    }",
+					"}, function (err, res){",
+					"    pm.environment.set('access_token',res.json().access_token)",
+					"});",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a04d2703-720c-4369-8348-2c265979e110",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

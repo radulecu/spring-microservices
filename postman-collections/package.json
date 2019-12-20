@@ -1,0 +1,17 @@
+{
+  "name": "postman-collections",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "newman": "^4.5.7",
+    "start": "^5.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "newman run \"Spring Microservices.postman_collection.json\" -e localhost.postman_environment.json -k --disable-unicode"
+  },
+  "author": "",
+  "license": "ISC"
+}
