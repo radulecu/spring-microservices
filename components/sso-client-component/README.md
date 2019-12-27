@@ -1,4 +1,4 @@
-= Security dependencies
+# Security dependencies
 
 To access any resource via SSO you need to get a token from the security service (see security-sso-auth-server module) and use it to get the resource.
 
@@ -13,14 +13,14 @@ In this chase we can have 2 types of secured services
         ** in chase of simple spring boot rest/mvc service it is done via OAuth2 (@EnableOAuth2Sso)
         ** in chase of javascript you have to acquire the token from the security service and forward it in the header at future requests
 
-== Usage
+## Usage
 * Security for a resource server is enabled using security-sso-component by:
     ** using ro.rasel:ssl-component maven dependency
     ** include ResourceSecurityClientComponent class in SpringApplication.run() source classes
     ** default configuration by including security profile in configuration file (which ends up including application-security.yml
 * To enable a client server instead of ResourceSecurityClientComponent class we will include WebSecurityClientComponent in SpringApplication.run() source classes
 
-== Example services using security
+## Example services using security
 * Resource servers:
     ** bookmark-service
     ** contact-service
@@ -30,7 +30,7 @@ In this chase we can have 2 types of secured services
     ** client-service-light
     ** security-sso-ui
 
-== Accessing a resource server
+## Accessing a resource server
 curl -k -X POST -vu acme:acmesecret https://localhost:9999/sso/oauth/token -H "Accept: application/json" -d "password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme"
 
 You can request a new access token using the refresh token.
@@ -51,7 +51,7 @@ curl -k https://localhost:9025/bookmark-service/v1/users/jlong/bookmarks -H "Aut
 curl -k https://localhost:9025/contact-service/v1/users/jlong/contacts -H "Authorization: Bearer <TOKEN>"
 curl -k https://localhost:9025/passport-service/v1/users/jlong/passport -H "Authorization: Bearer <TOKEN>"
 
-== Configuring HPKP
+## Configuring HPKP
 
 For the certificate (.cer file) from ssl-component run following commands
 openssl x509 -inform DER -in computername.cer -out computername.crt
@@ -59,7 +59,7 @@ openssl x509 -in computername.crt -pubkey -noout | openssl rsa -pubin -outform d
 
 Returned value represents the pinning value
 
-== Further read
+## Further read
 - Securing Your Cloud-native Microservice Architecture in Spring
     * https://ordina-jworks.github.io/microservices/2017/09/26/Secure-your-architecture-part1.html
     * http://www.swisspush.org/security/2016/10/17/oauth2-in-depth-introduction-for-enterprises

@@ -1,14 +1,14 @@
-= SSL component
+# SSL component
 
 Used to enable https and provide truststore for self signed certificates.
 
-== Usage
+## Usage
 * Same is for truststore and keystore dependency for ssl certificates
     ** add ro.rasel:ssl-component
     ** for trustStore include TrustStoreComponent class in SpringApplication.run()  source classes
     ** include ssl and sslTrustStore in configuration file depending if you want to enable ssl or access a ssl service (can be bot used)
 
-== Example services using security
+## Example services using security
 * bookmark-service
 * contact-service
 * passport-service
@@ -16,9 +16,9 @@ Used to enable https and provide truststore for self signed certificates.
 * client-service-light
 * security-sso-ui
 
-== SSL security
+## SSL security
 
-=== Generating keystore, certificate and truststore files command (for this demo it is automatically done by maven and groovy plugin)
+### Generating keystore, certificate and truststore files command (for this demo it is automatically done by maven and groovy plugin)
 
 keytool -genkey -alias jkslocalhostalias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
 keytool -genkey -alias jkscomputernamealias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
@@ -33,7 +33,7 @@ The first command is to generate a jks keystore. It will be used to enable the S
 Next a certificate for the keystore is generated.
 Using the certificate we can nou create the truststore. The role of the trustore is to be able to use the SSL/TSL signed service.
 
-=== Viewing  keystore details
+### Viewing  keystore details
 
 keytool -list -v -alias jksalias -keystore ./my.jks -storepass jkspass
 

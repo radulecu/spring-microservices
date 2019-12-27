@@ -1,11 +1,11 @@
-= Client service
+# Client service
 
-=== Description
+## Description
 Basic resource client used for exposing data through for clients which access data directly (e.g. from a web browser).
 This is used as a proxy to not allow accessing rest data directly and can be used for additional processing before providing data to the user.
 
 
-=== Functionality
+## Functionality
 Eureka and ssl are enabled similarly to bookmark service. For more details go to bookmark-service/README.adoc
 
 Compared to bookmark-service security is enabled through sso client because we want to be able to access data through for example the browser.

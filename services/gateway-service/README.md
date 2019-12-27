@@ -1,4 +1,4 @@
-= Client service light
+# Client service light
 
 This module is a carbon copy of contact-service. It tries to show how you can use Zuul proxy to expose data from rest services.
 
