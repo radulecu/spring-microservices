@@ -31,6 +31,7 @@
         <module>services/contact-service</module>
         <module>services/passport-service</module>
         <module>services/zipkin-service</module>
+        <module>services/spring-config-service</module>
         <module>services/hystrix-dashboard-service</module>
         <module>services/client-service</module>
         <module>services/sso-ui-test-service</module>

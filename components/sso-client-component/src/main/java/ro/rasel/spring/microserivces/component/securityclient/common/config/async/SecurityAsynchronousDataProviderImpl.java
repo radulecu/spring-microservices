@@ -1,4 +1,4 @@
-package ro.rasel.spring.microserivces.component.securityclient.common.config;
+package ro.rasel.spring.microserivces.component.securityclient.common.config.async;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
