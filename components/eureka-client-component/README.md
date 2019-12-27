@@ -1,13 +1,13 @@
-= Eureka service
+# Eureka service
 Component used to provide dependencies, default configuration and code for connection to Eureka service.
 
-== Usage
+## Usage
 * How to enable Eureka:
     ** add ro.rasel:eureka-client-component dependency
     ** include EurekaClientComponent class in SpringApplication.run() source classes
     ** include eureka profile in configuration file
 
-== Example services using Eureka
+## Example services using Eureka
 * bookmark-service
 * contact-service
 * passport-service
@@ -15,7 +15,7 @@ Component used to provide dependencies, default configuration and code for conne
 * client-service-light
 * security-sso-ui
 
-== How to get details about services
+## How to get details about services
 * get details about all applications
 curl http://localhost:8761/eureka/apps -H "Accept:application/json"
 * get details about a specific service:

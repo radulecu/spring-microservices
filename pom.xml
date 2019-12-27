@@ -11,6 +11,7 @@
     <modules>
         <!--Parents-->
         <module>parents/starter-parent</module>
+        <module>parents/service-parent</module>
         <module>parents/dependency-parent</module>
         <!--Commons-->
         <module>commons/commons</module>

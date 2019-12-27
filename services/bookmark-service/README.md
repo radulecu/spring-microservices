@@ -1,9 +1,9 @@
-= Bookmark service
+# Bookmark service
 
-=== Description
+## Description
 Basic resource service used for exposing data from database.
 
-=== Functionality
+## Functionality
 
 * Basic rest service which exposes database data through restful services
 * See security-sso-component for more details about security and how to enable it
