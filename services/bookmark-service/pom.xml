@@ -5,9 +5,9 @@
 
     <parent>
         <groupId>ro.rasel.spring.microservices</groupId>
-        <artifactId>starter-parent</artifactId>
+        <artifactId>service-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../parents/starter-parent/pom.xml</relativePath>
+        <relativePath>../../parents/service-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>bookmark-service</artifactId>
@@ -23,28 +23,22 @@
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>sso-client-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>eureka-client-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>ssl-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>swagger-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>zipkin-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
 
         <!--Spring Boot-->
@@ -125,5 +119,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -1,7 +1,6 @@
-package ro.rasel.spring.microserivces.eurekaservice.config;
+package ro.rasel.spring.microserivces.component.securityclient.basic.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -12,28 +11,27 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@ConditionalOnProperty(name = "security.enabled", havingValue = "true")
 @Order(1)
-public class InternalWebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final EurekaConfigProperties eurekaConfigProperties;
+public class SecurityBasicConfig extends WebSecurityConfigurerAdapter {
+    private final SecurityBasicProperties securityBasicProperties;
 
     @Autowired
-    public InternalWebSecurityConfig(EurekaConfigProperties eurekaConfigProperties) {
-        this.eurekaConfigProperties = eurekaConfigProperties;
+    public SecurityBasicConfig(SecurityBasicProperties securityBasicProperties) {
+        this.securityBasicProperties = securityBasicProperties;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .httpBasic().and()
-                .antMatcher("/eureka/**")
+                .antMatcher(securityBasicProperties.getUrlAntMatcher())
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
                 .userDetailsService(s -> {
-                    String user = eurekaConfigProperties.getUser();
+                    String user = securityBasicProperties.getUser();
                     if (user != null && user.equals(s)) {
-                        return new User(s, eurekaConfigProperties.getPassword(), true, true, true, true,
+                        return new User(s, securityBasicProperties.getPassword(), true, true, true, true,
                                 AuthorityUtils.createAuthorityList("ROLE_USER"));
                     }
                     return null;

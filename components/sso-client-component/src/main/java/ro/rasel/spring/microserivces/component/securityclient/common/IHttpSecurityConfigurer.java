@@ -1,4 +1,4 @@
-package ro.rasel.spring.microserivces.component.securityclient.common.config;
+package ro.rasel.spring.microserivces.component.securityclient.common;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
