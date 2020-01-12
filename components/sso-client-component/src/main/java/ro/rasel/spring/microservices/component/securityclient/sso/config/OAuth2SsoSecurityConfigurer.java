@@ -47,7 +47,6 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 .antMatchers("/user","/login").permitAll()
-                .anyRequest().authenticated()
              .and()
                 .headers()
                     .httpStrictTransportSecurity()
@@ -81,6 +80,10 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
         // @formatter:on
         for (IWebSecurityConfigurer configurer : configurers) {
             configurer.configure(http);
+        }
+
+        if (configurers.size()==0){
+            http.authorizeRequests().anyRequest().authenticated();
         }
     }
 
