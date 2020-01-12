@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <start.class>ro.rasel.spring.microserivces.contactservice.ContactServiceApplication</start.class>
+        <start.class>ro.rasel.spring.microservices.contactservice.ContactServiceApplication</start.class>
     </properties>
 
     <description>Basic resource service used for exposing data from database.</description>

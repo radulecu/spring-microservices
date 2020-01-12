@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <start.class>ro.rasel.spring.microserivces.service.zipkin.ZipkinDashboardServiceApplication</start.class>
+        <start.class>ro.rasel.spring.microservices.service.zipkin.ZipkinDashboardServiceApplication</start.class>
     </properties>
 
     <dependencies>
