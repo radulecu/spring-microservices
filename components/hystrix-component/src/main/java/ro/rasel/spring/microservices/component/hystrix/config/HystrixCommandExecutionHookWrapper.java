@@ -4,8 +4,8 @@ import com.netflix.hystrix.HystrixInvokable;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestVariableDefault;
 import com.netflix.hystrix.strategy.executionhook.HystrixCommandExecutionHook;
-import ro.rasel.spring.microserivces.commons.utils.Touple;
-import ro.rasel.spring.microserivces.commons.utils.async.AsynchronousDataProvider;
+import ro.rasel.spring.microservices.commons.utils.Touple;
+import ro.rasel.spring.microservices.commons.utils.async.AsynchronousDataProvider;
 
 import java.util.List;
 import java.util.Map;

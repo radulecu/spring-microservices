@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <start.class>ro.rasel.spring.microserivces.service.hystrix.HystrixDashboardServiceApplication</start.class>
+        <start.class>ro.rasel.spring.microservices.service.hystrix.HystrixDashboardServiceApplication</start.class>
     </properties>
 
     <dependencies>

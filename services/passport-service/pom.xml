@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <start.class>ro.rasel.spring.microserivces.passportservice.PassportServiceApplication</start.class>
+        <start.class>ro.rasel.spring.microservices.passportservice.PassportServiceApplication</start.class>
     </properties>
 
     <description>Basic resource service used for exposing data by aggregating it from other rest services.</description>
@@ -94,8 +94,8 @@
                         <!--suppress MavenModelInspection -->
                         <configuration>
                             <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>
-                            <apiPackage>ro.rasel.spring.microserivces.api.bookmark</apiPackage>
-                            <modelPackage>ro.rasel.spring.microserivces.api.bookmark.domain</modelPackage>
+                            <apiPackage>ro.rasel.spring.microservices.api.bookmark</apiPackage>
+                            <modelPackage>ro.rasel.spring.microservices.api.bookmark.domain</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
@@ -106,8 +106,8 @@
                         <!--suppress MavenModelInspection -->
                         <configuration>
                             <inputSpec>${project.basedir}/swagger/contact-service-swagger.json</inputSpec>
-                            <apiPackage>ro.rasel.spring.microserivces.api.contact</apiPackage>
-                            <modelPackage>ro.rasel.spring.microserivces.api.contact.domain</modelPackage>
+                            <apiPackage>ro.rasel.spring.microservices.api.contact</apiPackage>
+                            <modelPackage>ro.rasel.spring.microservices.api.contact.domain</modelPackage>
                         </configuration>
                     </execution>
                 </executions>
