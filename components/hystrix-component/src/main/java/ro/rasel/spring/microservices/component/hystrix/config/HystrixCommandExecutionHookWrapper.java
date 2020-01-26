@@ -7,6 +7,7 @@ import com.netflix.hystrix.strategy.executionhook.HystrixCommandExecutionHook;
 import ro.rasel.spring.microservices.commons.utils.Touple;
 import ro.rasel.spring.microservices.commons.utils.async.AsynchronousDataProvider;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +22,8 @@ public class HystrixCommandExecutionHookWrapper extends HystrixCommandExecutionH
             HystrixCommandExecutionHook hystrixCommandExecutionHook,
             List<AsynchronousDataProvider> asynchronousDataProviders) {
         this.hystrixCommandExecutionHook = hystrixCommandExecutionHook;
-        this.asynchronousDataProviders = asynchronousDataProviders;
+        this.asynchronousDataProviders = asynchronousDataProviders != null ? asynchronousDataProviders :
+                Collections.emptyList();
     }
 
     public <T> void onStart(HystrixInvokable<T> commandInstance) {
@@ -79,7 +81,8 @@ public class HystrixCommandExecutionHookWrapper extends HystrixCommandExecutionH
         final Map<Class<? extends AsynchronousDataProvider>, Object> hystrixData = hystrixStorage.get();
         if (hystrixData != null) {
             //noinspection unchecked
-            asynchronousDataProviders.forEach(asynchronousDataProvider -> asynchronousDataProvider.setup(hystrixData.get(asynchronousDataProvider.getClass())));
+            asynchronousDataProviders.forEach(asynchronousDataProvider -> asynchronousDataProvider
+                    .setup(hystrixData.get(asynchronousDataProvider.getClass())));
         }
     }
 

@@ -36,6 +36,8 @@
         <module>services/hystrix-dashboard-service</module>
         <module>services/client-service</module>
         <module>services/sso-ui-test-service</module>
+        <!--Performance-->
+        <module>gatling-performance-testing</module>
     </modules>
 
     <distributionManagement>
