@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import ro.rasel.spring.microservices.springcommons.EnableSpringCommonsComponent;
 
-@ConditionalOnProperty(name = "ssl.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "client.ssl.enabled", havingValue = "true", matchIfMissing = true)
 @EnableSpringCommonsComponent
 @ComponentScan
 @PropertySource("classpath:application-clientSsl.properties")
