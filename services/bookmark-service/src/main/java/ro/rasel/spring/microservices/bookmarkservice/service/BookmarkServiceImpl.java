@@ -36,11 +36,11 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     @Transactional
-    public Optional<Bookmark> updateBookmark(
-            String userId, long bookmarkId, BookmarkDetails bookmarkDetails) {
+    public Optional<Bookmark> updateBookmark(String userId, long bookmarkId, BookmarkDetails bookmarkDetails) {
         Bookmark bookmark =
                 new Bookmark(bookmarkId, userId, bookmarkDetails.getHref(), bookmarkDetails.getDescription(),
                         bookmarkDetails.getLabel());
+
         final Optional<Bookmark> currentBookmark =
                 bookmarkRepository.findByIdAndUserId(bookmark.getId(), bookmark.getUserId());
 

@@ -24,7 +24,6 @@ public class Bookmark extends BookmarkDetails {
     @NotBlank
     private String userId;
 
-    @SuppressWarnings("unused") // used by hibernate
     Bookmark() {
     }
 

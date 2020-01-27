@@ -1,6 +1,7 @@
 package ro.rasel.spring.microservices.contactservice.service;
 
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
+import ro.rasel.spring.microservices.contactservice.domain.ContactDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +9,11 @@ import java.util.Optional;
 public interface ContactService {
     List<Contact> getContacts(String userId);
 
-    Optional<Contact> getContact(String userId, Long contactId);
+    Optional<Contact> getContact(String userId, long contactId);
 
-    Contact createContact(Contact contact);
+    Contact createContact(String userId, ContactDetails contactDetails);
 
-    Optional<Contact> updateContact(Contact contact);
+    Optional<Contact> updateContact(String userId, long contactId, ContactDetails contactDetails);
 
-    boolean deleteContact(String userId, Long contactId);
+    boolean deleteContact(String userId, long contactId);
 }

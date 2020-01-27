@@ -58,12 +58,13 @@ public interface ContactApi {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal server error")})
     ResponseEntity<Contact> updateContact(
-            @PathVariable String userId, @PathVariable long contactId, @Valid @RequestBody ContactDetails contactDetails);
+            @PathVariable String userId, @PathVariable long contactId,
+            @Valid @RequestBody ContactDetails contactDetails);
 
     @DeleteMapping(value = "/{contactId}")
     @ApiOperation(code = 201, value = "delete contact", notes = "Delete a contact", tags = TAG)
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Ok"),
+            @ApiResponse(code = 201, message = "No content"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
