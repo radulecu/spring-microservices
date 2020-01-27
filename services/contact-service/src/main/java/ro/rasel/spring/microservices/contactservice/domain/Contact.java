@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity
@@ -27,8 +28,7 @@ public class Contact extends ContactDetails {
     }
 
     public Contact(
-            Long id, String userId, String firstName, String lastName, String email,
-            String relationship) {
+            long id, String userId, String firstName, String lastName, String email, String relationship) {
         this(userId, firstName, lastName, email, relationship);
         this.id = id;
     }
@@ -47,6 +47,25 @@ public class Contact extends ContactDetails {
     @ApiModelProperty(value = "Used id")
     public String getUserId() {
         return userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Contact contact = (Contact) o;
+        return super.equals(o) &&
+                Objects.equals(id, contact.id) &&
+                Objects.equals(userId, contact.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, userId);
     }
 
     @Override

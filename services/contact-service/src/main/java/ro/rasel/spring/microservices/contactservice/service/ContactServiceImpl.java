@@ -3,6 +3,7 @@ package ro.rasel.spring.microservices.contactservice.service;
 import org.springframework.stereotype.Service;
 import ro.rasel.spring.microservices.contactservice.dao.ContactRepository;
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
+import ro.rasel.spring.microservices.contactservice.domain.ContactDetails;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,18 +23,23 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Optional<Contact> getContact(String userId, Long contactId) {
+    public Optional<Contact> getContact(String userId, long contactId) {
         return contactRepository.findByIdAndUserId(contactId, userId);
     }
 
     @Override
-    public Contact createContact(Contact contact) {
+    public Contact createContact(String userId, ContactDetails contactDetails) {
+        final Contact contact = new Contact(userId, contactDetails.getFirstName(), contactDetails.getLastName(),
+                contactDetails.getEmail(), contactDetails.getRelationship());
         return contactRepository.save(contact);
     }
 
-    @Override
     @Transactional
-    public Optional<Contact> updateContact(Contact contact) {
+    public Optional<Contact> updateContact(String userId, long contactId, ContactDetails contactDetails) {
+        Contact contact =
+                new Contact(contactId, userId, contactDetails.getFirstName(), contactDetails.getLastName(),
+                        contactDetails.getEmail(), contactDetails.getRelationship());
+
         final Optional<Contact> currentContact =
                 contactRepository.findByIdAndUserId(contact.getId(), contact.getUserId());
 
@@ -41,14 +47,14 @@ public class ContactServiceImpl implements ContactService {
             c.setRelationship(contact.getRelationship());
             c.setFirstName(contact.getFirstName());
             c.setLastName(contact.getLastName());
-            c.setEmail(c.getEmail());
+            c.setEmail(contact.getEmail());
             return contactRepository.save(c);
         });
     }
 
     @Override
     @Transactional
-    public boolean deleteContact(String userId, Long contactId) {
+    public boolean deleteContact(String userId, long contactId) {
         final Optional<Contact> contact = contactRepository.findByIdAndUserId(contactId, userId);
         contact.ifPresent(contactRepository::delete);
         return contact.isPresent();

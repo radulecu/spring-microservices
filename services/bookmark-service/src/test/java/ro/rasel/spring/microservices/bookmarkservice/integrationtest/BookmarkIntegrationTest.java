@@ -70,8 +70,7 @@ class BookmarkIntegrationTest {
         final Bookmark bookmark = initBookmarkInDb(USER_ID);
         final ResponseEntity<Bookmark> result = testRestTemplate
                 .exchange(BOOKMARK_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, Bookmark.class,
-                        USER_ID,
-                        bookmark.getId());
+                        USER_ID, bookmark.getId());
 
         assertThat(result.getBody(), is(bookmark));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
@@ -81,8 +80,7 @@ class BookmarkIntegrationTest {
     void shouldGetNoBookmarkWhenBookmarksDoesNotExist() {
         final ResponseEntity<Bookmark> result = testRestTemplate
                 .exchange(BOOKMARK_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, Bookmark.class,
-                        USER_ID,
-                        3);
+                        USER_ID, 3);
 
         assertThat(result.getBody(), is((Bookmark) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));

@@ -59,8 +59,7 @@ class BookmarkRestControllerTest {
         final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
         when(bookmarkService.getBookmark(USER_ID, BOOKMARK_ID)).thenReturn(Optional.of(bookmark));
 
-        final ResponseEntity<Bookmark> result = bookmarkRestController.getBookmark(
-                USER_ID, BOOKMARK_ID);
+        final ResponseEntity<Bookmark> result = bookmarkRestController.getBookmark(USER_ID, BOOKMARK_ID);
 
         assertThat(result.getBody(), is(bookmark));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
@@ -68,8 +67,7 @@ class BookmarkRestControllerTest {
 
     @Test
     void shouldGetNoBookmarkWhenBookmarksDoesNotExist() {
-        final ResponseEntity<Bookmark> result = bookmarkRestController.getBookmark(
-                USER_ID, BOOKMARK_ID);
+        final ResponseEntity<Bookmark> result = bookmarkRestController.getBookmark(USER_ID, BOOKMARK_ID);
 
         assertThat(result.getBody(), is((Bookmark) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
@@ -115,8 +113,7 @@ class BookmarkRestControllerTest {
     @Test
     void shouldDeleteBookmarkWhenBookmarkExists() {
         when(bookmarkService.deleteBookmark(USER_ID, BOOKMARK_ID)).thenReturn(true);
-        final ResponseEntity<Void> result = bookmarkRestController.deleteBookmark(
-                USER_ID, BOOKMARK_ID);
+        final ResponseEntity<Void> result = bookmarkRestController.deleteBookmark(USER_ID, BOOKMARK_ID);
 
         assertThat(result.getStatusCode(), is(HttpStatus.NO_CONTENT));
     }
@@ -124,8 +121,7 @@ class BookmarkRestControllerTest {
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingDeleteBookmarkAndBookmarkDoesNotExists() {
         when(bookmarkService.deleteBookmark(USER_ID, BOOKMARK_ID)).thenReturn(false);
-        final ResponseEntity<Void> result = bookmarkRestController.deleteBookmark(
-                USER_ID, BOOKMARK_ID);
+        final ResponseEntity<Void> result = bookmarkRestController.deleteBookmark(USER_ID, BOOKMARK_ID);
 
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }

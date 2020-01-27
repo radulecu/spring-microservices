@@ -8,6 +8,7 @@ import ro.rasel.spring.microservices.commons.utils.validators.Validators;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 @MappedSuperclass
@@ -76,6 +77,26 @@ public class ContactDetails {
 
     public void setRelationship(String relationship) {
         this.relationship = RELATIONSHIP_VALIDATOR.validate(relationship);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ContactDetails that = (ContactDetails) o;
+        return Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(relationship, that.relationship);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, relationship);
     }
 
     @Override
