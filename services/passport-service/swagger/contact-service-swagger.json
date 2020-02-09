@@ -178,7 +178,7 @@
         } ],
         "responses" : {
           "201" : {
-            "description" : "Ok"
+            "description" : "No content"
           },
           "400" : {
             "description" : "Bad request"

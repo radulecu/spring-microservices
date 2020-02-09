@@ -6,13 +6,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ro.rasel.spring.microservices.bookmarkservice.controller.dto.BookmarkDetailsDto;
+import ro.rasel.spring.microservices.bookmarkservice.controller.dto.BookmarkDto;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
-import ro.rasel.spring.microservices.bookmarkservice.domain.BookmarkDetails;
 import ro.rasel.spring.microservices.bookmarkservice.service.BookmarkService;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class BookmarkRestController implements BookmarkApi {
@@ -25,30 +27,43 @@ public class BookmarkRestController implements BookmarkApi {
     }
 
     @Override
-    public ResponseEntity<Collection<Bookmark>> getBookmarks(@PathVariable String userId) {
+    public ResponseEntity<Collection<BookmarkDto>> getBookmarks(@PathVariable String userId) {
         LOG.debug("getting bookmarks for userId={}", userId);
-        final List<Bookmark> bookmarks = bookmarkService.getBookmarks(userId);
+        final List<BookmarkDto> bookmarks =
+                bookmarkService.getBookmarks(userId).stream()
+                        .map(BookmarkDto::new)
+                        .collect(Collectors.toList());
         return bookmarks.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(bookmarks);
     }
 
     @Override
-    public ResponseEntity<Bookmark> getBookmark(@PathVariable String userId, @PathVariable long bookmarkId) {
+    public ResponseEntity<BookmarkDto> getBookmark(@PathVariable String userId, @PathVariable long bookmarkId) {
         LOG.debug("getting bookmark for userId={} and bookmarkId={}", userId, bookmarkId);
-        final Optional<Bookmark> bookmark = this.bookmarkService.getBookmark(userId, bookmarkId);
+        final Optional<BookmarkDto> bookmark =
+                this.bookmarkService.getBookmark(userId, bookmarkId).map(BookmarkDto::new);
         return bookmark.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
-    public Bookmark createBookmark(@PathVariable String userId, @RequestBody BookmarkDetails bookmarkDetails) {
+    public BookmarkDto createBookmark(@PathVariable String userId, @RequestBody BookmarkDetailsDto bookmarkDetailsDto) {
         LOG.debug("creating bookmark for userId={}", userId);
-        return bookmarkService.createBookmark(userId, bookmarkDetails);
+        final Bookmark bookmark = bookmarkDetailsDto.getBookmark();
+        bookmark.setUserId(userId);
+        final Bookmark createdBookmark = bookmarkService.createBookmark(bookmark);
+        return createdBookmark != null ? new BookmarkDto(createdBookmark) : null;
     }
 
     @Override
-    public ResponseEntity<Bookmark> updateBookmark(
-            @PathVariable String userId, @PathVariable long bookmarkId, @RequestBody BookmarkDetails bookmarkDetails) {
+    public ResponseEntity<BookmarkDto> updateBookmark(
+            @PathVariable String userId, @PathVariable long bookmarkId, @RequestBody
+            BookmarkDetailsDto bookmarkDetailsDto) {
         LOG.debug("updating bookmark for userId={} and bookmarkId={}", userId, bookmarkId);
-        return bookmarkService.updateBookmark(userId, bookmarkId, bookmarkDetails).map(ResponseEntity::ok)
+        final Bookmark bookmark = bookmarkDetailsDto.getBookmark();
+        bookmark.setId(bookmarkId);
+        bookmark.setUserId(userId);
+        return bookmarkService.updateBookmark(bookmark)
+                .map(BookmarkDto::new)
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 

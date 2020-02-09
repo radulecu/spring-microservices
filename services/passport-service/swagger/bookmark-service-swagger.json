@@ -196,6 +196,15 @@
       "type" : "object",
       "required" : [ "description", "href", "label" ],
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Bookmark id"
+        },
+        "userId" : {
+          "type" : "string",
+          "description" : "Used id"
+        },
         "href" : {
           "type" : "string",
           "description" : "Bookmark href"
@@ -208,14 +217,8 @@
           "type" : "string",
           "description" : "Bookmark label"
         },
-        "id" : {
-          "type" : "integer",
-          "format" : "int64",
-          "description" : "Bookmark id"
-        },
-        "userId" : {
-          "type" : "string",
-          "description" : "Used id"
+        "bookmark" : {
+          "$ref" : "#/definitions/Bookmark"
         }
       },
       "description" : "User Bookmark"
@@ -235,6 +238,9 @@
         "label" : {
           "type" : "string",
           "description" : "Bookmark label"
+        },
+        "bookmark" : {
+          "$ref" : "#/definitions/Bookmark"
         }
       },
       "description" : "User Bookmark"

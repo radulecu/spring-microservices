@@ -3,7 +3,6 @@ package ro.rasel.spring.microservices.bookmarkservice.service;
 import org.springframework.stereotype.Service;
 import ro.rasel.spring.microservices.bookmarkservice.dao.BookmarkRepository;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
-import ro.rasel.spring.microservices.bookmarkservice.domain.BookmarkDetails;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -28,19 +27,13 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public Bookmark createBookmark(String userId, BookmarkDetails bookmarkDetails) {
-        Bookmark bookmark = new Bookmark(userId, bookmarkDetails.getHref(), bookmarkDetails.getDescription(),
-                bookmarkDetails.getLabel());
+    public Bookmark createBookmark(Bookmark bookmark) {
         return bookmarkRepository.save(bookmark);
     }
 
     @Override
     @Transactional
-    public Optional<Bookmark> updateBookmark(String userId, long bookmarkId, BookmarkDetails bookmarkDetails) {
-        Bookmark bookmark =
-                new Bookmark(bookmarkId, userId, bookmarkDetails.getHref(), bookmarkDetails.getDescription(),
-                        bookmarkDetails.getLabel());
-
+    public Optional<Bookmark> updateBookmark(Bookmark bookmark) {
         final Optional<Bookmark> currentBookmark =
                 bookmarkRepository.findByIdAndUserId(bookmark.getId(), bookmark.getUserId());
 

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
-import ro.rasel.spring.microservices.bookmarkservice.domain.BookmarkDetails;
+import ro.rasel.spring.microservices.bookmarkservice.controller.dto.BookmarkDetailsDto;
+import ro.rasel.spring.microservices.bookmarkservice.controller.dto.BookmarkDto;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public interface BookmarkApi {
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    ResponseEntity<Collection<Bookmark>> getBookmarks(@PathVariable String userId);
+    ResponseEntity<Collection<BookmarkDto>> getBookmarks(@PathVariable String userId);
 
     @GetMapping("/{bookmarkId}")
     @ApiOperation(value = "get bookmark", notes = "Get a bookmark", tags = TAG)
@@ -40,7 +40,7 @@ public interface BookmarkApi {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    ResponseEntity<Bookmark> getBookmark(@PathVariable String userId, @PathVariable long bookmarkId);
+    ResponseEntity<BookmarkDto> getBookmark(@PathVariable String userId, @PathVariable long bookmarkId);
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @ApiOperation(value = "add bookmark", notes = "Create a new bookmark and return it", tags = TAG)
@@ -48,7 +48,7 @@ public interface BookmarkApi {
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    Bookmark createBookmark(@PathVariable String userId, @Valid @RequestBody BookmarkDetails bookmarkDetails);
+    BookmarkDto createBookmark(@PathVariable String userId, @Valid @RequestBody BookmarkDetailsDto bookmarkDetailsDto);
 
     @PutMapping(value = "/{bookmarkId}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @ApiOperation(value = "add bookmark", notes = "Update a bookmark and return it", tags = TAG)
@@ -57,9 +57,9 @@ public interface BookmarkApi {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    ResponseEntity<Bookmark> updateBookmark(
+    ResponseEntity<BookmarkDto> updateBookmark(
             @PathVariable String userId, @PathVariable long bookmarkId,
-            @Valid @RequestBody BookmarkDetails bookmarkDetails);
+            @Valid @RequestBody BookmarkDetailsDto bookmarkDetailsDto);
 
     @DeleteMapping(value = "/{bookmarkId}")
     @ApiOperation(code = 201, value = "delete bookmarks", notes = "Delete a bookmark", tags = TAG)
