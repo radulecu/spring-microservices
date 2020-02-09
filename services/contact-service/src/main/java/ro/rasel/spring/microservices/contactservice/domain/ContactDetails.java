@@ -15,11 +15,16 @@ import java.util.StringJoiner;
 @ApiModel(description = "User Contacts")
 public class ContactDetails {
     private static final String EMAIL_PATTERN_STRING = ".+@.+\\..+";
-    private static final Validator<CharSequence> FIRST_NAME_VALIDATOR = Validators.notBlankValidator("firstName");
-    private static final Validator<CharSequence> LAST_NAME_VALIDATOR = Validators.notBlankValidator("lastName");
+
+    private static final Validator<CharSequence> FIRST_NAME_VALIDATOR =
+            Validators.of("firstName", Validators::notNullValidator, Validators::notBlankValidator);
+    private static final Validator<CharSequence> LAST_NAME_VALIDATOR =
+            Validators.of("lastName", Validators::notNullValidator, Validators::notBlankValidator);
     private static final Validator<CharSequence> EMAIL_VALIDATOR =
-            Validators.matchesPatternValidator("email", EMAIL_PATTERN_STRING);
-    private static final Validator<CharSequence> RELATIONSHIP_VALIDATOR = Validators.notBlankValidator("relationship");
+            Validators.matchesPatternValidator("email", EMAIL_PATTERN_STRING)
+                    .and(Validators.notNullValidator("email"));
+    private static final Validator<CharSequence> RELATIONSHIP_VALIDATOR =
+            Validators.of("relationship", Validators::notNullValidator, Validators::notBlankValidator);
 
     @NotBlank
     private String firstName;

@@ -6,16 +6,19 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import ro.rasel.spring.microservices.bookmarkservice.controller.dto.BookmarkDetailsDto;
+import ro.rasel.spring.microservices.bookmarkservice.controller.dto.BookmarkDto;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
-import ro.rasel.spring.microservices.bookmarkservice.domain.BookmarkDetails;
 import ro.rasel.spring.microservices.bookmarkservice.service.BookmarkService;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.*;
 import static org.hamcrest.core.Is.*;
 import static org.mockito.Mockito.*;
 import static ro.rasel.spring.microservices.bookmarkservice.utils.TestConstants.BOOKMARK_ID;
@@ -33,25 +36,28 @@ class BookmarkRestControllerTest {
     BookmarkService bookmarkService;
 
     @Test
-    void shouldGetBookmarkCollectionWhenBookmarksExist() {
+    void shouldGetBookmarksWhenBookmarksExist() {
         final List<Bookmark> bookmarks =
                 Collections.singletonList(new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL));
         when(bookmarkService.getBookmarks(USER_ID)).thenReturn(bookmarks);
 
-        final ResponseEntity<Collection<Bookmark>> result = bookmarkRestController.getBookmarks(USER_ID);
+        final ResponseEntity<Collection<BookmarkDto>> result = bookmarkRestController.getBookmarks(USER_ID);
 
-        assertThat(result.getBody(), is(bookmarks));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
+
+        final List<BookmarkDto> expectedBookmarkDtos =
+                bookmarks.stream().map(BookmarkDto::new).collect(Collectors.toList());
+        assertThat(result.getBody(), containsInAnyOrder(expectedBookmarkDtos.toArray()));
     }
 
     @Test
     void shouldGetEmptyBookmarksCollectionWhenBookmarksDoesNotExist() {
         when(bookmarkService.getBookmarks(USER_ID)).thenReturn(Collections.emptyList());
 
-        final ResponseEntity<Collection<Bookmark>> result = bookmarkRestController.getBookmarks(USER_ID);
+        final ResponseEntity<Collection<BookmarkDto>> result = bookmarkRestController.getBookmarks(USER_ID);
 
-        assertThat(result.getBody(), is((Collection<Bookmark>) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(result.getBody(), is((Collection<Bookmark>) null));
     }
 
     @Test
@@ -59,55 +65,57 @@ class BookmarkRestControllerTest {
         final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
         when(bookmarkService.getBookmark(USER_ID, BOOKMARK_ID)).thenReturn(Optional.of(bookmark));
 
-        final ResponseEntity<Bookmark> result = bookmarkRestController.getBookmark(USER_ID, BOOKMARK_ID);
+        final ResponseEntity<BookmarkDto> result = bookmarkRestController.getBookmark(USER_ID, BOOKMARK_ID);
 
-        assertThat(result.getBody(), is(bookmark));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), is(new BookmarkDto(bookmark)));
     }
 
     @Test
     void shouldGetNoBookmarkWhenBookmarksDoesNotExist() {
-        final ResponseEntity<Bookmark> result = bookmarkRestController.getBookmark(USER_ID, BOOKMARK_ID);
+        final ResponseEntity<BookmarkDto> result = bookmarkRestController.getBookmark(USER_ID, BOOKMARK_ID);
 
-        assertThat(result.getBody(), is((Bookmark) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(result.getBody(), is((Bookmark) null));
     }
 
     @Test
     void shouldCreateBookmark() {
-        final BookmarkDetails
-                bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
-        final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
+        final Bookmark bookmark = new Bookmark(USER_ID, HREF, DESCRIPTION, LABEL);
+        final BookmarkDetailsDto
+                bookmarkDetailsDto = new BookmarkDetailsDto(HREF, DESCRIPTION, LABEL);
+        final Bookmark createdBookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
 
-        when(bookmarkService.createBookmark(USER_ID, bookmarkDetails)).thenReturn(bookmark);
-        final Bookmark result = bookmarkRestController.createBookmark(USER_ID, bookmarkDetails);
+        when(bookmarkService.createBookmark(bookmark)).thenReturn(createdBookmark);
+        final BookmarkDto result = bookmarkRestController.createBookmark(USER_ID, bookmarkDetailsDto);
 
-        assertThat(result, is(bookmark));
+        assertThat(result, is(new BookmarkDto(createdBookmark)));
     }
 
     @Test
     void shouldUpdateBookmarkWhenBookmarkExists() {
-        final BookmarkDetails bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
         final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
+        final BookmarkDetailsDto bookmarkDetailsDto = new BookmarkDetailsDto(HREF, DESCRIPTION, LABEL);
 
-        when(bookmarkService.updateBookmark(USER_ID, BOOKMARK_ID, bookmarkDetails)).thenReturn(Optional.of(bookmark));
-        final ResponseEntity<Bookmark> result =
-                bookmarkRestController.updateBookmark(USER_ID, BOOKMARK_ID, bookmarkDetails);
+        when(bookmarkService.updateBookmark(bookmark)).thenReturn(Optional.of(bookmark));
+        final ResponseEntity<BookmarkDto> result =
+                bookmarkRestController.updateBookmark(USER_ID, BOOKMARK_ID, bookmarkDetailsDto);
 
-        assertThat(result.getBody(), is(bookmark));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), is(new BookmarkDto(bookmark)));
     }
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingUpdateBookmarkAndBookmarkDoesNotExists() {
-        final BookmarkDetails bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
+        final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
+        final BookmarkDetailsDto bookmarkDetailsDto = new BookmarkDetailsDto(HREF, DESCRIPTION, LABEL);
 
-        when(bookmarkService.updateBookmark(USER_ID, BOOKMARK_ID, bookmarkDetails)).thenReturn(Optional.empty());
-        final ResponseEntity<Bookmark> result =
-                bookmarkRestController.updateBookmark(USER_ID, BOOKMARK_ID, bookmarkDetails);
+        when(bookmarkService.updateBookmark(bookmark)).thenReturn(Optional.empty());
+        final ResponseEntity<BookmarkDto> result =
+                bookmarkRestController.updateBookmark(USER_ID, BOOKMARK_ID, bookmarkDetailsDto);
 
-        assertThat(result.getBody(), is((Bookmark) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(result.getBody(), is((BookmarkDto) null));
     }
 
     @Test

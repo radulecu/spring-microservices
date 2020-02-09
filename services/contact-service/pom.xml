@@ -111,7 +111,7 @@
                 <configuration>
                     <apiSources>
                         <apiSource>
-                            <locations>ro.rasel.service.contacts.controller</locations>
+                            <locations>ro.rasel.spring.microservices.contactservice.controller</locations>
                             <schemes>https</schemes>
                         </apiSource>
                     </apiSources>

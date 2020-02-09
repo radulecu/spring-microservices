@@ -9,7 +9,6 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 import ro.rasel.spring.microservices.bookmarkservice.dao.BookmarkRepository;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
-import ro.rasel.spring.microservices.bookmarkservice.domain.BookmarkDetails;
 
 import java.util.Collections;
 import java.util.List;
@@ -71,24 +70,24 @@ class BookmarkServiceImplTest {
 
     @Test
     void shouldCreateBookmark() {
-        final BookmarkDetails bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
-        final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
+        final Bookmark bookmark = new Bookmark(USER_ID, HREF, DESCRIPTION, LABEL);
+        final Bookmark createdBookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
 
-        when(bookmarkRepository.save(new Bookmark(USER_ID, HREF, DESCRIPTION, LABEL))).thenReturn(bookmark);
-        final Bookmark result = bookmarkService1.createBookmark(USER_ID, bookmarkDetails);
+        when(bookmarkRepository.save(bookmark)).thenReturn(createdBookmark);
+        final Bookmark result = bookmarkService1.createBookmark(bookmark);
 
-        assertThat(result, is(bookmark));
+        assertThat(result, is(createdBookmark));
     }
 
     @Test
     void shouldUpdateBookmarkWhenBookmarkExists() {
-        final BookmarkDetails bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
         final Bookmark bookmarkSpy = Mockito.spy(Bookmark.class);
         final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
+        final Bookmark updatedBookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
 
         when(bookmarkRepository.findByIdAndUserId(BOOKMARK_ID, USER_ID)).thenReturn(Optional.of(bookmarkSpy));
         when(bookmarkRepository.save(bookmarkSpy)).thenReturn(bookmark);
-        final Optional<Bookmark> result = bookmarkService1.updateBookmark(USER_ID, BOOKMARK_ID, bookmarkDetails);
+        final Optional<Bookmark> result = bookmarkService1.updateBookmark(updatedBookmark);
 
         assertThat(result.get(), is(bookmark));
 
@@ -99,10 +98,10 @@ class BookmarkServiceImplTest {
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingUpdateBookmarkAndBookmarkDoesNotExists() {
-        final BookmarkDetails bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
+        final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
 
         when(bookmarkRepository.findByIdAndUserId(BOOKMARK_ID, USER_ID)).thenReturn(Optional.empty());
-        final Optional<Bookmark> result = bookmarkService1.updateBookmark(USER_ID, BOOKMARK_ID, bookmarkDetails);
+        final Optional<Bookmark> result = bookmarkService1.updateBookmark(bookmark);
 
         assertThat(result.isPresent(), is(false));
     }
