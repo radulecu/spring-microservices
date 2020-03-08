@@ -28,14 +28,13 @@
         <module>services/sso-auth-service</module>
         <module>services/gateway-service</module>
         <module>services/resource-gateway-service</module>
-        <module>services/bookmark-service</module>
-        <module>services/contact-service</module>
-        <module>services/passport-service</module>
         <module>services/zipkin-service</module>
         <module>services/spring-config-service</module>
         <module>services/hystrix-dashboard-service</module>
-        <module>services/client-service</module>
-        <module>services/sso-ui-test-service</module>
+        <!--Application-->
+        <module>application/bookmark-service</module>
+        <module>application/contact-service</module>
+        <module>application/passport-service</module>
         <!--Performance-->
         <module>gatling-performance-testing</module>
     </modules>
