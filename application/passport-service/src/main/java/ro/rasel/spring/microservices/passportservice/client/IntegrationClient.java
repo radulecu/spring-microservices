@@ -4,8 +4,8 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import ro.rasel.spring.microservices.api.bookmark.domain.Bookmark;
-import ro.rasel.spring.microservices.api.contact.domain.Contact;
+import ro.rasel.spring.microservices.api.bookmark.data.Bookmark;
+import ro.rasel.spring.microservices.api.contact.data.Contact;
 
 import java.util.Collection;
 import java.util.Collections;

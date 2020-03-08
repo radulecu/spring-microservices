@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ro.rasel.spring.microservices.passportservice.domain.Passport;
+import ro.rasel.spring.microservices.passportservice.controller.dto.PassportDto;
 
 @Api(tags = PassportApi.TAG)
 public interface PassportApi {
@@ -21,5 +21,5 @@ public interface PassportApi {
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
     @GetMapping(value = "/v1/users/{userId}/passport", produces = "application/json")
-    ResponseEntity<Passport> passport(@PathVariable String userId);
+    ResponseEntity<PassportDto> getPassport(@PathVariable String userId);
 }

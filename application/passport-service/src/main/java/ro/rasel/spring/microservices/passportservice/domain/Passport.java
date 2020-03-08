@@ -1,14 +1,12 @@
 package ro.rasel.spring.microservices.passportservice.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import ro.rasel.spring.microservices.api.bookmark.domain.Bookmark;
-import ro.rasel.spring.microservices.api.contact.domain.Contact;
+import ro.rasel.spring.microservices.api.bookmark.data.Bookmark;
+import ro.rasel.spring.microservices.api.contact.data.Contact;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.StringJoiner;
 
-@ApiModel(description = "User Passport")
 public class Passport {
 
     private final String userId;
@@ -18,26 +16,41 @@ public class Passport {
     private final Collection<Contact> contacts;
 
     public Passport(
-            String userId, Collection<Contact> contacts,
-            Collection<Bookmark> bookmarks) {
+            String userId, Collection<Bookmark> bookmarks, Collection<Contact> contacts) {
         this.userId = userId;
-        this.contacts = contacts;
         this.bookmarks = bookmarks;
+        this.contacts = contacts;
     }
 
-    @ApiModelProperty(value = "Passport user id")
     public String getUserId() {
         return userId;
     }
 
-    @ApiModelProperty(value = "Passport contacts")
     public Collection<Contact> getContacts() {
         return contacts;
     }
 
-    @ApiModelProperty(value = "Passport passports")
     public Collection<Bookmark> getBookmarks() {
         return bookmarks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Passport passport = (Passport) o;
+        return Objects.equals(userId, passport.userId) &&
+                Objects.equals(bookmarks, passport.bookmarks) &&
+                Objects.equals(contacts, passport.contacts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, bookmarks, contacts);
     }
 
     @Override
