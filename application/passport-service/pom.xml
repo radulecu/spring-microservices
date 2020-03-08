@@ -95,7 +95,7 @@
                         <configuration>
                             <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>
                             <apiPackage>ro.rasel.spring.microservices.api.bookmark</apiPackage>
-                            <modelPackage>ro.rasel.spring.microservices.api.bookmark.domain</modelPackage>
+                            <modelPackage>ro.rasel.spring.microservices.api.bookmark.data</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
@@ -107,7 +107,7 @@
                         <configuration>
                             <inputSpec>${project.basedir}/swagger/contact-service-swagger.json</inputSpec>
                             <apiPackage>ro.rasel.spring.microservices.api.contact</apiPackage>
-                            <modelPackage>ro.rasel.spring.microservices.api.contact.domain</modelPackage>
+                            <modelPackage>ro.rasel.spring.microservices.api.contact.data</modelPackage>
                         </configuration>
                     </execution>
                 </executions>
