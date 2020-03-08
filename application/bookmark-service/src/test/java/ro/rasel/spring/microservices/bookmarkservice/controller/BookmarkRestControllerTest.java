@@ -45,9 +45,7 @@ class BookmarkRestControllerTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
 
-        final List<BookmarkDto> expectedBookmarkDtos =
-                bookmarks.stream().map(BookmarkDto::new).collect(Collectors.toList());
-        assertThat(result.getBody(), containsInAnyOrder(expectedBookmarkDtos.toArray()));
+        assertThat(result.getBody(), containsInAnyOrder(bookmarks.stream().map(BookmarkDto::new).toArray()));
     }
 
     @Test

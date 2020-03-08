@@ -58,4 +58,56 @@ public class Validators {
                 .map(f -> f.apply(label))
                 .collect(Collectors.toList()));
     }
+//
+//    @SafeVarargs
+//    public static <O> Validator<O> of(Validator<? super O> validator, Validator<? super O>... validators) {
+//        return Validator.of(Stream.of(Stream.of(validator), Arrays.stream(validators))
+//                .flatMap(Function.identity())
+//                .collect(Collectors.toList()));
+//    }
+//
+//    public <T> ValidatorBuilder<T> builder(String label) {
+//        new ValidatorBuilder<>(label);
+//    }
+//
+//    public static class ValidatorBuilder<T> {
+//        private final String label;
+//        private final Validator<T> validator;
+//
+//        public ValidatorBuilder(String label) {
+//            this.label = label;
+//            validator = null;
+//        }
+//
+//        public ValidatorBuilder(String label, Validator<T> validator) {
+//            this.label = label;
+//            this.validator = validator;
+//        }
+//
+//        public ValidatorBuilder<T> notNull() {
+//            return validator(Validators::notNullValidator);
+//        }
+//
+//        public ValidatorBuilder<T> notBlank() {
+//            return validator(Validators::notBlankValidator);
+//        }
+//
+//        public <E extends T & CharSequence> ValidatorBuilder<E> matchesPattern(E pattern) {
+//            Function<String,Validator<CharSequence>> validatorFunction =
+//                    label -> Validators.matchesPatternValidator(label, pattern);
+//            final Validator<? super E> apply = validatorFunction.apply(this.label);
+//            final Validator<E> eValidator = this.validator == null ? apply : Validators.of(this.validator, apply);
+//            return new ValidatorBuilder<E>(this.label, eValidator);
+//        }
+//
+//        public <E extends T> ValidatorBuilder<E> validator(Function<String, Validator<? super E>> validatorFunction) {
+//            final Validator<? super E> apply = validatorFunction.apply(this.label);
+//            final Validator<E> eValidator = this.validator == null ? apply : Validators.of(this.validator, apply);
+//            return new ValidatorBuilder<E>(this.label, eValidator);
+//        }
+//
+//        public Validator<T> build() {
+//            return validator;
+//        }
+//    }
 }
