@@ -1,30 +1,18 @@
-package ro.rasel.spring.microservices.contactservice.domain;
+package ro.rasel.spring.microservices.contactservice.controller.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ro.rasel.spring.microservices.commons.utils.validators.Validator;
-import ro.rasel.spring.microservices.commons.utils.validators.Validators;
 
-import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.beans.ConstructorProperties;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@MappedSuperclass
-@ApiModel(description = "User Contacts")
-public class ContactDetails {
-    private static final String EMAIL_PATTERN_STRING = ".+@.+\\..+";
+import static ro.rasel.spring.microservices.contactservice.utils.Constants.EMAIL_PATTERN_STRING;
 
-    private static final Validator<CharSequence> FIRST_NAME_VALIDATOR =
-            Validators.of("firstName", Validators::notNullValidator, Validators::notBlankValidator);
-    private static final Validator<CharSequence> LAST_NAME_VALIDATOR =
-            Validators.of("lastName", Validators::notNullValidator, Validators::notBlankValidator);
-    private static final Validator<CharSequence> EMAIL_VALIDATOR =
-            Validators.matchesPatternValidator("email", EMAIL_PATTERN_STRING)
-                    .and(Validators.notNullValidator("email"));
-    private static final Validator<CharSequence> RELATIONSHIP_VALIDATOR =
-            Validators.of("relationship", Validators::notNullValidator, Validators::notBlankValidator);
+@ApiModel(description = "User Contacts")
+public class ContactDetailsDto {
 
     @NotBlank
     private String firstName;
@@ -38,14 +26,15 @@ public class ContactDetails {
     @NotBlank
     private String relationship;
 
-    ContactDetails() {
+    ContactDetailsDto() {
     }
 
-    public ContactDetails(String firstName, String lastName, String email, String relationship) {
-        this.firstName = FIRST_NAME_VALIDATOR.validate(firstName);
-        this.lastName = LAST_NAME_VALIDATOR.validate(lastName);
-        this.email = EMAIL_VALIDATOR.validate(email);
-        this.relationship = RELATIONSHIP_VALIDATOR.validate(relationship);
+    @ConstructorProperties({"firstName", "lastName", "email", "relationship"})
+    public ContactDetailsDto(String firstName, String lastName, String email, String relationship) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.relationship = relationship;
     }
 
     @ApiModelProperty(value = "First name")
@@ -54,7 +43,7 @@ public class ContactDetails {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = FIRST_NAME_VALIDATOR.validate(firstName);
+        this.firstName = firstName;
     }
 
     @ApiModelProperty(value = "Last name")
@@ -63,7 +52,7 @@ public class ContactDetails {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = LAST_NAME_VALIDATOR.validate(lastName);
+        this.lastName = lastName;
     }
 
     @ApiModelProperty(value = "Email")
@@ -72,7 +61,7 @@ public class ContactDetails {
     }
 
     public void setEmail(String email) {
-        this.email = EMAIL_VALIDATOR.validate(email);
+        this.email = email;
     }
 
     @ApiModelProperty(value = "Relationship")
@@ -81,7 +70,7 @@ public class ContactDetails {
     }
 
     public void setRelationship(String relationship) {
-        this.relationship = RELATIONSHIP_VALIDATOR.validate(relationship);
+        this.relationship = relationship;
     }
 
     @Override
@@ -92,7 +81,7 @@ public class ContactDetails {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ContactDetails that = (ContactDetails) o;
+        ContactDetailsDto that = (ContactDetailsDto) o;
         return Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(email, that.email) &&
@@ -106,7 +95,7 @@ public class ContactDetails {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", ContactDetails.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", ContactDetailsDto.class.getSimpleName() + "[", "]")
                 .add("firstName='" + firstName + "'")
                 .add("lastName='" + lastName + "'")
                 .add("email='" + email + "'")

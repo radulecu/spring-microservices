@@ -9,7 +9,6 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 import ro.rasel.spring.microservices.contactservice.dao.ContactRepository;
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
-import ro.rasel.spring.microservices.contactservice.domain.ContactDetails;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +28,7 @@ import static ro.rasel.spring.microservices.contactservice.utils.TestConstants.U
 @ExtendWith(MockitoExtension.class)
 class ContactServiceImplTest {
     @InjectMocks
-    ContactServiceImpl contactService1;
+    ContactServiceImpl contactService;
 
     @Mock
     ContactRepository contactRepository;
@@ -40,7 +39,7 @@ class ContactServiceImplTest {
                 ImmutableList.of(new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP));
         when(contactRepository.findByUserId(USER_ID)).thenReturn(contacts);
 
-        final List<Contact> result = contactService1.getContacts(USER_ID);
+        final List<Contact> result = contactService.getContacts(USER_ID);
 
         assertThat(result, is(contacts));
     }
@@ -49,7 +48,7 @@ class ContactServiceImplTest {
     void shouldGetEmptyContactsCollectionWhenContactsDoesNotExist() {
         when(contactRepository.findByUserId(USER_ID)).thenReturn(Collections.emptyList());
 
-        final List<Contact> result = contactService1.getContacts(USER_ID);
+        final List<Contact> result = contactService.getContacts(USER_ID);
 
         assertThat(result.isEmpty(), is(true));
     }
@@ -59,73 +58,74 @@ class ContactServiceImplTest {
         final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
         when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.of(contact));
 
-        final Optional<Contact> result = contactService1.getContact(USER_ID, CONTACT_ID);
+        final Optional<Contact> result = contactService.getContact(USER_ID, CONTACT_ID);
 
         assertThat(result.get(), is(contact));
     }
 
     @Test
     void shouldGetNoContactWhenContactsDoesNotExist() {
-        final Optional<Contact> result = contactService1.getContact(USER_ID, CONTACT_ID);
+        final Optional<Contact> result = contactService.getContact(USER_ID, CONTACT_ID);
 
         assertThat(result.isPresent(), is(false));
     }
 
     @Test
     void shouldCreateContact() {
-        final ContactDetails contactDetails = new ContactDetails(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final Contact contactRequest = new Contact(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
         final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
 
         when(contactRepository.save(new Contact(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP)))
                 .thenReturn(contact);
-        final Contact result = contactService1.createContact(USER_ID, contactDetails);
+        final Contact result = contactService.createContact(USER_ID, contactRequest);
 
         assertThat(result, is(contact));
     }
 
     @Test
     void shouldUpdateContactWhenContactExists() {
-        final ContactDetails contactDetails = new ContactDetails(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final Contact contactSpy = Mockito.spy(Contact.class);
+        final Contact contactFromDb =
+                new Contact(CONTACT_ID, USER_ID, FIRST_NAME + 0, LAST_NAME + 0, EMAIL + 0, RELATIONSHIP + 0);
+        final Contact contactRequest = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
         final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
 
-        when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.of(contactSpy));
-        when(contactRepository.save(contactSpy)).thenReturn(contact);
-        final Optional<Contact> result = contactService1.updateContact(USER_ID, CONTACT_ID, contactDetails);
+        when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.of(contactFromDb));
+        when(contactRepository.save(contactFromDb)).thenReturn(contact);
+        final Optional<Contact> result = contactService.updateContact(contactRequest);
 
         assertThat(result.get(), is(contact));
 
-        MatcherAssert.assertThat(contactSpy.getFirstName(), Is.is(FIRST_NAME));
-        MatcherAssert.assertThat(contactSpy.getLastName(), Is.is(LAST_NAME));
-        MatcherAssert.assertThat(contactSpy.getEmail(), Is.is(EMAIL));
-        MatcherAssert.assertThat(contactSpy.getRelationship(), Is.is(RELATIONSHIP));
+        MatcherAssert.assertThat(contactFromDb.getFirstName(), Is.is(FIRST_NAME));
+        MatcherAssert.assertThat(contactFromDb.getLastName(), Is.is(LAST_NAME));
+        MatcherAssert.assertThat(contactFromDb.getEmail(), Is.is(EMAIL));
+        MatcherAssert.assertThat(contactFromDb.getRelationship(), Is.is(RELATIONSHIP));
     }
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingUpdateContactAndContactDoesNotExists() {
-        final ContactDetails contactDetails = new ContactDetails(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final Contact contactRequest = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
 
         when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.empty());
-        final Optional<Contact> result = contactService1.updateContact(USER_ID, CONTACT_ID, contactDetails);
+        final Optional<Contact> result = contactService.updateContact(contactRequest);
 
         assertThat(result.isPresent(), is(false));
     }
 
     @Test
     void shouldDeleteContactWhenContactExists() {
-        final Contact contactSpy = Mockito.spy(Contact.class);
-        when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.of(contactSpy));
+        final Contact contactMock = Mockito.mock(Contact.class);
+        when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.of(contactMock));
 
-        final boolean result = contactService1.deleteContact(USER_ID, CONTACT_ID);
+        final boolean result = contactService.deleteContact(USER_ID, CONTACT_ID);
 
         assertThat(result, is(true));
 
-        verify(contactRepository, Mockito.times(1)).delete(contactSpy);
+        verify(contactRepository, Mockito.times(1)).delete(contactMock);
     }
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingDeleteContactAndContactDoesNotExists() {
-        final boolean result = contactService1.deleteContact(USER_ID, CONTACT_ID);
+        final boolean result = contactService.deleteContact(USER_ID, CONTACT_ID);
 
         assertThat(result, is(false));
 

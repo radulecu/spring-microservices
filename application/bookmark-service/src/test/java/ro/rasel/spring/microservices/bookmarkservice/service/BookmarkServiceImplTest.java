@@ -81,19 +81,19 @@ class BookmarkServiceImplTest {
 
     @Test
     void shouldUpdateBookmarkWhenBookmarkExists() {
-        final Bookmark bookmarkSpy = Mockito.spy(Bookmark.class);
+        final Bookmark bookmarkFromDb = new Bookmark(BOOKMARK_ID, USER_ID, HREF + 0, DESCRIPTION + 0, LABEL + 0);
         final Bookmark bookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
         final Bookmark updatedBookmark = new Bookmark(BOOKMARK_ID, USER_ID, HREF, DESCRIPTION, LABEL);
 
-        when(bookmarkRepository.findByIdAndUserId(BOOKMARK_ID, USER_ID)).thenReturn(Optional.of(bookmarkSpy));
-        when(bookmarkRepository.save(bookmarkSpy)).thenReturn(bookmark);
+        when(bookmarkRepository.findByIdAndUserId(BOOKMARK_ID, USER_ID)).thenReturn(Optional.of(bookmarkFromDb));
+        when(bookmarkRepository.save(bookmarkFromDb)).thenReturn(bookmark);
         final Optional<Bookmark> result = bookmarkService1.updateBookmark(updatedBookmark);
 
         assertThat(result.get(), is(bookmark));
 
-        MatcherAssert.assertThat(bookmarkSpy.getHref(), Is.is(HREF));
-        MatcherAssert.assertThat(bookmarkSpy.getDescription(), Is.is(DESCRIPTION));
-        MatcherAssert.assertThat(bookmarkSpy.getLabel(), Is.is(LABEL));
+        MatcherAssert.assertThat(bookmarkFromDb.getHref(), Is.is(HREF));
+        MatcherAssert.assertThat(bookmarkFromDb.getDescription(), Is.is(DESCRIPTION));
+        MatcherAssert.assertThat(bookmarkFromDb.getLabel(), Is.is(LABEL));
     }
 
     @Test
@@ -108,7 +108,7 @@ class BookmarkServiceImplTest {
 
     @Test
     void shouldDeleteBookmarkWhenBookmarkExists() {
-        final Bookmark bookmarkSpy = Mockito.spy(Bookmark.class);
+        final Bookmark bookmarkSpy = Mockito.mock(Bookmark.class);
         when(bookmarkRepository.findByIdAndUserId(BOOKMARK_ID, USER_ID)).thenReturn(Optional.of(bookmarkSpy));
 
         final boolean result = bookmarkService1.deleteBookmark(USER_ID, BOOKMARK_ID);

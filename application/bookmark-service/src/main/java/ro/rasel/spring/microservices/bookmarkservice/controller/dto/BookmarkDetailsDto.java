@@ -1,5 +1,6 @@
 package ro.rasel.spring.microservices.bookmarkservice.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
@@ -42,6 +43,7 @@ public class BookmarkDetailsDto {
     }
 
     @ApiIgnore
+    @JsonIgnore
     public Bookmark getBookmark() {
         return bookmark;
     }

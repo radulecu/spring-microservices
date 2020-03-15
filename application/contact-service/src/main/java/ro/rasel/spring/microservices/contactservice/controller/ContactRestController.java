@@ -1,54 +1,72 @@
 package ro.rasel.spring.microservices.contactservice.controller;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDetailsDto;
+import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDto;
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
-import ro.rasel.spring.microservices.contactservice.domain.ContactDetails;
 import ro.rasel.spring.microservices.contactservice.service.ContactService;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class ContactRestController implements ContactApi {
     private static final Logger LOG = LoggerFactory.getLogger(ContactRestController.class);
 
     private final ContactService contactService;
+    private final ModelMapper modelMapper;
 
-    public ContactRestController(ContactService contactService) {
+    public ContactRestController(ContactService contactService, ModelMapper modelMapper) {
         this.contactService = contactService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public ResponseEntity<Collection<Contact>> getContacts(@PathVariable String userId) {
+    public ResponseEntity<Collection<ContactDto>> getContacts(@PathVariable String userId) {
         LOG.debug("getting contacts for userId={}", userId);
         final List<Contact> contacts = contactService.getContacts(userId);
-        return contacts.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(contacts);
+        return contacts.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(toContactDtos(contacts));
     }
 
     @Override
-    public ResponseEntity<Contact> getContact(@PathVariable String userId, @PathVariable long contactId) {
+    public ResponseEntity<ContactDto> getContact(@PathVariable String userId, @PathVariable long contactId) {
         LOG.debug("getting contact for userId={} and contactId={}", userId, contactId);
         final Optional<Contact> contact = contactService.getContact(userId, contactId);
-        return contact.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return contact
+                .map(this::toContactDto)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
-    public Contact createContact(@PathVariable String userId, @RequestBody ContactDetails contactDetails) {
+    public ContactDto createContact(@PathVariable String userId, @RequestBody ContactDetailsDto contactDetails) {
         LOG.debug("creating contact for userId={}", userId);
-        return contactService.createContact(userId, contactDetails);
+        final Contact contact = new Contact(userId, contactDetails.getFirstName(), contactDetails.getLastName(),
+                contactDetails.getEmail(), contactDetails.getRelationship());
+
+        return toContactDto(contactService.createContact(userId, contact));
     }
 
     @Override
-    public ResponseEntity<Contact> updateContact(
-            @PathVariable String userId, @PathVariable long contactId, @RequestBody ContactDetails contactDetails) {
+    public ResponseEntity<ContactDto> updateContact(
+            @PathVariable String userId, @PathVariable long contactId, @RequestBody ContactDetailsDto contactDetails) {
         LOG.debug("updating contact for userId={} and contactId={}", userId, contactId);
-        return contactService.updateContact(userId, contactId, contactDetails).map(ResponseEntity::ok)
+
+        Contact contact =
+                toContact(userId, contactId, contactDetails);
+
+        return contactService
+                .updateContact(contact)
+                .map(this::toContactDto)
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -60,4 +78,17 @@ public class ContactRestController implements ContactApi {
                 ResponseEntity.notFound().build();
     }
 
+    private Contact toContact(String userId, long contactId, ContactDetailsDto contactDetails) {
+        return new Contact(contactId, userId, contactDetails.getFirstName(), contactDetails.getLastName(),
+                contactDetails.getEmail(), contactDetails.getRelationship());
+    }
+
+    private List<ContactDto> toContactDtos(List<Contact> contacts) {
+        return contacts.stream().map(this::toContactDto)
+                .collect(Collectors.toList());
+    }
+
+    private ContactDto toContactDto(Contact contact) {
+        return modelMapper.map(contact, ContactDto.class);
+    }
 }
