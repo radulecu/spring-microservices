@@ -16,7 +16,7 @@ public class PassportDto {
     private Passport passport;
 
     public PassportDto(Passport passport) {
-        this.passport=passport;
+        this.passport = passport;
     }
 
     @ApiModelProperty(value = "Passport user id")

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@SuppressWarnings("JpaObjectClassSignatureInspection")
 @Entity
 public class Bookmark {
     private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidator("userId");
@@ -32,7 +33,7 @@ public class Bookmark {
     @NotNull
     private String label;
 
-    public Bookmark() {
+    private Bookmark() {
     }
 
     public Bookmark(long id, String userId, String href, String description, String label) {

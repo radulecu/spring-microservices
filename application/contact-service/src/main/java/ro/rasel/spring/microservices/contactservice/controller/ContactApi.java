@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ro.rasel.spring.microservices.contactservice.domain.Contact;
-import ro.rasel.spring.microservices.contactservice.domain.ContactDetails;
+import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDetailsDto;
+import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDto;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public interface ContactApi {
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    ResponseEntity<Collection<Contact>> getContacts(@PathVariable String userId);
+    ResponseEntity<Collection<ContactDto>> getContacts(@PathVariable String userId);
 
     @GetMapping(value = "/{contactId}")
     @ApiOperation(value = "get contact", notes = "Get a contact", tags = TAG)
@@ -40,7 +40,7 @@ public interface ContactApi {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    ResponseEntity<Contact> getContact(@PathVariable String userId, @PathVariable long contactId);
+    ResponseEntity<ContactDto> getContact(@PathVariable String userId, @PathVariable long contactId);
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @ApiOperation(value = "add contact", notes = "Create a new contact and return it", tags = TAG)
@@ -48,7 +48,7 @@ public interface ContactApi {
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    Contact createContact(@PathVariable String userId, @Valid @RequestBody ContactDetails contactDetails);
+    ContactDto createContact(@PathVariable String userId, @Valid @RequestBody ContactDetailsDto contactDetails);
 
     @PutMapping(value = "/{contactId}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @ApiOperation(value = "add contact", notes = "Update a contact and return it", tags = TAG)
@@ -57,9 +57,9 @@ public interface ContactApi {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    ResponseEntity<Contact> updateContact(
+    ResponseEntity<ContactDto> updateContact(
             @PathVariable String userId, @PathVariable long contactId,
-            @Valid @RequestBody ContactDetails contactDetails);
+            @Valid @RequestBody ContactDetailsDto contactDetails);
 
     @DeleteMapping(value = "/{contactId}")
     @ApiOperation(code = 201, value = "delete contact", notes = "Delete a contact", tags = TAG)

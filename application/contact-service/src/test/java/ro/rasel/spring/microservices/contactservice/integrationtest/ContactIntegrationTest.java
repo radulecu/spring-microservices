@@ -9,9 +9,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDetailsDto;
+import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDto;
 import ro.rasel.spring.microservices.contactservice.dao.ContactRepository;
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
-import ro.rasel.spring.microservices.contactservice.domain.ContactDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,11 +44,11 @@ class ContactIntegrationTest {
 
     @Test
     void shouldGetContactCollectionWhenContactsExist() {
-        final Contact contact = initContactInDb(USER_ID);
+        final ContactDto contact = initContactInDb(USER_ID);
 
-        final ResponseEntity<List<Contact>> result = testRestTemplate
+        final ResponseEntity<List<ContactDto>> result = testRestTemplate
                 .exchange(CONTACTS_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY,
-                        new ParameterizedTypeReference<List<Contact>>() {
+                        new ParameterizedTypeReference<List<ContactDto>>() {
                         }, USER_ID);
 
         assertThat(result.getBody().get(0), is(contact));
@@ -57,20 +58,20 @@ class ContactIntegrationTest {
     @Test
     void shouldGetEmptyContactsCollectionWhenContactsDoesNotExist() {
 
-        final ResponseEntity<List<Contact>> result = testRestTemplate
+        final ResponseEntity<List<ContactDto>> result = testRestTemplate
                 .exchange(CONTACTS_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY,
-                        new ParameterizedTypeReference<List<Contact>>() {
+                        new ParameterizedTypeReference<List<ContactDto>>() {
                         }, USER_ID);
 
-        assertThat(result.getBody(), is((List<Contact>) null));
+        assertThat(result.getBody(), is((List<ContactDto>) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 
     @Test
     void shouldGetContactWhenContactExist() {
-        final Contact contact = initContactInDb(USER_ID);
-        final ResponseEntity<Contact> result = testRestTemplate
-                .exchange(CONTACT_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, Contact.class,
+        final ContactDto contact = initContactInDb(USER_ID);
+        final ResponseEntity<ContactDto> result = testRestTemplate
+                .exchange(CONTACT_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, ContactDto.class,
                         USER_ID, contact.getId());
 
         assertThat(result.getBody(), is(contact));
@@ -79,23 +80,23 @@ class ContactIntegrationTest {
 
     @Test
     void shouldGetNoContactWhenContactsDoesNotExist() {
-        final ResponseEntity<Contact> result = testRestTemplate
-                .exchange(CONTACT_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, Contact.class,
+        final ResponseEntity<ContactDto> result = testRestTemplate
+                .exchange(CONTACT_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, ContactDto.class,
                         USER_ID, 3);
 
-        assertThat(result.getBody(), is((Contact) null));
+        assertThat(result.getBody(), is((ContactDto) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 
     @Test
     void shouldCreateContact() {
-        final ContactDetails contactDetails = new ContactDetails(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final ContactDetailsDto contactDetails = new ContactDetailsDto(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
 
-        final ResponseEntity<Contact> result = testRestTemplate
+        final ResponseEntity<ContactDto> result = testRestTemplate
                 .exchange(CONTACTS_ENDPOINT, HttpMethod.POST, new HttpEntity<>(contactDetails),
-                        Contact.class, USER_ID);
+                        ContactDto.class, USER_ID);
 
-        final Contact contact = result.getBody();
+        final ContactDto contact = result.getBody();
 
         assertThat(contact.getUserId(), is(USER_ID));
         assertThat(contact.getFirstName(), is(FIRST_NAME));
@@ -112,14 +113,14 @@ class ContactIntegrationTest {
     @Test
     void shouldUpdateContactWhenContactExists() {
         final long contactId = initContactInDb(USER_ID, "0").getId();
-        final ContactDetails contactDetails = new ContactDetails(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final Contact contact =
-                new Contact(contactId, USER_ID, contactDetails.getFirstName(), contactDetails.getLastName(),
+        final ContactDetailsDto contactDetails = new ContactDetailsDto(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final ContactDto contact =
+                new ContactDto(contactId, USER_ID, contactDetails.getFirstName(), contactDetails.getLastName(),
                         contactDetails.getEmail(), contactDetails.getRelationship());
 
-        final ResponseEntity<Contact> result = testRestTemplate
+        final ResponseEntity<ContactDto> result = testRestTemplate
                 .exchange(CONTACT_ENDPOINT, HttpMethod.PUT,
-                        new HttpEntity<>(contactDetails), Contact.class, USER_ID, contactId);
+                        new HttpEntity<>(contactDetails), ContactDto.class, USER_ID, contactId);
 
         assertThat(result.getBody(), is(contact));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
@@ -127,13 +128,13 @@ class ContactIntegrationTest {
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingUpdateContactAndContactDoesNotExists() {
-        final ContactDetails contactDetails = new ContactDetails(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final ContactDetailsDto contactDetails = new ContactDetailsDto(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
 
-        final ResponseEntity<Contact> result = testRestTemplate
+        final ResponseEntity<ContactDto> result = testRestTemplate
                 .exchange(CONTACT_ENDPOINT, HttpMethod.PUT,
-                        new HttpEntity<>(contactDetails), Contact.class, USER_ID, 1);
+                        new HttpEntity<>(contactDetails), ContactDto.class, USER_ID, 1);
 
-        assertThat(result.getBody(), is((Contact) null));
+        assertThat(result.getBody(), is((ContactDto) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 
@@ -141,32 +142,32 @@ class ContactIntegrationTest {
     void shouldDeleteContactWhenContactExists() {
         final long contactId = initContactInDb(USER_ID).getId();
 
-        final ResponseEntity<Contact> result = testRestTemplate
+        final ResponseEntity<ContactDto> result = testRestTemplate
                 .exchange(CONTACT_ENDPOINT, HttpMethod.DELETE,
-                        HttpEntity.EMPTY, Contact.class, USER_ID, contactId);
+                        HttpEntity.EMPTY, ContactDto.class, USER_ID, contactId);
 
         assertThat(result.getStatusCode(), is(HttpStatus.NO_CONTENT));
     }
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingDeleteContactAndContactDoesNotExists() {
-        final ResponseEntity<Contact> result = testRestTemplate
+        final ResponseEntity<ContactDto> result = testRestTemplate
                 .exchange(CONTACT_ENDPOINT, HttpMethod.DELETE,
-                        HttpEntity.EMPTY, Contact.class, USER_ID, 1);
+                        HttpEntity.EMPTY, ContactDto.class, USER_ID, 1);
 
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 
-    private Contact initContactInDb(String userId) {
-        return contactRepository.save(createContact(userId));
+    private ContactDto initContactInDb(String userId) {
+        return toContactDto(contactRepository.save(createContact(userId)));
     }
 
-    private Contact initContactInDb(String userId, String suffix) {
-        return contactRepository.save(createContact(userId, suffix));
+    private ContactDto initContactInDb(String userId, String suffix) {
+        return toContactDto(contactRepository.save(createContact(userId, suffix)));
     }
 
-    private Optional<Contact> getContactFromDb(long id, String userId) {
-        return contactRepository.findByIdAndUserId(id, userId);
+    private Optional<ContactDto> getContactFromDb(long id, String userId) {
+        return contactRepository.findByIdAndUserId(id, userId).map(this::toContactDto);
     }
 
     private Contact createContact(String userId) {
@@ -179,5 +180,10 @@ class ContactIntegrationTest {
                 LAST_NAME + suffix,
                 String.format("%s@email.com", FIRST_NAME.toLowerCase() + suffix),
                 "friend" + suffix);
+    }
+
+    private ContactDto toContactDto(Contact contact) {
+        return new ContactDto(contact.getId(), contact.getUserId(), contact.getFirstName(), contact.getLastName(),
+                contact.getEmail(), contact.getRelationship());
     }
 }
