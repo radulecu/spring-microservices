@@ -61,10 +61,11 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!--H2-->
+        <!--HSQL-->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <!--Test-->
