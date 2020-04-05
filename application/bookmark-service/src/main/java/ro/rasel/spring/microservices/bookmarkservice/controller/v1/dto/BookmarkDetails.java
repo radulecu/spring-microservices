@@ -1,26 +1,22 @@
-package ro.rasel.spring.microservices.bookmarkservice.controller.dto;
+package ro.rasel.spring.microservices.bookmarkservice.controller.v1.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.NotNull;
-import java.beans.ConstructorProperties;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@ApiModel(value = "BookmarkDetails", description = "User Bookmark")
-public class BookmarkDetailsDto {
+public class BookmarkDetails {
     private final Bookmark bookmark;
 
-    @ConstructorProperties({"href", "description", "label"})
-    public BookmarkDetailsDto(String href, String description, String label) {
+    public BookmarkDetails(String href, String description, String label) {
         this(new Bookmark(href, description, label));
     }
 
-    public BookmarkDetailsDto(Bookmark bookmark) {
+    public BookmarkDetails(Bookmark bookmark) {
         this.bookmark = bookmark;
     }
 
@@ -56,7 +52,7 @@ public class BookmarkDetailsDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        BookmarkDetailsDto that = (BookmarkDetailsDto) o;
+        BookmarkDetails that = (BookmarkDetails) o;
         return Objects.equals(bookmark, that.bookmark);
     }
 

@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.contactservice.controller;
+package ro.rasel.spring.microservices.contactservice.controller.v1;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
@@ -7,10 +7,11 @@ import org.mockito.junit.jupiter.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDetailsDto;
-import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDto;
+import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactRequest;
+import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactResponse;
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
 import ro.rasel.spring.microservices.contactservice.service.ContactService;
+import ro.rasel.spring.microservices.contactservice.utils.DomainGenerator;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -20,11 +21,9 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.Is.*;
 import static org.mockito.Mockito.*;
+import static ro.rasel.spring.microservices.contactservice.utils.DtoGenerator.createContactRequestBuilder;
+import static ro.rasel.spring.microservices.contactservice.utils.DtoGenerator.createContactResponseBuilder;
 import static ro.rasel.spring.microservices.contactservice.utils.TestConstants.CONTACT_ID;
-import static ro.rasel.spring.microservices.contactservice.utils.TestConstants.EMAIL;
-import static ro.rasel.spring.microservices.contactservice.utils.TestConstants.FIRST_NAME;
-import static ro.rasel.spring.microservices.contactservice.utils.TestConstants.LAST_NAME;
-import static ro.rasel.spring.microservices.contactservice.utils.TestConstants.RELATIONSHIP;
 import static ro.rasel.spring.microservices.contactservice.utils.TestConstants.USER_ID;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,16 +40,14 @@ class ContactRestControllerTest {
 
     @Test
     void shouldGetContactCollectionWhenContactsExist() {
-        final List<Contact> contacts =
-                Collections.singletonList(new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP));
-        final List<ContactDto> contactDtos =
-                Collections
-                        .singletonList(new ContactDto(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP));
+        final List<Contact> contacts = Collections.singletonList(DomainGenerator.createContact(true));
+        final List<ContactResponse> contactResponses =
+                Collections.singletonList(createContactResponseBuilder().build());
         when(contactService.getContacts(USER_ID)).thenReturn(contacts);
 
-        final ResponseEntity<Collection<ContactDto>> result = contactRestController.getContacts(USER_ID);
+        final ResponseEntity<Collection<ContactResponse>> result = contactRestController.getContacts(USER_ID);
 
-        assertThat(result.getBody(), is(contactDtos));
+        assertThat(result.getBody(), is(contactResponses));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
@@ -58,7 +55,7 @@ class ContactRestControllerTest {
     void shouldGetEmptyContactsCollectionWhenContactsDoesNotExist() {
         when(contactService.getContacts(USER_ID)).thenReturn(Collections.emptyList());
 
-        final ResponseEntity<Collection<ContactDto>> result = contactRestController.getContacts(USER_ID);
+        final ResponseEntity<Collection<ContactResponse>> result = contactRestController.getContacts(USER_ID);
 
         assertThat(result.getBody(), is((Collection<Contact>) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
@@ -66,19 +63,19 @@ class ContactRestControllerTest {
 
     @Test
     void shouldGetContactWhenContactExist() {
-        final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final ContactDto contactDto = new ContactDto(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final Contact contact = DomainGenerator.createContact(true);
+        final ContactResponse contactResponse = createContactResponseBuilder().build();
         when(contactService.getContact(USER_ID, CONTACT_ID)).thenReturn(Optional.of(contact));
 
-        final ResponseEntity<ContactDto> result = contactRestController.getContact(USER_ID, CONTACT_ID);
+        final ResponseEntity<ContactResponse> result = contactRestController.getContact(USER_ID, CONTACT_ID);
 
-        assertThat(result.getBody(), is(contactDto));
+        assertThat(result.getBody(), is(contactResponse));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
     @Test
     void shouldGetNoContactWhenContactsDoesNotExist() {
-        final ResponseEntity<ContactDto> result = contactRestController.getContact(USER_ID, CONTACT_ID);
+        final ResponseEntity<ContactResponse> result = contactRestController.getContact(USER_ID, CONTACT_ID);
 
         assertThat(result.getBody(), is((Contact) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
@@ -86,41 +83,42 @@ class ContactRestControllerTest {
 
     @Test
     void shouldCreateContact() {
-        final ContactDetailsDto contactDetails = new ContactDetailsDto(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final Contact contactRequest = new Contact(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final ContactDto contactDto = new ContactDto(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final ContactRequest contactDetails = createContactRequestBuilder().build();
+        final Contact contactServiceRequest = DomainGenerator.createContact(null, USER_ID, "", false);
+        final Contact contactServiceResponse = DomainGenerator.createContact(true);
+        final ContactResponse contactResponse = createContactResponseBuilder().build();
 
-        when(contactService.createContact(USER_ID, contactRequest)).thenReturn(contact);
-        final ContactDto result = contactRestController.createContact(USER_ID, contactDetails);
+        when(contactService.createContact(USER_ID, contactServiceRequest)).thenReturn(contactServiceResponse);
+        final ContactResponse result = contactRestController.createContact(USER_ID, contactDetails);
 
-        assertThat(result, is(contactDto));
+        assertThat(result, is(contactResponse));
     }
 
     @Test
     void shouldUpdateContactWhenContactExists() {
-        final ContactDetailsDto contactDetails = new ContactDetailsDto(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final ContactDto contactDto = new ContactDto(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final ContactRequest contactDetails = createContactRequestBuilder().build();
+        final Contact contactServiceRequest = DomainGenerator.createContact(false);
+        final Contact contactServiceResponse = DomainGenerator.createContact(true);
+        final ContactResponse contactResponse = createContactResponseBuilder().build();
 
-        when(contactService.updateContact(contact)).thenReturn(Optional.of(contact));
-        final ResponseEntity<ContactDto> result =
+        when(contactService.updateContact(contactServiceRequest)).thenReturn(Optional.of(contactServiceResponse));
+        final ResponseEntity<ContactResponse> result =
                 contactRestController.updateContact(USER_ID, CONTACT_ID, contactDetails);
 
-        assertThat(result.getBody(), is(contactDto));
+        assertThat(result.getBody(), is(contactResponse));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingUpdateContactAndContactDoesNotExists() {
-        final ContactDetailsDto contactDetails = new ContactDetailsDto(FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final Contact contactRequest = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final ContactRequest contactDetails = createContactRequestBuilder().build();
+        final Contact contactRequest = DomainGenerator.createContact(false);
 
         when(contactService.updateContact(contactRequest)).thenReturn(Optional.empty());
-        final ResponseEntity<ContactDto> result =
+        final ResponseEntity<ContactResponse> result =
                 contactRestController.updateContact(USER_ID, CONTACT_ID, contactDetails);
 
-        assertThat(result.getBody(), is((ContactDto) null));
+        assertThat(result.getBody(), is((ContactResponse) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 

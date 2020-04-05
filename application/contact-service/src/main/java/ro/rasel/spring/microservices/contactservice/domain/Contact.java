@@ -1,15 +1,20 @@
 package ro.rasel.spring.microservices.contactservice.domain;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import ro.rasel.spring.microservices.commons.utils.validators.Validator;
 import ro.rasel.spring.microservices.commons.utils.validators.Validators;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -17,7 +22,6 @@ import static ro.rasel.spring.microservices.contactservice.utils.Constants.EMAIL
 
 @SuppressWarnings("JpaObjectClassSignatureInspection")
 @Entity
-@ApiModel(description = "User Contacts")
 public class Contact {
     private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidator("userId");
     private static final Validator<CharSequence> FIRST_NAME_VALIDATOR =
@@ -49,67 +53,101 @@ public class Contact {
     @NotBlank
     private String relationship;
 
+    @NotNull
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_id",referencedColumnName="id")
+    private List<PhoneNumber> phoneNumbers = new ArrayList<>();
+
+    @NotNull
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_id",referencedColumnName="id")
+    private List<Address> addresses = new ArrayList<>();
+
     private Contact() {
     }
 
-    public Contact(long id, String userId, String firstName, String lastName, String email, String relationship) {
-        this(userId, firstName, lastName, email, relationship);
+    public Contact(
+            Long id, String userId, String firstName, String lastName, String email, String relationship,
+            List<PhoneNumber> phoneNumbers, List<Address> addresses) {
+        this(userId, firstName, lastName, email, relationship, phoneNumbers, addresses);
         this.id = id;
     }
 
-    public Contact(String userId, String firstName, String lastName, String email, String relationship) {
+    public Contact(
+            String userId, String firstName, String lastName, String email, String relationship,
+            List<PhoneNumber> phoneNumbers, List<Address> addresses) {
         this.userId = USER_ID_VALIDATOR.validate(userId);
 
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setRelationship(relationship);
+        setPhoneNumbers(phoneNumbers);
+        setAddresses(addresses);
     }
 
-    @ApiModelProperty(value = "Contact id")
     public Long getId() {
         return id;
     }
 
-    @ApiModelProperty(value = "Used id")
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUserId() {
         return userId;
     }
 
-    @ApiModelProperty(value = "First name")
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = FIRST_NAME_VALIDATOR.validate(firstName);
+        this.firstName = firstName;
     }
 
-    @ApiModelProperty(value = "Last name")
     public String getLastName() {
         return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = LAST_NAME_VALIDATOR.validate(lastName);
+        this.lastName = lastName;
     }
 
-    @ApiModelProperty(value = "Email")
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
-        this.email = EMAIL_VALIDATOR.validate(email);
+        this.email = email;
     }
 
-    @ApiModelProperty(value = "Relationship")
+    public List<PhoneNumber> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     public String getRelationship() {
         return relationship;
     }
 
     public void setRelationship(String relationship) {
-        this.relationship = RELATIONSHIP_VALIDATOR.validate(relationship);
+        this.relationship = relationship;
     }
 
     @Override
@@ -126,12 +164,14 @@ public class Contact {
                 Objects.equals(firstName, contact.firstName) &&
                 Objects.equals(lastName, contact.lastName) &&
                 Objects.equals(email, contact.email) &&
+                Objects.equals(phoneNumbers, contact.phoneNumbers) &&
+                Objects.equals(addresses, contact.addresses) &&
                 Objects.equals(relationship, contact.relationship);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, firstName, lastName, email, relationship);
+        return Objects.hash(id, userId, firstName, lastName, email, phoneNumbers, addresses, relationship);
     }
 
     @Override
@@ -142,7 +182,65 @@ public class Contact {
                 .add("firstName='" + firstName + "'")
                 .add("lastName='" + lastName + "'")
                 .add("email='" + email + "'")
+                .add("phoneNumbers=" + phoneNumbers)
+                .add("addresses=" + addresses)
                 .add("relationship='" + relationship + "'")
                 .toString();
+    }
+
+    public static final class ContactBuilder {
+        private Contact contact;
+
+        private ContactBuilder() {
+            contact = new Contact();
+        }
+
+        public static ContactBuilder aContact() {
+            return new ContactBuilder();
+        }
+
+        public ContactBuilder withId(Long id) {
+            contact.setId(id);
+            return this;
+        }
+
+        public ContactBuilder withUserId(String userId) {
+            contact.setUserId(userId);
+            return this;
+        }
+
+        public ContactBuilder withFirstName(String firstName) {
+            contact.setFirstName(firstName);
+            return this;
+        }
+
+        public ContactBuilder withLastName(String lastName) {
+            contact.setLastName(lastName);
+            return this;
+        }
+
+        public ContactBuilder withEmail(String email) {
+            contact.setEmail(email);
+            return this;
+        }
+
+        public ContactBuilder withPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+            contact.setPhoneNumbers(phoneNumbers);
+            return this;
+        }
+
+        public ContactBuilder withAddresses(List<Address> addresses) {
+            contact.setAddresses(addresses);
+            return this;
+        }
+
+        public ContactBuilder withRelationship(String relationship) {
+            contact.setRelationship(relationship);
+            return this;
+        }
+
+        public Contact build() {
+            return contact;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.bookmarkservice.integrationtest;
+package ro.rasel.spring.microservices.bookmarkservice.integrationtest.v1;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ro.rasel.spring.microservices.bookmarkservice.controller.dto.BookmarkDetailsDto;
-import ro.rasel.spring.microservices.bookmarkservice.controller.dto.BookmarkDto;
+import ro.rasel.spring.microservices.bookmarkservice.controller.v1.dto.BookmarkDetails;
+import ro.rasel.spring.microservices.bookmarkservice.controller.v1.dto.BookmarkResponse;
 import ro.rasel.spring.microservices.bookmarkservice.dao.BookmarkRepository;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
 
@@ -43,34 +43,34 @@ class BookmarkIntegrationTest {
 
     @Test
     void shouldGetBookmarkCollectionWhenBookmarksExist() {
-        final BookmarkDto bookmarkDto = new BookmarkDto(initBookmarkInDb(USER_ID));
+        final BookmarkResponse bookmarkResponse = new BookmarkResponse(initBookmarkInDb(USER_ID));
 
-        final ResponseEntity<List<BookmarkDto>> result = testRestTemplate
+        final ResponseEntity<List<BookmarkResponse>> result = testRestTemplate
                 .exchange(BOOKMARKS_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY,
-                        new ParameterizedTypeReference<List<BookmarkDto>>() {
+                        new ParameterizedTypeReference<List<BookmarkResponse>>() {
                         }, USER_ID);
 
-        assertThat(result.getBody().get(0), is(bookmarkDto));
+        assertThat(result.getBody().get(0), is(bookmarkResponse));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
     @Test
     void shouldGetEmptyBookmarksCollectionWhenBookmarksDoesNotExist() {
 
-        final ResponseEntity<List<BookmarkDto>> result = testRestTemplate
+        final ResponseEntity<List<BookmarkResponse>> result = testRestTemplate
                 .exchange(BOOKMARKS_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY,
-                        new ParameterizedTypeReference<List<BookmarkDto>>() {
+                        new ParameterizedTypeReference<List<BookmarkResponse>>() {
                         }, USER_ID);
 
-        assertThat(result.getBody(), is((List<BookmarkDto>) null));
+        assertThat(result.getBody(), is((List<BookmarkResponse>) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 
     @Test
     void shouldGetBookmarkWhenBookmarkExist() {
-        final BookmarkDto bookmark = new BookmarkDto(initBookmarkInDb(USER_ID));
-        final ResponseEntity<BookmarkDto> result = testRestTemplate
-                .exchange(BOOKMARK_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, BookmarkDto.class,
+        final BookmarkResponse bookmark = new BookmarkResponse(initBookmarkInDb(USER_ID));
+        final ResponseEntity<BookmarkResponse> result = testRestTemplate
+                .exchange(BOOKMARK_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, BookmarkResponse.class,
                         USER_ID, bookmark.getId());
 
         assertThat(result.getBody(), is(bookmark));
@@ -79,45 +79,45 @@ class BookmarkIntegrationTest {
 
     @Test
     void shouldGetNoBookmarkWhenBookmarksDoesNotExist() {
-        final ResponseEntity<BookmarkDto> result = testRestTemplate
-                .exchange(BOOKMARK_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, BookmarkDto.class,
+        final ResponseEntity<BookmarkResponse> result = testRestTemplate
+                .exchange(BOOKMARK_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, BookmarkResponse.class,
                         USER_ID, 3);
 
-        assertThat(result.getBody(), is((BookmarkDto) null));
+        assertThat(result.getBody(), is((BookmarkResponse) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 
     @Test
     void shouldCreateBookmark() {
-        final BookmarkDetailsDto bookmarkDetailsDto = new BookmarkDetailsDto(HREF, DESCRIPTION, LABEL);
+        final BookmarkDetails bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
 
-        final ResponseEntity<BookmarkDto> result = testRestTemplate
-                .exchange(BOOKMARKS_ENDPOINT, HttpMethod.POST, new HttpEntity<>(bookmarkDetailsDto),
-                        BookmarkDto.class, USER_ID);
+        final ResponseEntity<BookmarkResponse> result = testRestTemplate
+                .exchange(BOOKMARKS_ENDPOINT, HttpMethod.POST, new HttpEntity<>(bookmarkDetails),
+                        BookmarkResponse.class, USER_ID);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
 
-        final BookmarkDto bookmarkDto = result.getBody();
-        assertThat(bookmarkDto.getUserId(), is(USER_ID));
-        assertThat(bookmarkDto.getHref(), is(HREF));
-        assertThat(bookmarkDto.getDescription(), is(DESCRIPTION));
-        assertThat(bookmarkDto.getLabel(), is(LABEL));
+        final BookmarkResponse bookmarkResponse = result.getBody();
+        assertThat(bookmarkResponse.getUserId(), is(USER_ID));
+        assertThat(bookmarkResponse.getHref(), is(HREF));
+        assertThat(bookmarkResponse.getDescription(), is(DESCRIPTION));
+        assertThat(bookmarkResponse.getLabel(), is(LABEL));
 
-        assertThat(getBookmarkFromDb(bookmarkDto.getId(), USER_ID).get(), is(bookmarkDto.getBookmark()));
+        assertThat(getBookmarkFromDb(bookmarkResponse.getId(), USER_ID).get(), is(bookmarkResponse.getBookmark()));
 
     }
 
     @Test
     void shouldUpdateBookmarkWhenBookmarkExists() {
         final long bookmarkId = initBookmarkInDb(USER_ID, "0").getId();
-        final BookmarkDetailsDto bookmarkDetailsDto = new BookmarkDetailsDto(HREF, DESCRIPTION, LABEL);
-        final BookmarkDto bookmark =
-                new BookmarkDto(bookmarkId, USER_ID, bookmarkDetailsDto.getHref(), bookmarkDetailsDto.getDescription(),
-                        bookmarkDetailsDto.getLabel());
+        final BookmarkDetails bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
+        final BookmarkResponse bookmark =
+                new BookmarkResponse(bookmarkId, USER_ID, bookmarkDetails.getHref(), bookmarkDetails.getDescription(),
+                        bookmarkDetails.getLabel());
 
-        final ResponseEntity<BookmarkDto> result = testRestTemplate
+        final ResponseEntity<BookmarkResponse> result = testRestTemplate
                 .exchange(BOOKMARK_ENDPOINT, HttpMethod.PUT,
-                        new HttpEntity<>(bookmarkDetailsDto), BookmarkDto.class, USER_ID, bookmarkId);
+                        new HttpEntity<>(bookmarkDetails), BookmarkResponse.class, USER_ID, bookmarkId);
 
         assertThat(result.getBody(), is(bookmark));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
@@ -125,13 +125,13 @@ class BookmarkIntegrationTest {
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingUpdateBookmarkAndBookmarkDoesNotExists() {
-        final BookmarkDetailsDto bookmarkDetailsDto = new BookmarkDetailsDto(HREF, DESCRIPTION, LABEL);
+        final BookmarkDetails bookmarkDetails = new BookmarkDetails(HREF, DESCRIPTION, LABEL);
 
-        final ResponseEntity<BookmarkDto> result = testRestTemplate
+        final ResponseEntity<BookmarkResponse> result = testRestTemplate
                 .exchange(BOOKMARK_ENDPOINT, HttpMethod.PUT,
-                        new HttpEntity<>(bookmarkDetailsDto), BookmarkDto.class, USER_ID, 1);
+                        new HttpEntity<>(bookmarkDetails), BookmarkResponse.class, USER_ID, 1);
 
-        assertThat(result.getBody(), is((BookmarkDto) null));
+        assertThat(result.getBody(), is((BookmarkResponse) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 
@@ -139,18 +139,18 @@ class BookmarkIntegrationTest {
     void shouldDeleteBookmarkWhenBookmarkExists() {
         final long bookmarkId = initBookmarkInDb(USER_ID).getId();
 
-        final ResponseEntity<BookmarkDto> result = testRestTemplate
+        final ResponseEntity<BookmarkResponse> result = testRestTemplate
                 .exchange(BOOKMARK_ENDPOINT, HttpMethod.DELETE,
-                        HttpEntity.EMPTY, BookmarkDto.class, USER_ID, bookmarkId);
+                        HttpEntity.EMPTY, BookmarkResponse.class, USER_ID, bookmarkId);
 
         assertThat(result.getStatusCode(), is(HttpStatus.NO_CONTENT));
     }
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingDeleteBookmarkAndBookmarkDoesNotExists() {
-        final ResponseEntity<BookmarkDto> result = testRestTemplate
+        final ResponseEntity<BookmarkResponse> result = testRestTemplate
                 .exchange(BOOKMARK_ENDPOINT, HttpMethod.DELETE,
-                        HttpEntity.EMPTY, BookmarkDto.class, USER_ID, 1);
+                        HttpEntity.EMPTY, BookmarkResponse.class, USER_ID, 1);
 
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
