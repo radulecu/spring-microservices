@@ -1,22 +1,19 @@
 package ro.rasel.spring.microservices.passportservice.domain;
 
-import ro.rasel.spring.microservices.api.bookmark.data.Bookmark;
-import ro.rasel.spring.microservices.api.contact.data.Contact;
+import ro.rasel.spring.microservices.api.bookmark.data.BookmarkResponse;
+import ro.rasel.spring.microservices.api.contact.data.ContactResponse;
 
 import java.util.Collection;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Passport {
-
     private final String userId;
-
-    private final Collection<Bookmark> bookmarks;
-
-    private final Collection<Contact> contacts;
+    private final Collection<BookmarkResponse> bookmarks;
+    private final Collection<ContactResponse> contacts;
 
     public Passport(
-            String userId, Collection<Bookmark> bookmarks, Collection<Contact> contacts) {
+            String userId, Collection<BookmarkResponse> bookmarks, Collection<ContactResponse> contacts) {
         this.userId = userId;
         this.bookmarks = bookmarks;
         this.contacts = contacts;
@@ -26,11 +23,11 @@ public class Passport {
         return userId;
     }
 
-    public Collection<Contact> getContacts() {
+    public Collection<ContactResponse> getContacts() {
         return contacts;
     }
 
-    public Collection<Bookmark> getBookmarks() {
+    public Collection<BookmarkResponse> getBookmarks() {
         return bookmarks;
     }
 

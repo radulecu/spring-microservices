@@ -9,6 +9,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 import ro.rasel.spring.microservices.contactservice.dao.ContactRepository;
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
+import ro.rasel.spring.microservices.contactservice.utils.DomainGenerator;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,7 @@ import static ro.rasel.spring.microservices.contactservice.utils.TestConstants.U
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @ExtendWith(MockitoExtension.class)
-class ContactServiceImplTest {
+public class ContactServiceImplTest {
     @InjectMocks
     ContactServiceImpl contactService;
 
@@ -35,8 +36,7 @@ class ContactServiceImplTest {
 
     @Test
     void shouldGetContactCollectionWhenContactsExist() {
-        final List<Contact> contacts =
-                ImmutableList.of(new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP));
+        final List<Contact> contacts = ImmutableList.of(DomainGenerator.createContact(true));
         when(contactRepository.findByUserId(USER_ID)).thenReturn(contacts);
 
         final List<Contact> result = contactService.getContacts(USER_ID);
@@ -55,7 +55,7 @@ class ContactServiceImplTest {
 
     @Test
     void shouldGetContactWhenContactExist() {
-        final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final Contact contact = DomainGenerator.createContact(true);
         when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.of(contact));
 
         final Optional<Contact> result = contactService.getContact(USER_ID, CONTACT_ID);
@@ -72,28 +72,27 @@ class ContactServiceImplTest {
 
     @Test
     void shouldCreateContact() {
-        final Contact contactRequest = new Contact(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final Contact contact = DomainGenerator.createContact();
+        final Contact expectedContact = DomainGenerator.createContact(true);
 
-        when(contactRepository.save(new Contact(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP)))
-                .thenReturn(contact);
-        final Contact result = contactService.createContact(USER_ID, contactRequest);
+        when(contactRepository.save(contact))
+                .thenReturn(expectedContact);
+        final Contact result = contactService.createContact(USER_ID, contact);
 
-        assertThat(result, is(contact));
+        assertThat(result, is(expectedContact));
     }
 
     @Test
     void shouldUpdateContactWhenContactExists() {
-        final Contact contactFromDb =
-                new Contact(CONTACT_ID, USER_ID, FIRST_NAME + 0, LAST_NAME + 0, EMAIL + 0, RELATIONSHIP + 0);
-        final Contact contactRequest = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
-        final Contact contact = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final Contact contactFromDb = DomainGenerator.createContact(CONTACT_ID, USER_ID, "0", true);
+        final Contact contact = DomainGenerator.createContact();
+        final Contact expectedContact = DomainGenerator.createContact();
 
         when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.of(contactFromDb));
-        when(contactRepository.save(contactFromDb)).thenReturn(contact);
-        final Optional<Contact> result = contactService.updateContact(contactRequest);
+        when(contactRepository.save(contactFromDb)).thenReturn(expectedContact);
+        final Optional<Contact> result = contactService.updateContact(contact);
 
-        assertThat(result.get(), is(contact));
+        assertThat(result.get(), is(expectedContact));
 
         MatcherAssert.assertThat(contactFromDb.getFirstName(), Is.is(FIRST_NAME));
         MatcherAssert.assertThat(contactFromDb.getLastName(), Is.is(LAST_NAME));
@@ -103,10 +102,10 @@ class ContactServiceImplTest {
 
     @Test
     void shouldReturnNotFoundStatusCodeWhenCallingUpdateContactAndContactDoesNotExists() {
-        final Contact contactRequest = new Contact(CONTACT_ID, USER_ID, FIRST_NAME, LAST_NAME, EMAIL, RELATIONSHIP);
+        final Contact contact = DomainGenerator.createContact();
 
         when(contactRepository.findByIdAndUserId(CONTACT_ID, USER_ID)).thenReturn(Optional.empty());
-        final Optional<Contact> result = contactService.updateContact(contactRequest);
+        final Optional<Contact> result = contactService.updateContact(contact);
 
         assertThat(result.isPresent(), is(false));
     }

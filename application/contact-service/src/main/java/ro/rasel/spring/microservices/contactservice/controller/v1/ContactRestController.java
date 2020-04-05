@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.contactservice.controller;
+package ro.rasel.spring.microservices.contactservice.controller.v1;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -7,12 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDetailsDto;
-import ro.rasel.spring.microservices.contactservice.controller.dto.ContactDto;
+import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactRequest;
+import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactResponse;
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
 import ro.rasel.spring.microservices.contactservice.service.ContactService;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,14 +31,14 @@ public class ContactRestController implements ContactApi {
     }
 
     @Override
-    public ResponseEntity<Collection<ContactDto>> getContacts(@PathVariable String userId) {
+    public ResponseEntity<Collection<ContactResponse>> getContacts(@PathVariable String userId) {
         LOG.debug("getting contacts for userId={}", userId);
         final List<Contact> contacts = contactService.getContacts(userId);
-        return contacts.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(toContactDtos(contacts));
+        return contacts.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(toContactResponses(contacts));
     }
 
     @Override
-    public ResponseEntity<ContactDto> getContact(@PathVariable String userId, @PathVariable long contactId) {
+    public ResponseEntity<ContactResponse> getContact(@PathVariable String userId, @PathVariable long contactId) {
         LOG.debug("getting contact for userId={} and contactId={}", userId, contactId);
         final Optional<Contact> contact = contactService.getContact(userId, contactId);
         return contact
@@ -47,21 +48,20 @@ public class ContactRestController implements ContactApi {
     }
 
     @Override
-    public ContactDto createContact(@PathVariable String userId, @RequestBody ContactDetailsDto contactDetails) {
+    public ContactResponse createContact(@PathVariable String userId, @RequestBody ContactRequest contactRequest) {
         LOG.debug("creating contact for userId={}", userId);
-        final Contact contact = new Contact(userId, contactDetails.getFirstName(), contactDetails.getLastName(),
-                contactDetails.getEmail(), contactDetails.getRelationship());
+        final Contact contact = toContact(userId, null, contactRequest);
 
         return toContactDto(contactService.createContact(userId, contact));
     }
 
     @Override
-    public ResponseEntity<ContactDto> updateContact(
-            @PathVariable String userId, @PathVariable long contactId, @RequestBody ContactDetailsDto contactDetails) {
+    public ResponseEntity<ContactResponse> updateContact(
+            @PathVariable String userId, @PathVariable long contactId,
+            @RequestBody ContactRequest contactRequest) {
         LOG.debug("updating contact for userId={} and contactId={}", userId, contactId);
 
-        Contact contact =
-                toContact(userId, contactId, contactDetails);
+        Contact contact = toContact(userId, contactId, contactRequest);
 
         return contactService
                 .updateContact(contact)
@@ -78,17 +78,25 @@ public class ContactRestController implements ContactApi {
                 ResponseEntity.notFound().build();
     }
 
-    private Contact toContact(String userId, long contactId, ContactDetailsDto contactDetails) {
-        return new Contact(contactId, userId, contactDetails.getFirstName(), contactDetails.getLastName(),
-                contactDetails.getEmail(), contactDetails.getRelationship());
+    private Contact toContact(String userId, Long contactId, ContactRequest contactRequest) {
+        final Contact contact = modelMapper.map(contactRequest, Contact.class);
+        contact.setId(contactId);
+        contact.setUserId(userId);
+        if (contact.getPhoneNumbers()==null){
+            contact.setPhoneNumbers(Collections.emptyList());
+        }
+        if (contact.getAddresses()==null){
+            contact.setAddresses(Collections.emptyList());
+        }
+        return contact;
     }
 
-    private List<ContactDto> toContactDtos(List<Contact> contacts) {
+    private List<ContactResponse> toContactResponses(List<Contact> contacts) {
         return contacts.stream().map(this::toContactDto)
                 .collect(Collectors.toList());
     }
 
-    private ContactDto toContactDto(Contact contact) {
-        return modelMapper.map(contact, ContactDto.class);
+    private ContactResponse toContactDto(Contact contact) {
+        return modelMapper.map(contact, ContactResponse.class);
     }
 }

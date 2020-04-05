@@ -4,8 +4,8 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import ro.rasel.spring.microservices.api.bookmark.data.Bookmark;
-import ro.rasel.spring.microservices.api.contact.data.Contact;
+import ro.rasel.spring.microservices.api.bookmark.data.BookmarkResponse;
+import ro.rasel.spring.microservices.api.contact.data.ContactResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,25 +24,25 @@ public class IntegrationClient {
     }
 
     @SuppressWarnings("unused")
-    public Collection<Bookmark> getBookmarksFallback(String userId, Throwable t) {
+    public Collection<BookmarkResponse> getBookmarksFallback(String userId, Throwable t) {
         LOG.error("getBookmarksFallback", t);
         return Collections.emptyList();
     }
 
     @HystrixCommand(fallbackMethod = "getBookmarksFallback")
-    public Collection<Bookmark> getBookmarks(String userId) {
+    public Collection<BookmarkResponse> getBookmarks(String userId) {
         LOG.info("getting bookmarks form bookmark service for userId={}", userId);
         return this.bookmarkClient.getBookmarks(userId).getBody();
     }
 
     @SuppressWarnings("unused")
-    public Collection<Contact> getContactsFallback(String userId, Throwable t) {
+    public Collection<ContactResponse> getContactsFallback(String userId, Throwable t) {
         LOG.error("getContactsFallback", t);
         return Collections.emptyList();
     }
 
     @HystrixCommand(fallbackMethod = "getContactsFallback")
-    public Collection<Contact> getContacts(String userId) {
+    public Collection<ContactResponse> getContacts(String userId) {
         LOG.info("getting contacts form bookmark service for userId={}", userId);
         return this.contactClient.getContacts(userId).getBody();
     }

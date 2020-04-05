@@ -41,6 +41,8 @@ public class ContactServiceImpl implements ContactService {
             c.setFirstName(contact.getFirstName());
             c.setLastName(contact.getLastName());
             c.setEmail(contact.getEmail());
+            c.setPhoneNumbers(contact.getPhoneNumbers());
+            c.setAddresses(contact.getAddresses());
             return contactRepository.save(c);
         });
     }
