@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import java.beans.ConstructorProperties;
 
 @ApiModel(value = "BookmarkResponse", description = "User Bookmark Response")
-public class BookmarkResponse extends BookmarkDetails {
+public class BookmarkResponse extends BookmarkDto {
     @ConstructorProperties({"id", "userId", "href", "description", "label"})
     public BookmarkResponse(long id, String userId, String href, String description, String label) {
         this(new Bookmark(id, userId, href, description, label));

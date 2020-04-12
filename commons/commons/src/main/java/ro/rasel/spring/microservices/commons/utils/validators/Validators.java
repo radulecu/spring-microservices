@@ -1,8 +1,8 @@
 package ro.rasel.spring.microservices.commons.utils.validators;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -23,6 +23,26 @@ public class Validators {
             @Override
             public <T extends CharSequence> T validate(T t) {
                 return returnOrThrowIllegatArgumentException(t, t != null && t.toString().trim().isEmpty(),
+                        "should not be empty", label);
+            }
+        };
+    }
+
+    public static <E> Validator<Collection<E>> notEmptyCollectionValidator(CharSequence label) {
+        return new Validator<Collection<E>>() {
+            @Override
+            public <T extends Collection<E>> T validate(T t) {
+                return returnOrThrowIllegatArgumentException(t, t != null && t.isEmpty(),
+                        "should not be empty", label);
+            }
+        };
+    }
+
+    public static <K,V> Validator<Map<K,V>> notEmptyMapValidator(CharSequence label) {
+        return new Validator<Map<K,V>>() {
+            @Override
+            public <T extends Map<K,V>> T validate(T t) {
+                return returnOrThrowIllegatArgumentException(t, t != null && t.isEmpty(),
                         "should not be empty", label);
             }
         };

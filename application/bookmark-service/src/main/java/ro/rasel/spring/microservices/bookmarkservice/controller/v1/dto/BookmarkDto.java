@@ -9,14 +9,14 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class BookmarkDetails {
+public class BookmarkDto {
     private final Bookmark bookmark;
 
-    public BookmarkDetails(String href, String description, String label) {
+    public BookmarkDto(String href, String description, String label) {
         this(new Bookmark(href, description, label));
     }
 
-    public BookmarkDetails(Bookmark bookmark) {
+    public BookmarkDto(Bookmark bookmark) {
         this.bookmark = bookmark;
     }
 
@@ -52,7 +52,7 @@ public class BookmarkDetails {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        BookmarkDetails that = (BookmarkDetails) o;
+        BookmarkDto that = (BookmarkDto) o;
         return Objects.equals(bookmark, that.bookmark);
     }
 
