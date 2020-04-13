@@ -1,7 +1,7 @@
 package ro.rasel.spring.microservices.ssoauthservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ro.rasel.spring.microservices.ssoauthservice.repository.model.UserInfoImpl;
+import ro.rasel.spring.microservices.ssoauthservice.domain.UserInfo;
 
-public interface UsersRepository extends JpaRepository<UserInfoImpl, String> {
+public interface UsersRepository extends JpaRepository<UserInfo, String> {
 }

@@ -1,32 +1,41 @@
-package ro.rasel.spring.microservices.ssoauthservice.repository.model;
+package ro.rasel.spring.microservices.ssoauthservice.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@Entity(name = "role")
-public class RoleImpl implements Role {
-    @Id
-    String userName;
-    String role;
+import static javax.persistence.GenerationType.IDENTITY;
 
-    @Override
+@Entity(name = "role")
+public class Role {
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+    @Column
+    private String userName;
+    @Column
+    private String role;
+
+    public Integer getId() {
+        return id;
+    }
+
     public String getUserName() {
         return userName;
     }
 
-    @Override
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    @Override
     public String getRole() {
         return role;
     }
 
-    @Override
     public void setRole(String role) {
         this.role = role;
     }
@@ -39,21 +48,24 @@ public class RoleImpl implements Role {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RoleImpl role1 = (RoleImpl) o;
-        return Objects.equals(userName, role1.userName) &&
+        Role role1 = (Role) o;
+        return Objects.equals(id, role1.id) &&
+                Objects.equals(userName, role1.userName) &&
                 Objects.equals(role, role1.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userName, role);
+        return Objects.hash(id, userName, role);
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", RoleImpl.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", Role.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
                 .add("userName='" + userName + "'")
                 .add("role='" + role + "'")
                 .toString();
     }
+
 }
