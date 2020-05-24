@@ -198,14 +198,17 @@
       "properties" : {
         "href" : {
           "type" : "string",
+          "example" : "http://some-other-host-for-jlong.com",
           "description" : "Bookmark href"
         },
         "description" : {
           "type" : "string",
+          "example" : "A description for jlong's link",
           "description" : "Bookmark description"
         },
         "label" : {
           "type" : "string",
+          "example" : "jlongLabel",
           "description" : "Bookmark label"
         }
       },
@@ -218,22 +221,27 @@
         "id" : {
           "type" : "integer",
           "format" : "int64",
+          "example" : 2,
           "description" : "Bookmark id"
         },
         "userId" : {
           "type" : "string",
+          "example" : "jlong",
           "description" : "Used id"
         },
         "href" : {
           "type" : "string",
+          "example" : "http://some-other-host-for-jlong.com",
           "description" : "Bookmark href"
         },
         "description" : {
           "type" : "string",
+          "example" : "A description for jlong's link",
           "description" : "Bookmark description"
         },
         "label" : {
           "type" : "string",
+          "example" : "jlongLabel",
           "description" : "Bookmark label"
         }
       },

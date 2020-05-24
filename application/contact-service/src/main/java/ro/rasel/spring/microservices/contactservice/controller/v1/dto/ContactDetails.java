@@ -33,7 +33,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
     }
 
     @NotBlank
-    @ApiModelProperty(value = "First name")
+    @ApiModelProperty(value = "First name", required = true, example = "Stéphane")
     public String getFirstName() {
         return firstName;
     }
@@ -43,7 +43,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
     }
 
     @NotBlank
-    @ApiModelProperty(value = "Last name")
+    @ApiModelProperty(value = "Last name", required = true, example = "Maldini")
     public String getLastName() {
         return lastName;
     }
@@ -52,7 +52,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
         this.lastName = lastName;
     }
 
-    @ApiModelProperty(value = "Email")
+    @ApiModelProperty(value = "Email", example = "stéphane@email.com")
     @Pattern(regexp = EMAIL_PATTERN_STRING)
     public String getEmail() {
         return email;
@@ -63,7 +63,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
     }
 
     @NotBlank
-    @ApiModelProperty(value = "Relationship")
+    @ApiModelProperty(value = "Relationship", example="friend")
     public String getRelationship() {
         return relationship;
     }

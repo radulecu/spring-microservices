@@ -1,7 +1,9 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotNull;
 import java.beans.ConstructorProperties;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -19,6 +21,8 @@ public class PhoneNumberResponse extends PhoneNumberDto {
         this.id = id;
     }
 
+    @NotNull
+    @ApiModelProperty(required = true, example = "64")
     public Long getId() {
         return id;
     }
