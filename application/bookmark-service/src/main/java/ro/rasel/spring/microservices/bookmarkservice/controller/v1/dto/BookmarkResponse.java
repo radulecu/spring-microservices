@@ -18,12 +18,12 @@ public class BookmarkResponse extends BookmarkDto {
         super(bookmark);
     }
 
-    @ApiModelProperty(value = "Bookmark id")
+    @ApiModelProperty(value = "Bookmark id", example = "2")
     public Long getId() {
         return getBookmark().getId();
     }
 
-    @ApiModelProperty(value = "Used id")
+    @ApiModelProperty(value = "Used id", example = "jlong")
     @NotBlank
     public String getUserId() {
         return getBookmark().getUserId();

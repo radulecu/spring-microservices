@@ -35,6 +35,11 @@
         <activation.version>1.1.1</activation.version>
 
         <commons-io.version>2.6</commons-io.version>
+
+        <!--Plugins-->
+        <gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
+        <groovy-all.version>2.4.17</groovy-all.version>
+        <dependency-check-maven.version>5.0.0</dependency-check-maven.version>
     </properties>
 
     <dependencyManagement>
@@ -109,7 +114,7 @@
                 <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.7.1</version>
+                    <version>${gmavenplus-plugin.version}</version>
                     <configuration>
                         <properties>
                             <workingDir>${project.basedir}</workingDir>
@@ -119,7 +124,7 @@
                         <dependency>
                             <groupId>org.codehaus.groovy</groupId>
                             <artifactId>groovy-all</artifactId>
-                            <version>2.4.17</version>
+                            <version>${groovy-all.version}</version>
                             <scope>runtime</scope>
                         </dependency>
                     </dependencies>
@@ -127,7 +132,7 @@
                 <plugin>
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
-                    <version>5.0.0</version>
+                    <version>${dependency-check-maven.version}</version>
                     <configuration>
                         <versionCheckEnabled>true</versionCheckEnabled>
                     </configuration>

@@ -39,7 +39,7 @@ public class ContactResponse extends ContactDetails<PhoneNumberResponse, Address
         this.userId = USER_ID_VALIDATOR.validate(userId);
     }
 
-    @ApiModelProperty(value = "Contact id")
+    @ApiModelProperty(value = "Contact id", required = true,example = "3")
     public Long getId() {
         return id;
     }
@@ -48,7 +48,7 @@ public class ContactResponse extends ContactDetails<PhoneNumberResponse, Address
         this.id = id;
     }
 
-    @ApiModelProperty(value = "Used id")
+    @ApiModelProperty(value = "Used id", required = true, example = "jlong")
     public String getUserId() {
         return userId;
     }

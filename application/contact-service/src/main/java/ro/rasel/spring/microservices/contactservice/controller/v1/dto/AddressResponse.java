@@ -1,6 +1,7 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.beans.ConstructorProperties;
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class AddressResponse extends AddressDto {
         this.id = id;
     }
 
+    @ApiModelProperty(required = true, example = "31")
     public void setId(Long id) {
         this.id = id;
     }

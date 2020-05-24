@@ -1,5 +1,7 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotBlank;
 import java.beans.ConstructorProperties;
 import java.util.Objects;
@@ -28,6 +30,7 @@ class AddressDto {
     }
 
     @NotBlank(message = "Country should not be null or blank")
+    @ApiModelProperty(required = true, example = "USA")
     public String getCountry() {
         return country;
     }
@@ -37,6 +40,7 @@ class AddressDto {
     }
 
     @NotBlank(message = "Town should not be null or blank")
+    @ApiModelProperty(required = true, example = "New York")
     public String getTown() {
         return town;
     }
@@ -46,6 +50,7 @@ class AddressDto {
     }
 
     @NotBlank(message = "Street should not be null or blank")
+    @ApiModelProperty(required = true, example = "17th Street")
     public String getStreet() {
         return street;
     }
@@ -54,6 +59,7 @@ class AddressDto {
         this.street = street;
     }
 
+    @ApiModelProperty(example = "84")
     public int getNumber() {
         return number;
     }
@@ -62,6 +68,7 @@ class AddressDto {
         this.number = number;
     }
 
+    @ApiModelProperty(example = "3")
     public Integer getEntrance() {
         return entrance;
     }
@@ -70,6 +77,7 @@ class AddressDto {
         this.entrance = entrance;
     }
 
+    @ApiModelProperty(example = "123")
     public Integer getFlatNumber() {
         return flatNumber;
     }

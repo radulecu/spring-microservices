@@ -196,80 +196,100 @@
   "definitions" : {
     "AddressRequest" : {
       "type" : "object",
+      "required" : [ "country", "street", "town" ],
       "properties" : {
         "country" : {
-          "type" : "string"
+          "type" : "string",
+          "example" : "USA"
         },
         "town" : {
-          "type" : "string"
+          "type" : "string",
+          "example" : "New York"
         },
         "street" : {
-          "type" : "string"
+          "type" : "string",
+          "example" : "17th Street"
         },
         "number" : {
           "type" : "integer",
-          "format" : "int32"
+          "format" : "int32",
+          "example" : 84
         },
         "entrance" : {
           "type" : "integer",
-          "format" : "int32"
+          "format" : "int32",
+          "example" : 3
         },
         "flatNumber" : {
           "type" : "integer",
-          "format" : "int32"
+          "format" : "int32",
+          "example" : 123
         }
       },
       "description" : "Address"
     },
     "AddressResponse" : {
       "type" : "object",
+      "required" : [ "country", "id", "street", "town" ],
       "properties" : {
         "id" : {
           "type" : "integer",
-          "format" : "int64"
+          "format" : "int64",
+          "example" : 31
         },
         "country" : {
-          "type" : "string"
+          "type" : "string",
+          "example" : "USA"
         },
         "town" : {
-          "type" : "string"
+          "type" : "string",
+          "example" : "New York"
         },
         "street" : {
-          "type" : "string"
+          "type" : "string",
+          "example" : "17th Street"
         },
         "number" : {
           "type" : "integer",
-          "format" : "int32"
+          "format" : "int32",
+          "example" : 84
         },
         "entrance" : {
           "type" : "integer",
-          "format" : "int32"
+          "format" : "int32",
+          "example" : 3
         },
         "flatNumber" : {
           "type" : "integer",
-          "format" : "int32"
+          "format" : "int32",
+          "example" : 123
         }
       },
       "description" : "Address"
     },
     "ContactRequest" : {
       "type" : "object",
+      "required" : [ "firstName", "lastName" ],
       "properties" : {
         "firstName" : {
           "type" : "string",
+          "example" : "Stéphane",
           "description" : "First name"
         },
         "lastName" : {
           "type" : "string",
+          "example" : "Maldini",
           "description" : "Last name"
         },
         "email" : {
           "type" : "string",
+          "example" : "stéphane@email.com",
           "description" : "Email",
           "pattern" : ".+@.+\\..+"
         },
         "relationship" : {
           "type" : "string",
+          "example" : "friend",
           "description" : "Relationship"
         },
         "phoneNumbers" : {
@@ -289,31 +309,38 @@
     },
     "ContactResponse" : {
       "type" : "object",
+      "required" : [ "firstName", "id", "lastName", "userId" ],
       "properties" : {
         "id" : {
           "type" : "integer",
           "format" : "int64",
+          "example" : 3,
           "description" : "Contact id"
         },
         "userId" : {
           "type" : "string",
+          "example" : "jlong",
           "description" : "Used id"
         },
         "firstName" : {
           "type" : "string",
+          "example" : "Stéphane",
           "description" : "First name"
         },
         "lastName" : {
           "type" : "string",
+          "example" : "Maldini",
           "description" : "Last name"
         },
         "email" : {
           "type" : "string",
+          "example" : "stéphane@email.com",
           "description" : "Email",
           "pattern" : ".+@.+\\..+"
         },
         "relationship" : {
           "type" : "string",
+          "example" : "friend",
           "description" : "Relationship"
         },
         "phoneNumbers" : {
@@ -333,12 +360,15 @@
     },
     "PhoneNumberDetails" : {
       "type" : "object",
+      "required" : [ "number" ],
       "properties" : {
         "number" : {
-          "type" : "string"
+          "type" : "string",
+          "example" : "+10723123456"
         },
         "description" : {
           "type" : "string",
+          "example" : "phone number description Stéphane Maldini",
           "minLength" : 1,
           "maxLength" : 2147483647
         }
