@@ -10,9 +10,9 @@
 
     <modules>
         <!--Parents-->
+        <module>parents/dependency-parent</module>
         <module>parents/starter-parent</module>
         <module>parents/service-parent</module>
-        <module>parents/dependency-parent</module>
         <!--Commons-->
         <module>commons/commons</module>
         <module>commons/spring-commons</module>
@@ -28,7 +28,7 @@
         <module>services/sso-auth-service</module>
         <module>services/gateway-service</module>
         <module>services/resource-gateway-service</module>
-        <module>services/zipkin-service</module>
+        <module>services/zipkin-dashboard-service</module>
         <module>services/spring-config-service</module>
         <module>services/hystrix-dashboard-service</module>
         <!--Application-->
