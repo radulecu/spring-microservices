@@ -45,60 +45,60 @@
     </dependencies>
 
     <profiles>
-        <profile>
-            <id>generateKeystore</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.gmavenplus</groupId>
-                        <artifactId>gmavenplus-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>generate</id>
-                                <goals>
-                                    <goal>execute</goal>
-                                </goals>
-                                <phase>compile</phase>
-                                <configuration>
-                                    <scripts>
-                                        <!--suppress UnresolvedMavenProperty -->
-                                        <script>
-                                            <![CDATA[
-                                                def execute (String s){
-                                                    final File file = new File("${workingDir}/src/main/resources")
-                                                    def strings = ["path="+System.getenv().get("Path"),"COMPUTERNAME="+System.getenv().get("COMPUTERNAME")]
-                                                    def proc = s.execute(strings, file)
-                                                    proc.consumeProcessOutput(System.out,System.err)
-                                                    proc.waitFor()
-                                                }
+<!--        <profile>-->
+<!--            <id>generateKeystore</id>-->
+<!--            <activation>-->
+<!--                <os>-->
+<!--                    <family>Windows</family>-->
+<!--                </os>-->
+<!--            </activation>-->
+<!--            <build>-->
+<!--                <plugins>-->
+<!--                    <plugin>-->
+<!--                        <groupId>org.codehaus.gmavenplus</groupId>-->
+<!--                        <artifactId>gmavenplus-plugin</artifactId>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>generate</id>-->
+<!--                                <goals>-->
+<!--                                    <goal>execute</goal>-->
+<!--                                </goals>-->
+<!--                                <phase>compile</phase>-->
+<!--                                <configuration>-->
+<!--                                    <scripts>-->
+<!--                                        &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+<!--                                        <script>-->
+<!--                                            <![CDATA[-->
+<!--                                                def execute (String s){-->
+<!--                                                    final File file = new File("${workingDir}/src/main/resources")-->
+<!--                                                    def strings = ["path="+System.getenv().get("Path"),"COMPUTERNAME="+System.getenv().get("COMPUTERNAME")]-->
+<!--                                                    def proc = s.execute(strings, file)-->
+<!--                                                    proc.consumeProcessOutput(System.out,System.err)-->
+<!--                                                    proc.waitFor()-->
+<!--                                                }-->
 
 
-                                                execute "cmd /c del localhost-identity.jks"
-                                                execute "cmd /c del computername-identity.jks"
-                                                execute "cmd /c del localhost.cer"
-                                                execute "cmd /c del computername.cer"
-                                                execute "cmd /c del truststore.jks"
+<!--                                                execute "cmd /c del localhost-identity.jks"-->
+<!--                                                execute "cmd /c del computername-identity.jks"-->
+<!--                                                execute "cmd /c del localhost.cer"-->
+<!--                                                execute "cmd /c del computername.cer"-->
+<!--                                                execute "cmd /c del truststore.jks"-->
 
-                                                execute "cmd /c keytool -genkey -alias localhost -keyalg RSA -keystore localhost-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
-                                                execute "cmd /c keytool -genkey -alias desktop-1gn7l5l -keyalg RSA -keystore computername-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""
-                                                execute "cmd /c keytool -export -alias localhost -keystore localhost-identity.jks -file localhost.cer -storepass jkspass"
-                                                execute "cmd /c keytool -export -alias desktop-1gn7l5l -keystore computername-identity.jks -file computername.cer -storepass jkspass"
-                                                execute "cmd /c keytool -importcert -keystore truststore.jks -alias localhost -storepass jkspass -file localhost.cer -noprompt"
-                                                execute "cmd /c keytool -importcert -keystore truststore.jks -alias desktop-1gn7l5l -storepass jkspass -file computername.cer -noprompt"
-                                            ]]>
-                                        </script>
-                                    </scripts>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+<!--                                                execute "cmd /c keytool -genkey -alias localhost -keyalg RSA -keystore localhost-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""-->
+<!--                                                execute "cmd /c keytool -genkey -alias desktop-1gn7l5l -keyalg RSA -keystore computername-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname \"CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?\""-->
+<!--                                                execute "cmd /c keytool -export -alias localhost -keystore localhost-identity.jks -file localhost.cer -storepass jkspass"-->
+<!--                                                execute "cmd /c keytool -export -alias desktop-1gn7l5l -keystore computername-identity.jks -file computername.cer -storepass jkspass"-->
+<!--                                                execute "cmd /c keytool -importcert -keystore truststore.jks -alias localhost -storepass jkspass -file localhost.cer -noprompt"-->
+<!--                                                execute "cmd /c keytool -importcert -keystore truststore.jks -alias desktop-1gn7l5l -storepass jkspass -file computername.cer -noprompt"-->
+<!--                                            ]]>-->
+<!--                                        </script>-->
+<!--                                    </scripts>-->
+<!--                                </configuration>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
+<!--                </plugins>-->
+<!--            </build>-->
+<!--        </profile>-->
     </profiles>
 </project>

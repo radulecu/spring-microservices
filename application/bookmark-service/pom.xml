@@ -15,6 +15,7 @@
 
     <properties>
         <start.class>ro.rasel.spring.microservices.bookmarkservice.BookmarkServiceApplication</start.class>
+        <server.port>8082</server.port>
     </properties>
 
     <description>Basic resource service used for exposing data from database</description>
@@ -124,4 +125,18 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>fabric8-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

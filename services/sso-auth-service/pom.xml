@@ -16,7 +16,8 @@
     <description>Security service for oauth2 authentication/authorisation</description>
 
     <properties>
-        <start.class>ro.rasel.service.</start.class>
+        <start.class>ro.rasel.spring.microservices.ssoauthservice.SsoAuthServiceApplication</start.class>
+        <server.port>9999</server.port>
     </properties>
 
     <dependencies>
@@ -91,4 +92,18 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>fabric8-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
