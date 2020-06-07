@@ -6,8 +6,8 @@ import ro.rasel.spring.microservices.commons.utils.connection.SecuredConnectionC
 
 @Configuration
 @ConfigurationProperties("registry.server")
-public class RegistryConnectionConfigImpl extends SecuredConnectionConfigImpl
-        implements RegistryConnectionConfig {
+public class RegistryServerConnectionConfigImpl extends SecuredConnectionConfigImpl
+        implements RegistryServerConnectionConfig {
     @Override
     public String toString() {
         return "RegistryConnectionConfigImpl{} " + super.toString();
