@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "newman run \"Spring Microservices.postman_collection.json\" -e localhost.postman_environment.json -k --disable-unicode"
+    "test": "newman run \"SpringMicroservices.postman_collection.json\" -e springMicroservicesHttpsLocalhost.postman_environment.json -k --disable-unicode",
+    "testHttp": "newman run \"SpringMicroservices.postman_collection.json\" -e springMicroservicesHttpLocalhost.postman_environment.json -k --disable-unicode"
   },
   "author": "",
   "license": "ISC"
