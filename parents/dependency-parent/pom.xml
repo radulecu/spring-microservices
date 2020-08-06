@@ -173,12 +173,12 @@
         <snapshotRepository>
             <id>project.local</id>
             <name>project</name>
-            <url>file:${project.basedir}/../.repo/snapshot</url>
+            <url>file:${maven.multiModuleProjectDirectory}/.repo/snapshot</url>
         </snapshotRepository>
         <repository>
             <id>project.local</id>
             <name>project</name>
-            <url>file:${project.basedir}/../.repo/release</url>
+            <url>file:${maven.multiModuleProjectDirectory}/.repo/release</url>
         </repository>
     </distributionManagement>
 </project>
