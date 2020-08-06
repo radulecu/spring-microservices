@@ -21,13 +21,13 @@ services:
       <<: *common-variables
       server.hostname: eureka-service
       eureka.instance.hostname: "eureka-service"
-    zipkin-dashboard-service:
-      build: services/zipkin-dashboard-service/target/docker/radulecu/zipkin-dashboard-service/build
-      ports:
-        - 9411:9411
-      environment:
-        <<: *common-variables
-        server.hostname: zipkin-dashboard-service
+  zipkin-dashboard-service:
+    build: services/zipkin-dashboard-service/target/docker/radulecu/zipkin-dashboard-service/build
+    ports:
+      - 9411:9411
+    environment:
+      <<: *common-variables
+      server.hostname: zipkin-dashboard-service
   #  gateway-service:
   #    build: services/gateway-service/target/docker/radulecu/gateway-service/build
   #    ports:
@@ -60,26 +60,26 @@ services:
       registry.server.hostname: "eureka-service"
       spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
       server.ssl.client-auth: none
-    contact-service:
-      build: application/contact-service/target/docker/radulecu/contact-service/build
-      ports:
-        - 8083:8083
-      environment:
-        <<: *common-variables
-        server.hostname: contact-service
-        registry.server.hostname: "eureka-service"
-        spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
-        server.ssl.client-auth: none
-    passport-service:
-      build: application/passport-service/target/docker/radulecu/passport-service/build
-      ports:
-        - 8084:8084
-      environment:
-        <<: *common-variables
-        server.hostname: passport-service
-        registry.server.hostname: "eureka-service"
-        spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
-        server.ssl.client-auth: none
+  contact-service:
+    build: application/contact-service/target/docker/radulecu/contact-service/build
+    ports:
+      - 8083:8083
+    environment:
+      <<: *common-variables
+      server.hostname: contact-service
+      registry.server.hostname: "eureka-service"
+      spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
+      server.ssl.client-auth: none
+  passport-service:
+    build: application/passport-service/target/docker/radulecu/passport-service/build
+    ports:
+      - 8084:8084
+    environment:
+      <<: *common-variables
+      server.hostname: passport-service
+      registry.server.hostname: "eureka-service"
+      spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
+      server.ssl.client-auth: none
   echo-service:
     build: application/echo-service/target/docker/radulecu/echo-service/build
     ports:

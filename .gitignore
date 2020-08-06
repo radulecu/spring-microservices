@@ -4,5 +4,12 @@
 .repo/*
 **/tmp/**
 **/target/
+
 **/node
 **/node_modules
+
+# Certificates
+**/*service.cer
+**/*service-identity.jks
+**/truststore.jks
+

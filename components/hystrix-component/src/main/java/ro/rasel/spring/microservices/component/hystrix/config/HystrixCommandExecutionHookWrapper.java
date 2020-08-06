@@ -68,6 +68,7 @@ public class HystrixCommandExecutionHookWrapper extends HystrixCommandExecutionH
         Map<Class<? extends AsynchronousDataProvider>, Object> context = asynchronousDataProviders.stream()
                 .map(asynchronousDataProvider -> new Touple<>(asynchronousDataProvider.getClass(),
                         asynchronousDataProvider.extract()))
+                .filter(classObjectTouple -> classObjectTouple.getQ() != null)
                 .collect(Collectors.toMap(Touple::getP, Touple::getQ));
         if (!context.isEmpty()) {
             hystrixStorage.set(context);
