@@ -4,15 +4,19 @@ import com.netflix.hystrix.HystrixInvokable;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestVariableDefault;
 import com.netflix.hystrix.strategy.executionhook.HystrixCommandExecutionHook;
+import org.springframework.core.annotation.AnnotationUtils;
 import ro.rasel.spring.microservices.commons.utils.Touple;
 import ro.rasel.spring.microservices.commons.utils.async.AsynchronousDataProvider;
+import ro.rasel.spring.microservices.commons.utils.async.ProviderName;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HystrixCommandExecutionHookWrapper extends HystrixCommandExecutionHook {
+    public static final String NAME = "hystrix";
     private final HystrixCommandExecutionHook hystrixCommandExecutionHook;
     private final List<AsynchronousDataProvider> asynchronousDataProviders;
     private HystrixRequestVariableDefault<Map<Class<? extends AsynchronousDataProvider>, Object>>
@@ -22,8 +26,18 @@ public class HystrixCommandExecutionHookWrapper extends HystrixCommandExecutionH
             HystrixCommandExecutionHook hystrixCommandExecutionHook,
             List<AsynchronousDataProvider> asynchronousDataProviders) {
         this.hystrixCommandExecutionHook = hystrixCommandExecutionHook;
-        this.asynchronousDataProviders = asynchronousDataProviders != null ? asynchronousDataProviders :
-                Collections.emptyList();
+        this.asynchronousDataProviders =
+                asynchronousDataProviders != null ?
+                        asynchronousDataProviders.stream()
+                                .filter(HystrixCommandExecutionHookWrapper::isSpecific).collect(Collectors.toList()) :
+                        Collections.emptyList();
+    }
+
+    private static boolean isSpecific(AsynchronousDataProvider asynchronousDataProvider) {
+        final ProviderName providerName = AnnotationUtils.findAnnotation(asynchronousDataProvider.getClass(),ProviderName.class);
+        final List<String> names = providerName != null ? Arrays.asList(providerName.value()) :
+                Collections.singletonList(ProviderName.ALL);
+        return names.contains("all") || names.contains(NAME);
     }
 
     public <T> void onStart(HystrixInvokable<T> commandInstance) {
@@ -82,12 +96,29 @@ public class HystrixCommandExecutionHookWrapper extends HystrixCommandExecutionH
         final Map<Class<? extends AsynchronousDataProvider>, Object> hystrixData = hystrixStorage.get();
         if (hystrixData != null) {
             //noinspection unchecked
-            asynchronousDataProviders.forEach(asynchronousDataProvider -> asynchronousDataProvider
-                    .setup(hystrixData.get(asynchronousDataProvider.getClass())));
+            asynchronousDataProviders.stream()
+                    .map(asynchronousDataProvider -> new Touple<>(asynchronousDataProvider,
+                            hystrixData.get(asynchronousDataProvider.getClass())))
+                    .filter(touple -> touple.getQ() != null)
+                    .map(touple -> new Touple<>(touple.getP().getClass(), touple.getP().setup(touple.getQ())))
+                    .filter(touple -> !touple.getQ())//leave only touples that should not be cleaned
+                    .map(Touple::getP)
+                    .forEach(hystrixData::remove);
+            hystrixStorage.set(hystrixData);
         }
     }
 
     private void cleanup() {
+        final Map<Class<? extends AsynchronousDataProvider>, Object> hystrixData = hystrixStorage.get();
+        if (hystrixData != null) {
+            asynchronousDataProviders.stream()
+                    .map(asynchronousDataProvider -> new Touple<>(asynchronousDataProvider,
+                            hystrixData.get(asynchronousDataProvider.getClass())))
+                    .filter(touple -> touple.getQ() != null)
+                    .map(Touple::getP)
+                    .forEach(AsynchronousDataProvider::clean);
+
+        }
         HystrixRequestContext.getContextForCurrentThread().shutdown();
     }
 }
