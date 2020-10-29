@@ -13,7 +13,13 @@ public class SecurityAsynchronousDataProviderImpl implements AsynchronousDataPro
     }
 
     @Override
-    public void setup(Authentication authentication) {
+    public boolean setup(Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        return false;
+    }
+
+    @Override
+    public void clean() {
+        //no action
     }
 }

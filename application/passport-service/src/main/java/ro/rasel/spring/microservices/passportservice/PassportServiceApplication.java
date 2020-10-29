@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableAsync;
 import ro.rasel.spring.microservices.component.eurekaclient.EnableEurekaClientComponent;
 import ro.rasel.spring.microservices.component.hystrix.EnableHystrixClientComponent;
 import ro.rasel.spring.microservices.component.securityclient.resource.EnableResourceSecurityClientComponent;
@@ -22,6 +23,7 @@ import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponen
 @EnableEurekaClientComponent
 @EnableHystrixClientComponent
 @EnableZipkinClientComponent
+@EnableAsync
 public class PassportServiceApplication {
 
     public static void main(String[] args) {
