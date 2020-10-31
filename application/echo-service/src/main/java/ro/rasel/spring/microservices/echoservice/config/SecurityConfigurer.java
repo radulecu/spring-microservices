@@ -10,7 +10,8 @@ public class SecurityConfigurer implements IResourceSecurityConfigurer {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .regexMatchers("/test/[a-zA-Z0-9]+").authenticated()
+                .regexMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }
 }

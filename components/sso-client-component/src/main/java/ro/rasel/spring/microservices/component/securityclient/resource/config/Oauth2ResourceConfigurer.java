@@ -12,19 +12,19 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import ro.rasel.spring.microservices.component.securityclient.resource.config.connection.ResourceSecurityConfig;
+import ro.rasel.spring.microservices.commons.utils.connection.securityclient.SecurityConfig;
 
 @Configuration
 @EnableResourceServer
 @Order(2)
 class Oauth2ResourceConfigurer extends ResourceServerConfigurerAdapter {
     private final IResourceSecurityConfigurer configurer;
-    private final ResourceSecurityConfig resourceSecurityConfig;
+    private final SecurityConfig securityConfig;
 
     public Oauth2ResourceConfigurer(IResourceSecurityConfigurer configurer,
-                                    ResourceSecurityConfig resourceSecurityConfig) {
+                                    SecurityConfig securityConfig) {
         this.configurer = configurer;
-        this.resourceSecurityConfig = resourceSecurityConfig;
+        this.securityConfig = securityConfig;
     }
 
     @Override
@@ -45,7 +45,7 @@ class Oauth2ResourceConfigurer extends ResourceServerConfigurerAdapter {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(resourceSecurityConfig.getJwtSigningKey());
+        converter.setSigningKey(securityConfig.getJwtSigningKey());
         return converter;
     }
 
