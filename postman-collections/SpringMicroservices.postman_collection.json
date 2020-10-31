@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e357f0ba-8954-4158-96a6-7ea346e51087",
+		"_postman_id": "c5d4f743-ff5b-465f-b095-0a89519a678f",
 		"name": "SpringMicroservices",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "96c43a75-80d3-49fe-aaee-34b744a07f69",
+								"id": "71859481-5bb9-40f0-8383-58a8a8451762",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -37,7 +37,7 @@
 									"",
 									"pm.test(\"Your test name\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.scope).to.eql('openid');",
+									"    pm.expect(jsonData.scope).to.eql('read write');",
 									"});"
 								],
 								"type": "text/javascript"
@@ -73,7 +73,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server.protocol}}://{{server.host}}:9999/sso/oauth/token?password={{password}}&username={{user}}&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme",
+							"raw": "{{server.protocol}}://{{server.host}}:9999/sso/oauth/token?password={{password}}&username={{user}}&grant_type=password&scope=read write&client_secret=acmesecret&client_id=acme",
 							"protocol": "{{server.protocol}}",
 							"host": [
 								"{{server.host}}"
@@ -99,7 +99,7 @@
 								},
 								{
 									"key": "scope",
-									"value": "openid"
+									"value": "read write"
 								},
 								{
 									"key": "client_secret",
@@ -126,7 +126,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "68fa59c9-399e-49ae-85a6-2cbdd66b5380",
+								"id": "73714161-bc48-42c8-be59-c7149e2b6911",
 								"exec": [
 									"postman.setNextRequest('GetBookmark')",
 									"",
@@ -215,7 +215,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ec6b10c5-df73-4254-9ca1-75646692504d",
+								"id": "c5a3ecee-0ff3-45dd-87fd-c07b5a4c0bb1",
 								"exec": [
 									"postman.setNextRequest('PutBookmark')",
 									"",
@@ -291,7 +291,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fbd0f070-a23a-4960-b9c5-f4824daa7614",
+								"id": "64b9c60e-9e8b-43f2-90fd-bfc5f978a331",
 								"exec": [
 									"postman.setNextRequest('GetBookmarks')",
 									"",
@@ -382,7 +382,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f643beab-bd31-4be2-b94e-ec66f26eea12",
+								"id": "ae11f886-44ba-431b-b586-fa480e48aae4",
 								"exec": [
 									"postman.setNextRequest('DelBookmark')",
 									"",
@@ -457,7 +457,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3bbc0cf9-0220-4834-9456-cd3c58414ae9",
+								"id": "dee1d74d-42d9-40d3-ad26-e86489cc895b",
 								"exec": [
 									"pm.test(\"Status code is 204\", function () {",
 									"    pm.response.to.have.status(204);",
@@ -504,13 +504,13 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "78fc1eee-9bf6-44b6-a029-dbd0f3b78719",
+						"id": "fff29950-5e3b-423f-ad8c-9ba858e64721",
 						"type": "text/javascript",
 						"exec": [
 							"pm.environment.set(\"userId\",\"dexter\");",
 							"",
 							"pm.sendRequest({",
-							"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+							"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid read write&client_secret=acmesecret&client_id=acme\",",
 							"    method: \"POST\",",
 							"    header: {",
 							"        'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
@@ -530,7 +530,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b652d62a-4882-45e2-9081-554012ff135f",
+						"id": "5fe14ace-9ff5-461c-b305-0c8a431c0c92",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -549,7 +549,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "627450de-2134-490d-a6a4-51b9359a6b3d",
+								"id": "ad7b7e2f-b83c-4d2d-8c66-7a438bdbe1ea",
 								"exec": [
 									"postman.setNextRequest('GetContact')",
 									"",
@@ -700,7 +700,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "187fa631-ae12-4ee9-9b06-3537a762f9df",
+								"id": "ea960a41-4f5d-4a7c-b867-8e5b870b868b",
 								"exec": [
 									"postman.setNextRequest('PutContact')",
 									"",
@@ -838,7 +838,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "64e56265-e3a4-4798-a438-508c492c6fe8",
+								"id": "07d66bcb-2cab-4ace-8c47-a41cf6466c89",
 								"exec": [
 									"postman.setNextRequest('GetContacts')",
 									"",
@@ -991,7 +991,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4ac86152-d9a9-4a47-a0d3-090a4f3a7cfe",
+								"id": "00875646-ff39-4c40-9b27-fae0e096ade3",
 								"exec": [
 									"postman.setNextRequest('DelContact')",
 									"",
@@ -1128,7 +1128,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "34987f54-194c-44a1-9dd0-3154a30a299b",
+								"id": "13ccb782-5539-4bd1-b3ad-da1857428b81",
 								"exec": [
 									"pm.test(\"Status code is 204\", function () {",
 									"    pm.response.to.have.status(204);",
@@ -1175,13 +1175,13 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "78e76719-999f-4668-ae30-f60f712f8935",
+						"id": "c21d4b61-0964-4ffb-8925-d7596a35e54f",
 						"type": "text/javascript",
 						"exec": [
 							"pm.environment.set(\"userId\",\"dexter\");",
 							"",
 							"pm.sendRequest({",
-							"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+							"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid read write&client_secret=acmesecret&client_id=acme\",",
 							"    method: \"POST\",",
 							"    header: {",
 							"        'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
@@ -1201,7 +1201,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fbf8bc96-ea32-4711-b4c1-aa2f3a9507cd",
+						"id": "c04d7a44-a273-44f8-a5bd-6efda7b445b0",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1220,7 +1220,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4707a9ad-6356-49b5-b3e3-688a134c0079",
+								"id": "939f6ff7-5d62-490f-a499-58009d53c234",
 								"exec": [
 									"if (pm.response.code==200){",
 									"    var jsonData = pm.response.json();",
@@ -1287,7 +1287,7 @@
 									"    var jsonData = pm.response.json();",
 									"",
 									"    pm.sendRequest({",
-									"        url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+									"        url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid read write&client_secret=acmesecret&client_id=acme\",",
 									"        method: \"POST\",",
 									"        header: {",
 									"            'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
@@ -1337,12 +1337,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ddfd3bd4-9cb9-46f2-8b45-f00c12db6785",
+								"id": "aaf6df5f-5e3a-427d-b387-814a902a77de",
 								"exec": [
 									"pm.environment.set(\"userId\",\"dexter\");",
 									"",
 									"pm.sendRequest({",
-									"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+									"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid read write&client_secret=acmesecret&client_id=acme\",",
 									"    method: \"POST\",",
 									"    header: {",
 									"        'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
@@ -1438,7 +1438,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ed20a62b-eda3-4ad6-b2cd-f5cd70633d1d",
+								"id": "3f6a81f0-617d-4b9a-a262-678ba1eb3f23",
 								"exec": [
 									"if (pm.response.code==200){",
 									"    var jsonData = pm.response.json();",
@@ -1505,7 +1505,7 @@
 									"    var jsonData = pm.response.json();",
 									"",
 									"    pm.sendRequest({",
-									"        url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+									"        url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid read write&client_secret=acmesecret&client_id=acme\",",
 									"        method: \"POST\",",
 									"        header: {",
 									"            'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
@@ -1555,12 +1555,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f1d284b1-e511-42d4-a29e-d3e01ccc8d5e",
+								"id": "3e2b45d8-1442-4214-b23c-29111322d8d8",
 								"exec": [
 									"pm.environment.set(\"userId\",\"dexter\");",
 									"",
 									"pm.sendRequest({",
-									"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
+									"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid read write&client_secret=acmesecret&client_id=acme\",",
 									"    method: \"POST\",",
 									"    header: {",
 									"        'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
@@ -1656,69 +1656,9 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "491e5589-5b77-4d93-89c9-5137c077d153",
+						"id": "ca949901-07e1-4bd3-bbbd-8d35caeeaa65",
 						"type": "text/javascript",
 						"exec": [
-							"pm.environment.set(\"userId\",\"dexter\");",
-							"",
-							"pm.sendRequest({",
-							"    url: \"https://localhost:9999/sso/oauth/token?password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme\",",
-							"    method: \"POST\",",
-							"    header: {",
-							"        'Authorization': \"Basic YWNtZTphY21lc2VjcmV0\"",
-							"    },",
-							"    request: {",
-							"        \"href\": \"http://some-other-host-for-dexter.com\",",
-							"        \"description\": \"A description for dexter's link\",",
-							"        \"label\": \"dexterLabel\"",
-							"    }",
-							"}, function (err, res){",
-							"    pm.sendRequest({",
-							"        url: \"https://localhost:9025/bookmark-service/v1/users/\"+pm.environment.get('userId')+\"/bookmarks\",",
-							"        method: \"POST\",",
-							"        header: {",
-							"            'Authorization': \"Bearer \"+res.json().access_token,",
-							"            'Content-Type': 'application/json'",
-							"        },",
-							"        body: {",
-							"            mode: 'jow',",
-							"            raw: JSON.stringify({",
-							"                        \"href\": \"http://some-other-host-for-dexter.com\",",
-							"                        \"description\": \"A description for dexter's link\",",
-							"                        \"label\": \"dexterLabel\",",
-							"                        \"id\": 34,",
-							"                        \"userId\": \"dexter\"",
-							"                    })",
-							"        },",
-							"        request: {",
-							"            \"href\": \"http://some-other-host-for-dexter.com\",",
-							"            \"description\": \"A description for dexter's link\",",
-							"            \"label\": \"dexterLabel\"",
-							"        }",
-							"    });",
-							"    pm.sendRequest({",
-							"        url: \"https://localhost:9025/contact-service/v1/users/\"+pm.environment.get('userId')+\"/contacts\",",
-							"        method: \"POST\",",
-							"        header: {",
-							"            'Authorization': \"Bearer \"+res.json().access_token,",
-							"            'Content-Type': 'application/json'",
-							"        },",
-							"        body: {",
-							"            mode: 'jow',",
-							"            raw: JSON.stringify({",
-							"                        \"firstName\": \"Stéphane\",",
-							"                        \"lastName\": \"Maldini\",",
-							"                        \"email\": \"stéphane@email.com\",",
-							"                        \"relationship\": \"coleague\"",
-							"                    })",
-							"        },",
-							"        request: {",
-							"            \"href\": \"http://some-other-host-for-dexter.com\",",
-							"            \"description\": \"A description for dexter's link\",",
-							"            \"label\": \"dexterLabel\"",
-							"        }",
-							"    });",
-							"});",
 							""
 						]
 					}
@@ -1726,7 +1666,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0c2d05d3-7d60-493c-9c5c-349a98f98c6a",
+						"id": "45903fea-f955-4591-815d-33cb47bca67f",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1741,7 +1681,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1f9a0d5d-ed7d-4dca-b973-a78423544e2b",
+				"id": "c5b88de1-d840-4f50-8006-5c7f31972242",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1751,7 +1691,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "2a678f8f-1d61-4fd4-b859-efb3b49acb90",
+				"id": "9bf4988f-a0f2-44a2-9911-d8cc21ec3ed4",
 				"type": "text/javascript",
 				"exec": [
 					""

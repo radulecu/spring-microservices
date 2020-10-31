@@ -15,6 +15,7 @@ public class SecurityConfigurer implements IResourceSecurityConfigurer, IWebSecu
         // @formatter:off
         http
             .authorizeRequests()
+                .regexMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/eureka/**").anonymous()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();

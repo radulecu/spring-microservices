@@ -10,8 +10,12 @@ public class SecurityConfigurer implements IResourceSecurityConfigurer {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/*-service/v2/api-docs").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
+                .regexMatchers("/users/.*").access("#oauth2.hasScope('openid')")
                 .anyRequest().authenticated();
     }
 }
