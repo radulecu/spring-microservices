@@ -11,7 +11,6 @@
     </parent>
 
     <artifactId>service-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>Contains the dependencies for the common components used as part of the project so that component alignment can be done easier</description>
@@ -20,33 +19,43 @@
         <dependencies>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>resource-security-client-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>web-security-client-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>basic-security-client-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
                 <artifactId>eureka-client-component</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
                 <artifactId>hystrix-component</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
                 <artifactId>ssl-component</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>sso-client-component</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
                 <artifactId>swagger-component</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
                 <artifactId>zipkin-component</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -24,7 +24,7 @@
         <dependency>
             <groupId>ro.rasel.spring.microservices.commons</groupId>
             <artifactId>spring-commons</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!--Spring Boot-->

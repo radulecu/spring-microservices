@@ -6,7 +6,7 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import ro.rasel.spring.microservices.component.eurekaclient.EnableEurekaClientComponent;
-import ro.rasel.spring.microservices.component.securityclient.sso.EnableWebSecurityClientComponent;
+import ro.rasel.spring.microservices.component.securityclient.web.EnableWebSecurityClientComponent;
 import ro.rasel.spring.microservices.component.ssl.client.EnableSslClientComponent;
 import ro.rasel.spring.microservices.component.ssl.server.EnableSslServerComponent;
 import ro.rasel.spring.microservices.component.swagger.EnableSwaggerComponent;

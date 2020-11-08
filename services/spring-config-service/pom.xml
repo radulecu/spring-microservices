@@ -23,8 +23,8 @@
     <dependencies>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>sso-client-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>basic-security-client-component</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <!--Spring Boot-->
