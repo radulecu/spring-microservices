@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import ro.rasel.spring.microservices.component.securityclient.sso.EnableWebSecurityClientComponent;
+import ro.rasel.spring.microservices.component.securityclient.web.EnableWebSecurityClientComponent;
 import ro.rasel.spring.microservices.component.ssl.server.EnableSslServerComponent;
 import ro.rasel.spring.microservices.component.ssl.client.EnableSslClientComponent;
 

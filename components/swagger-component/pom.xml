@@ -20,7 +20,7 @@
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>eureka-client-component</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!--Spring Boot-->

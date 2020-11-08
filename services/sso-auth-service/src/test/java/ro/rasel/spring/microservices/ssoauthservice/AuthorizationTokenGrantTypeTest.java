@@ -80,7 +80,7 @@ public class AuthorizationTokenGrantTypeTest {
                         .exchange(GET_AUTHORIZATION_CODE_URL,
                                 HttpMethod.POST,
                                 new HttpEntity<>(headers), Void.class, CLIENT_ID, REDIRECT_URL);
-        assertEquals(HttpStatus.FOUND, authorizeResponse.getStatusCode());
+        assertEquals(HttpStatus.SEE_OTHER, authorizeResponse.getStatusCode());
         final String location = authorizeResponse.getHeaders().get(HttpHeaders.LOCATION).get(0);
         return location.substring(location.indexOf("code=") + 5);
     }

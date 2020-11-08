@@ -2,6 +2,7 @@
 rm *.jks
 rm *.cer
 
+keytool -genkey -alias keyalias -keyalg RSA -keystore hystrix-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=*, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
 keytool -genkey -alias keyalias -keyalg RSA -keystore sso-auth-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=*, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
 keytool -genkey -alias keyalias -keyalg RSA -keystore eureka-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=*, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
 keytool -genkey -alias keyalias -keyalg RSA -keystore bookmark-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=*, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
@@ -12,6 +13,7 @@ keytool -genkey -alias keyalias -keyalg RSA -keystore zipkin-dashboard-service-i
 keytool -genkey -alias keyalias -keyalg RSA -keystore gateway-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=*, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
 keytool -genkey -alias keyalias -keyalg RSA -keystore resource-gateway-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=*, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
 
+keytool -export -alias keyalias -keystore hystrix-service-identity.jks -file hystrix-service.cer -storepass jkspass
 keytool -export -alias keyalias -keystore sso-auth-service-identity.jks -file sso-auth-service.cer -storepass jkspass
 keytool -export -alias keyalias -keystore eureka-service-identity.jks -file eureka-service.cer -storepass jkspass
 keytool -export -alias keyalias -keystore bookmark-service-identity.jks -file bookmark-service.cer -storepass jkspass
@@ -22,6 +24,7 @@ keytool -export -alias keyalias -keystore zipkin-dashboard-service-identity.jks 
 keytool -export -alias keyalias -keystore gateway-service-identity.jks -file gateway-service.cer -storepass jkspass
 keytool -export -alias keyalias -keystore resource-gateway-service-identity.jks -file resource-gateway-service.cer -storepass jkspass
 
+keytool -importcert -keystore truststore.jks -alias hystrix-service -storepass jkspass -file hystrix-service.cer -noprompt
 keytool -importcert -keystore truststore.jks -alias sso-auth-service -storepass jkspass -file sso-auth-service.cer -noprompt
 keytool -importcert -keystore truststore.jks -alias eureka-service -storepass jkspass -file eureka-service.cer -noprompt
 keytool -importcert -keystore truststore.jks -alias bookmark-service -storepass jkspass -file bookmark-service.cer -noprompt

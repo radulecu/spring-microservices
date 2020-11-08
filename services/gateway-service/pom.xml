@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>sso-client-component</artifactId>
+            <artifactId>web-security-client-component</artifactId>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
