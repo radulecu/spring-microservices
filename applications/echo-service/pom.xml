@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ro.rasel.spring.microservices.parents</groupId>
+        <artifactId>service-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../parents/service-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>ro.rasel.spring.microservices.applications</groupId>
+    <artifactId>echo-service</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <start.class>ro.rasel.spring.microservices.echoservice.EchoServiceApplication</start.class>
+    </properties>
+
+    <description>Basic resource service used for exposing data from database</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>resource-security-client-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>eureka-client-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>ssl-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>swagger-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>zipkin-component</artifactId>
+        </dependency>
+
+        <!--Spring Boot-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
+        <!--Validation-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!--Test-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <locations>ro.rasel.spring.microservices.echoservice.controller</locations>
+                            <schemes>https</schemes>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>fabric8-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

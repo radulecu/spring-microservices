@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>ro.rasel.spring.microservices</groupId>
+        <groupId>ro.rasel.spring.microservices.parents</groupId>
         <artifactId>dependency-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../../parents/dependency-parent/pom.xml</relativePath>
@@ -23,7 +23,7 @@
     <dependencies>
         <dependency>
             <groupId>ro.rasel.spring.microservices.commons</groupId>
-            <artifactId>spring-commons</artifactId>
+            <artifactId>spring-common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -40,7 +40,6 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.7</version>
         </dependency>
     </dependencies>
 

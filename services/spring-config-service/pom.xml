@@ -4,12 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>ro.rasel.spring.microservices</groupId>
+        <groupId>ro.rasel.spring.microservices.parents</groupId>
         <artifactId>starter-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../../parents/starter-parent/pom.xml</relativePath>
     </parent>
 
+    <groupId>ro.rasel.spring.microservices.services</groupId>
     <artifactId>spring-config-service</artifactId>
     <packaging>jar</packaging>
 

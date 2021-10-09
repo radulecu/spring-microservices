@@ -2,7 +2,7 @@ package ro.rasel.spring.microservices.component.eurekaclient.config.connection;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import ro.rasel.spring.microservices.commons.utils.connection.ConnectionConfigImpl;
+import ro.rasel.spring.microservices.common.utils.connection.ConnectionConfigImpl;
 
 @Configuration
 @ConfigurationProperties("registry.client")

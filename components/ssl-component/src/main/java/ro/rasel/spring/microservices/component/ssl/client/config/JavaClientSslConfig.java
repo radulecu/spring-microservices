@@ -2,7 +2,7 @@ package ro.rasel.spring.microservices.component.ssl.client.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import ro.rasel.spring.microservices.commons.utils.resource.ITempFileManager;
+import ro.rasel.spring.microservices.common.utils.resource.ITempFileManager;
 import ro.rasel.spring.microservices.component.ssl.client.config.properties.ClientSslContextProperties;
 
 import javax.annotation.PostConstruct;
