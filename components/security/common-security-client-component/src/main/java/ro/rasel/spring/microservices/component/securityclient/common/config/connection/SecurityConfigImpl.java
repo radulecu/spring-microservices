@@ -2,8 +2,8 @@ package ro.rasel.spring.microservices.component.securityclient.common.config.con
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import ro.rasel.spring.microservices.commons.utils.connection.ConnectionConfigImpl;
-import ro.rasel.spring.microservices.commons.utils.connection.securityclient.SecurityConfig;
+import ro.rasel.spring.microservices.common.utils.connection.ConnectionConfigImpl;
+import ro.rasel.spring.microservices.common.utils.connection.securityclient.SecurityConfig;
 
 import java.util.Objects;
 import java.util.StringJoiner;

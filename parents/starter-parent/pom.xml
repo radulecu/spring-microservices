@@ -7,9 +7,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.5.RELEASE</version>
+        <!--suppress CheckTagEmptyBody -->
+        <relativePath></relativePath>
     </parent>
 
-    <groupId>ro.rasel.spring.microservices</groupId>
+    <groupId>ro.rasel.spring.microservices.parents</groupId>
     <artifactId>starter-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -23,7 +25,7 @@
         <!--Plugins-->
         <gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
         <groovy-all.version>2.4.17</groovy-all.version>
-        <dependency-check-maven.version>5.0.0</dependency-check-maven.version>
+        <dependency-check-maven.version>6.3.2</dependency-check-maven.version>
         <swagger-maven-plugin.version>3.1.7</swagger-maven-plugin.version>
         <swagger-codegen-maven-plugin.version>2.4.5</swagger-codegen-maven-plugin.version>
         <fabric8-maven-plugin.version>4.4.0</fabric8-maven-plugin.version>
@@ -32,7 +34,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>ro.rasel.spring.microservices</groupId>
+                <groupId>ro.rasel.spring.microservices.parents</groupId>
                 <artifactId>dependency-parent</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
@@ -68,6 +70,9 @@
                     <version>${dependency-check-maven.version}</version>
                     <configuration>
                         <versionCheckEnabled>true</versionCheckEnabled>
+                        <!--Find latest here: https://nvd.nist.gov/vuln/data-feeds-->
+                        <cveUrlModified>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz</cveUrlModified>
+                        <cveUrlBase>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-recent.json.gz</cveUrlBase>
                     </configuration>
                     <executions>
                         <execution>

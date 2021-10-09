@@ -9,46 +9,24 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!--Parents-->
-        <module>parents/dependency-parent</module>
-        <module>parents/starter-parent</module>
-        <module>parents/service-parent</module>
-        <!--Commons-->
-        <module>commons/commons</module>
-        <module>commons/spring-commons</module>
-        <!--Components-->
-        <module>components/eureka-client-component</module>
-        <module>components/hystrix-component</module>
-        <module>components/ssl-component</module>
-        <module>components/security/common-security-client-component</module>
-        <module>components/security/basic-security-client-component</module>
-        <module>components/security/resource-security-client-component</module>
-        <module>components/security/web-security-client-component</module>
-        <module>components/swagger-component</module>
-        <module>components/zipkin-component</module>
-        <!--Services-->
-        <module>services/eureka-service</module>
-        <module>services/sso-auth-service</module>
-        <module>services/gateway-service</module>
-        <module>services/resource-gateway-service</module>
-        <module>services/zipkin-dashboard-service</module>
-        <module>services/spring-config-service</module>
-        <module>services/hystrix-dashboard-service</module>
-        <!--Application-->
-        <module>application/bookmark-service</module>
-        <module>application/contact-service</module>
-        <module>application/passport-service</module>
-        <module>application/echo-service</module>
-        <!--Performance-->
+        <module>parents</module>
+        <module>commons</module>
+        <module>components</module>
+        <module>services</module>
+        <module>applications</module>
         <module>gatling-performance-testing</module>
     </modules>
 
-    <distributionManagement>
-        <!--other repositories if any-->
-        <repository>
-            <id>project.local</id>
-            <name>project</name>
-            <url>file:${project.basedir}/../.repo</url>
-        </repository>
-    </distributionManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

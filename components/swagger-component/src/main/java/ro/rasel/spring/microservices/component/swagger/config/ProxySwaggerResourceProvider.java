@@ -7,7 +7,7 @@ import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
-import ro.rasel.spring.microservices.commons.utils.Touple;
+import ro.rasel.spring.microservices.common.utils.Touple;
 import ro.rasel.spring.microservices.component.swagger.config.properties.SwaggerConfigProperties;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;

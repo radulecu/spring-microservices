@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ro.rasel.spring.microservices.parents</groupId>
+        <artifactId>service-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../parents/service-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>ro.rasel.spring.microservices.applications</groupId>
+    <artifactId>passport-service</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <start.class>ro.rasel.spring.microservices.passportservice.PassportServiceApplication</start.class>
+        <server.port>8084</server.port>
+    </properties>
+
+    <description>Basic resource service used for exposing data by aggregating it from other rest services.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>resource-security-client-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>eureka-client-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>hystrix-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>ssl-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>swagger-component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>zipkin-component</artifactId>
+        </dependency>
+
+        <!--Spring Boot-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <locations>ro.rasel.spring.microservices.passportservice.controller</locations>
+                            <schemes>https</schemes>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>bookmark-api-generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <!--suppress MavenModelInspection -->
+                        <configuration>
+                            <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>
+                            <apiPackage>ro.rasel.spring.microservices.api.bookmark</apiPackage>
+                            <modelPackage>ro.rasel.spring.microservices.api.bookmark.data</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>contact-api-generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <!--suppress MavenModelInspection -->
+                        <configuration>
+                            <inputSpec>${project.basedir}/swagger/contact-service-swagger.json</inputSpec>
+                            <apiPackage>ro.rasel.spring.microservices.api.contact</apiPackage>
+                            <modelPackage>ro.rasel.spring.microservices.api.contact.data</modelPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+                <!--suppress MavenModelInspection -->
+                <configuration>
+                    <language>spring</language>
+                    <library>spring-cloud</library>
+                    <generateSupportingFiles>false</generateSupportingFiles>
+                    <configOptions>
+                        <interfaceOnly>true</interfaceOnly>
+                    </configOptions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>fabric8-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

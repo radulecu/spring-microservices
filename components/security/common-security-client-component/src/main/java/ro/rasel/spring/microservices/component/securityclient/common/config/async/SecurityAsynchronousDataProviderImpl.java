@@ -3,7 +3,7 @@ package ro.rasel.spring.microservices.component.securityclient.common.config.asy
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ro.rasel.spring.microservices.commons.utils.async.AsynchronousDataProvider;
+import ro.rasel.spring.microservices.common.utils.async.AsynchronousDataProvider;
 
 @Configuration
 public class SecurityAsynchronousDataProviderImpl implements AsynchronousDataProvider<Authentication> {

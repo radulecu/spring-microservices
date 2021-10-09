@@ -4,12 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>ro.rasel.spring.microservices</groupId>
+        <groupId>ro.rasel.spring.microservices.parents</groupId>
         <artifactId>starter-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../../parents/starter-parent/pom.xml</relativePath>
     </parent>
 
+    <groupId>ro.rasel.spring.microservices.services</groupId>
     <artifactId>zipkin-dashboard-service</artifactId>
     <packaging>jar</packaging>
 
@@ -19,31 +20,27 @@
     </properties>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>ro.rasel.spring.microservices.components</groupId>-->
-<!--            <artifactId>ssl-component</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>ro.rasel.spring.microservices.components</groupId>-->
-<!--            <artifactId>eureka-client-component</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--            <scope>compile</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>ro.rasel.spring.microservices.components</groupId>-->
-<!--            <artifactId>hystrix-component</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>io.zipkin</groupId>
             <artifactId>zipkin-server</artifactId>
-            <version>2.19.2</version>
         </dependency>
     </dependencies>
 
     <profiles>
+        <profile>
+            <id>owasp</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>docker</id>
             <build>

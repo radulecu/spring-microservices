@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import ro.rasel.spring.microservices.commons.utils.connection.securityclient.SecurityConfig;
+import ro.rasel.spring.microservices.common.utils.connection.securityclient.SecurityConfig;
 
 import javax.crypto.spec.SecretKeySpec;
 
