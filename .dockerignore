@@ -1,0 +1,7 @@
+# Local metadata
+.git
+.idea
+
+# Project specific
+**/target
+postman-collections
