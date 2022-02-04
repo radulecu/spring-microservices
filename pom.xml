@@ -15,6 +15,7 @@
         <module>services</module>
         <module>applications</module>
         <module>gatling-performance-testing</module>
+        <module>dockerBuild</module>
     </modules>
 
     <build>

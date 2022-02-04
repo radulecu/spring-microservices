@@ -13,3 +13,4 @@
 **/*service-identity.jks
 **/truststore.jks
 
+.docker
