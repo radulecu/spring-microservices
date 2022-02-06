@@ -13,6 +13,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
+import ro.rasel.spring.microservices.component.securityclient.web.config.properties.WebSecurityProperties;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -26,11 +27,15 @@ import java.util.List;
 
 
 @Configuration
-@Order(3)
+@Order(2)
 public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private final List<IWebSecurityConfigurer> configurers;
+    private final WebSecurityProperties webSecurityProperties;
 
-    public OAuth2SsoSecurityConfigurer(@Autowired(required = false) List<IWebSecurityConfigurer> configurers) {
+    public OAuth2SsoSecurityConfigurer(
+            @Autowired(required = false) List<IWebSecurityConfigurer> configurers,
+            WebSecurityProperties webSecurityProperties) {
+        this.webSecurityProperties = webSecurityProperties;
         configurers = configurers == null ? new ArrayList<>() : configurers;
         this.configurers = configurers;
     }
@@ -47,6 +52,7 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
             .and()
+            .antMatcher(webSecurityProperties.getUrlAntMatcher())
             .authorizeRequests((ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry auth) -> {
                     for (IWebSecurityConfigurer configurer : configurers) {
                         configurer.getExpressionInterceptUrlRegistryCustomizer().customize(auth);

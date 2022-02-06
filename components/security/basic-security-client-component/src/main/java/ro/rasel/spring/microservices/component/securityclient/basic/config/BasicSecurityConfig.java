@@ -9,27 +9,38 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ro.rasel.spring.microservices.component.securityclient.basic.config.properties.BasicSecurityProperties;
+import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
+
+import java.util.Optional;
 
 @Configuration
 @Order(1)
-public class SecurityBasicConfig extends WebSecurityConfigurerAdapter {
-    private final SecurityBasicProperties securityBasicProperties;
+public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
+    private final IBasicSecurityConfigurer basicSecurityConfigurer;
+    private final BasicSecurityProperties basicSecurityProperties;
 
     @Autowired
-    public SecurityBasicConfig(SecurityBasicProperties securityBasicProperties) {
-        this.securityBasicProperties = securityBasicProperties;
+    public BasicSecurityConfig(
+            @Autowired(required = false) IBasicSecurityConfigurer basicSecurityConfigurer,
+            BasicSecurityProperties basicSecurityProperties) {
+        this.basicSecurityConfigurer = basicSecurityConfigurer;
+        this.basicSecurityProperties = basicSecurityProperties;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .antMatcher(basicSecurityProperties.getUrlAntMatcher())
+                .csrf().disable()
                 .httpBasic().and()
-                .antMatcher(securityBasicProperties.getUrlAntMatcher())
-                .authorizeRequests(auth -> auth.anyRequest().authenticated())
+                .authorizeRequests(Optional.ofNullable(basicSecurityConfigurer)
+                        .map(IHttpSecurityConfigurer::getExpressionInterceptUrlRegistryCustomizer)
+                        .orElse(auth -> auth.anyRequest().authenticated()))
                 .userDetailsService(s -> {
-                    String user = securityBasicProperties.getUser();
+                    String user = basicSecurityProperties.getUser();
                     if (user != null && user.equals(s)) {
-                        return new User(s, securityBasicProperties.getPassword(), true, true, true, true,
+                        return new User(s, basicSecurityProperties.getPassword(), true, true, true, true,
                                 AuthorityUtils.createAuthorityList("ROLE_USER"));
                     }
                     return null;

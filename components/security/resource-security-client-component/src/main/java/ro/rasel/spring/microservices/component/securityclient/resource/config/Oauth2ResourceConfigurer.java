@@ -1,5 +1,6 @@
 package ro.rasel.spring.microservices.component.securityclient.resource.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -9,26 +10,34 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import ro.rasel.spring.microservices.common.utils.connection.securityclient.SecurityConfig;
+import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
+import ro.rasel.spring.microservices.component.securityclient.resource.config.properties.ResourceSecurityProperties;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Optional;
 
 @Configuration
-@Order(2)
+@Order(3)
 class Oauth2ResourceConfigurer extends WebSecurityConfigurerAdapter {
-    private final IResourceSecurityConfigurer configurer;
+    private final IResourceSecurityConfigurer resourceSecurityConfigurer;
+    private final ResourceSecurityProperties resourceSecurityProperties;
     private final SecurityConfig securityConfig;
 
     public Oauth2ResourceConfigurer(
-            IResourceSecurityConfigurer configurer,
+            @Autowired(required = false) IResourceSecurityConfigurer resourceSecurityConfigurer,
+            ResourceSecurityProperties resourceSecurityProperties,
             SecurityConfig securityConfig) {
-        this.configurer = configurer;
+        this.resourceSecurityConfigurer = resourceSecurityConfigurer;
+        this.resourceSecurityProperties = resourceSecurityProperties;
         this.securityConfig = securityConfig;
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(configurer.getExpressionInterceptUrlRegistryCustomizer())
+        http.antMatcher(resourceSecurityProperties.getUrlAntMatcher())
+                .authorizeRequests(Optional.ofNullable(resourceSecurityConfigurer)
+                        .map(IHttpSecurityConfigurer::getExpressionInterceptUrlRegistryCustomizer)
+                        .orElse(auth -> auth.anyRequest().authenticated()))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     }
 
