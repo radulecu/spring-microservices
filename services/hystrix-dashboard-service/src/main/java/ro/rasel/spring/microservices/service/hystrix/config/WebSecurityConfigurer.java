@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import ro.rasel.spring.microservices.component.securityclient.web.config.IWebSecurityConfigurer;
 
 @Configuration
-public class SecurityConfigurer implements IWebSecurityConfigurer {
+public class WebSecurityConfigurer implements IWebSecurityConfigurer {
     @Override
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
         return auth -> auth

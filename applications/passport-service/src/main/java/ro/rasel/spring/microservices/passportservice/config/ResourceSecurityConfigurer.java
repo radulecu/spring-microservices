@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.bookmarkservice.config;
+package ro.rasel.spring.microservices.passportservice.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,12 +8,12 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import ro.rasel.spring.microservices.component.securityclient.resource.config.IResourceSecurityConfigurer;
 
 @Configuration
-public class SecurityConfigurer implements IResourceSecurityConfigurer {
-    private static final String REST_MATCHER = "/v1/users/[^/]*/bookmarks(/[^/]*)?";
+public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
+    private static final String REST_MATCHER = "/v1(/async)?/users/[^/]*/passport";
 
     @Override
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
-        return auth -> auth
+        return authz -> authz
                 .regexMatchers("/v2/api-docs").permitAll()
                 .regexMatchers(HttpMethod.GET, REST_MATCHER).access("hasAuthority('SCOPE_read') or hasAuthority('SCOPE_write')")
                 .regexMatchers(HttpMethod.POST, REST_MATCHER).access("hasAuthority('SCOPE_write')")

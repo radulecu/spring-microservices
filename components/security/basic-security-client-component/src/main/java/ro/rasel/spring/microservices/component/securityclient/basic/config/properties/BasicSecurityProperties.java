@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.component.securityclient.basic.config;
+package ro.rasel.spring.microservices.component.securityclient.basic.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +7,7 @@ import java.util.StringJoiner;
 
 @Configuration
 @ConfigurationProperties("security.basic")
-public class SecurityBasicProperties {
+public class BasicSecurityProperties {
     private String user;
     private String password;
     private String urlAntMatcher="/**";
@@ -38,7 +38,7 @@ public class SecurityBasicProperties {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", SecurityBasicProperties.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", BasicSecurityProperties.class.getSimpleName() + "[", "]")
                 .add("user='" + user + "'")
                 .add("password='" + password + "'")
                 .add("urlAntMatcher='" + urlAntMatcher + "'")

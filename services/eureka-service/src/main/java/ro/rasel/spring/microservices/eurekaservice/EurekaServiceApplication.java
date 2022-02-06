@@ -4,18 +4,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import ro.rasel.spring.microservices.component.eurekaclient.EnableEurekaClientComponent;
-import ro.rasel.spring.microservices.component.securityclient.resource.EnableResourceSecurityClientComponent;
 import ro.rasel.spring.microservices.component.securityclient.basic.EnableBasicSecurityClientComponent;
-import ro.rasel.spring.microservices.component.ssl.server.EnableSslServerComponent;
+import ro.rasel.spring.microservices.component.securityclient.resource.EnableResourceSecurityClientComponent;
+import ro.rasel.spring.microservices.component.securityclient.web.EnableWebSecurityClientComponent;
 import ro.rasel.spring.microservices.component.ssl.client.EnableSslClientComponent;
+import ro.rasel.spring.microservices.component.ssl.server.EnableSslServerComponent;
 
 @SpringBootApplication
 @EnableEurekaServer
 @EnableSslServerComponent
 @EnableSslClientComponent
-@EnableResourceSecurityClientComponent
 @EnableBasicSecurityClientComponent
-@EnableEurekaClientComponent
+@EnableWebSecurityClientComponent
+//@EnableEurekaClientComponent // needed only if I want also expose eureka service through gateway
 public class EurekaServiceApplication {
 
     public static void main(String[] args) {

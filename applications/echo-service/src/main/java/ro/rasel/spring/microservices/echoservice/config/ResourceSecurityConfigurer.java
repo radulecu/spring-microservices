@@ -1,17 +1,17 @@
-package ro.rasel.spring.microservices.gatewayservice.config;
+package ro.rasel.spring.microservices.echoservice.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-import ro.rasel.spring.microservices.component.securityclient.web.config.IWebSecurityConfigurer;
+import ro.rasel.spring.microservices.component.securityclient.resource.config.IResourceSecurityConfigurer;
 
 @Configuration
-public class SecurityConfigurer implements IWebSecurityConfigurer {
+public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
     @Override
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
         return auth -> auth
-//                .antMatchers("/swagger-resources/**").permitAll()
+                .regexMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }
