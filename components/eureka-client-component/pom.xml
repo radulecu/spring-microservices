@@ -25,6 +25,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--Spring Boot-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!--Spring Cloud-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

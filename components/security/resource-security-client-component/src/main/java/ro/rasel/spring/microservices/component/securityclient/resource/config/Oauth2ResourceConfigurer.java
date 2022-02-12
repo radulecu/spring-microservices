@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import ro.rasel.spring.microservices.common.utils.connection.securityclient.SecurityConfig;
+import ro.rasel.spring.microservices.common.utils.properties.securityclient.SecurityConfigProperties;
 import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
 import ro.rasel.spring.microservices.component.securityclient.resource.config.properties.ResourceSecurityProperties;
 
@@ -21,12 +21,12 @@ import java.util.Optional;
 class Oauth2ResourceConfigurer extends WebSecurityConfigurerAdapter {
     private final IResourceSecurityConfigurer resourceSecurityConfigurer;
     private final ResourceSecurityProperties resourceSecurityProperties;
-    private final SecurityConfig securityConfig;
+    private final SecurityConfigProperties securityConfig;
 
     public Oauth2ResourceConfigurer(
             @Autowired(required = false) IResourceSecurityConfigurer resourceSecurityConfigurer,
             ResourceSecurityProperties resourceSecurityProperties,
-            SecurityConfig securityConfig) {
+            SecurityConfigProperties securityConfig) {
         this.resourceSecurityConfigurer = resourceSecurityConfigurer;
         this.resourceSecurityProperties = resourceSecurityProperties;
         this.securityConfig = securityConfig;

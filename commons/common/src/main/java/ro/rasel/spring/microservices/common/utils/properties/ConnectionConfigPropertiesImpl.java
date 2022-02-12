@@ -1,17 +1,17 @@
-package ro.rasel.spring.microservices.common.utils.connection;
+package ro.rasel.spring.microservices.common.utils.properties;
 
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-public class ConnectionConfigImpl implements ConnectionConfig {
+public class ConnectionConfigPropertiesImpl implements ConnectionConfigProperties {
     private String protocol;
     private String hostname;
     private short port;
 
-    public ConnectionConfigImpl() {
+    public ConnectionConfigPropertiesImpl() {
     }
 
-    public ConnectionConfigImpl(String protocol, String hostname, short port) {
+    public ConnectionConfigPropertiesImpl(String protocol, String hostname, short port) {
         this.protocol = protocol;
         this.hostname = hostname;
         this.port = port;
@@ -52,7 +52,7 @@ public class ConnectionConfigImpl implements ConnectionConfig {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ConnectionConfigImpl that = (ConnectionConfigImpl) o;
+        ConnectionConfigPropertiesImpl that = (ConnectionConfigPropertiesImpl) o;
         return port == that.port &&
                 Objects.equals(protocol, that.protocol) &&
                 Objects.equals(hostname, that.hostname);
