@@ -1,18 +1,18 @@
-package ro.rasel.spring.microservices.common.utils.connection;
+package ro.rasel.spring.microservices.common.utils.properties;
 
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-public class SecuredConnectionConfigImpl extends ConnectionConfigImpl
-        implements SecuredConnectionConfig {
+public class SecuredConnectionConfigPropertiesImpl extends ConnectionConfigPropertiesImpl
+        implements SecuredConnectionConfigProperties {
     private String user;
     private String password;
 
-    public SecuredConnectionConfigImpl() {
+    public SecuredConnectionConfigPropertiesImpl() {
     }
 
-    public SecuredConnectionConfigImpl(String protocol, String hostname, short port, String user,
-                                       String password) {
+    public SecuredConnectionConfigPropertiesImpl(String protocol, String hostname, short port, String user,
+                                                 String password) {
         super(protocol, hostname, port);
         this.user = user;
         this.password = password;
@@ -41,7 +41,7 @@ public class SecuredConnectionConfigImpl extends ConnectionConfigImpl
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        SecuredConnectionConfigImpl that = (SecuredConnectionConfigImpl) o;
+        SecuredConnectionConfigPropertiesImpl that = (SecuredConnectionConfigPropertiesImpl) o;
         return Objects.equals(user, that.user) &&
                 Objects.equals(password, that.password);
     }

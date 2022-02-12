@@ -3,7 +3,7 @@ package ro.rasel.spring.microservices.component.swagger.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ro.rasel.spring.microservices.common.utils.connection.securityclient.SecurityConfig;
+import ro.rasel.spring.microservices.common.utils.properties.securityclient.SecurityConfigProperties;
 import ro.rasel.spring.microservices.component.swagger.config.properties.SwaggerConfigProperties;
 import springfox.documentation.builders.AuthorizationCodeGrantBuilder;
 import springfox.documentation.builders.OAuthBuilder;
@@ -40,12 +40,12 @@ public class SwaggerConfig {
     public static final String WRITE_AUTHORIZATION_SCOPE = "write";
     public static final String OPENID_AUTHORIZATION_SCOPE = "openid";
     private final SwaggerConfigProperties swaggerConfigProperties;
-    private final SecurityConfig securityConfig;
+    private final SecurityConfigProperties securityConfig;
 
     @Autowired
     public SwaggerConfig(
             SwaggerConfigProperties swaggerConfigProperties,
-            @Autowired(required = false) SecurityConfig securityConfig) {
+            @Autowired(required = false) SecurityConfigProperties securityConfig) {
         this.swaggerConfigProperties = swaggerConfigProperties;
         this.securityConfig = securityConfig;
     }

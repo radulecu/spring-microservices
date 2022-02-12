@@ -1,17 +1,17 @@
-package ro.rasel.spring.microservices.component.securityclient.common.config.connection;
+package ro.rasel.spring.microservices.component.securityclient.common.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import ro.rasel.spring.microservices.common.utils.connection.ConnectionConfigImpl;
-import ro.rasel.spring.microservices.common.utils.connection.securityclient.SecurityConfig;
+import ro.rasel.spring.microservices.common.utils.properties.ConnectionConfigPropertiesImpl;
+import ro.rasel.spring.microservices.common.utils.properties.securityclient.SecurityConfigProperties;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
 @Configuration
 @ConfigurationProperties("security.server")
-public class SecurityConfigImpl extends ConnectionConfigImpl
-        implements SecurityConfig {
+public class SecurityConfigPropertiesImpl extends ConnectionConfigPropertiesImpl
+        implements SecurityConfigProperties {
     private String jwtSigningKey;
     private String user;
     private String password;
@@ -64,7 +64,7 @@ public class SecurityConfigImpl extends ConnectionConfigImpl
         if (!super.equals(o)) {
             return false;
         }
-        SecurityConfigImpl that = (SecurityConfigImpl) o;
+        SecurityConfigPropertiesImpl that = (SecurityConfigPropertiesImpl) o;
         return Objects.equals(jwtSigningKey, that.jwtSigningKey) &&
                 Objects.equals(user, that.user) &&
                 Objects.equals(password, that.password) &&
@@ -78,11 +78,11 @@ public class SecurityConfigImpl extends ConnectionConfigImpl
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", SecurityConfigImpl.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", SecurityConfigPropertiesImpl.class.getSimpleName() + "[", "]")
                 .add("jwtSigningKey='" + jwtSigningKey + "'")
                 .add("user='" + user + "'")
                 .add("password='" + password + "'")
                 .add("url='" + url + "'")
-                .toString() + " " + super.toString();
+                + " " + super.toString();
     }
 }

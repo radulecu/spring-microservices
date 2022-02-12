@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.component.eurekaclient.config.connection;
+package ro.rasel.spring.microservices.component.eurekaclient.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalancedRetryFactory;
 import org.springframework.cloud.netflix.ribbon.RibbonLoadBalancedRetryFactory;
