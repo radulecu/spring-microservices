@@ -25,7 +25,7 @@
         <!--Plugins-->
         <gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
         <groovy-all.version>2.4.17</groovy-all.version>
-        <dependency-check-maven.version>6.3.2</dependency-check-maven.version>
+        <dependency-check-maven.version>7.2.0</dependency-check-maven.version>
         <swagger-maven-plugin.version>3.1.7</swagger-maven-plugin.version>
         <swagger-codegen-maven-plugin.version>2.4.5</swagger-codegen-maven-plugin.version>
         <fabric8-maven-plugin.version>4.4.0</fabric8-maven-plugin.version>
@@ -213,11 +213,13 @@
         <snapshotRepository>
             <id>project.local</id>
             <name>project</name>
+            <!--suppress UnresolvedMavenProperty -->
             <url>file:${maven.multiModuleProjectDirectory}/.repo/snapshot</url>
         </snapshotRepository>
         <repository>
             <id>project.local</id>
             <name>project</name>
+            <!--suppress UnresolvedMavenProperty -->
             <url>file:${maven.multiModuleProjectDirectory}/.repo/release</url>
         </repository>
     </distributionManagement>
