@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookmark-service
+  labels:
+    app: bookmark-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bookmark-service
+  template:
+    metadata:
+      labels:
+        app: bookmark-service
+    spec:
+      containers:
+        - name: bookmark-service
+          image: radulecu/bookmark-service
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: cloud
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookmark-service
+  labels:
+    run: bookmark-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      nodePort: 30082
+  selector:
+    app: bookmark-service
