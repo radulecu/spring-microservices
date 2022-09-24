@@ -30,6 +30,9 @@
         <swagger-codegen-maven-plugin.version>2.4.5</swagger-codegen-maven-plugin.version>
         <fabric8-maven-plugin.version>4.4.0</fabric8-maven-plugin.version>
         <server.port>8080</server.port>
+
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -71,7 +74,8 @@
                     <configuration>
                         <versionCheckEnabled>true</versionCheckEnabled>
                         <!--Find latest here: https://nvd.nist.gov/vuln/data-feeds-->
-                        <cveUrlModified>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz</cveUrlModified>
+                        <cveUrlModified>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz
+                        </cveUrlModified>
                         <cveUrlBase>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-recent.json.gz</cveUrlBase>
                     </configuration>
                     <executions>
@@ -138,14 +142,15 @@
                         <images>
                             <image>
                                 <name>${DOCKER_REPOSITORY}/${project.artifactId}</name>
-<!--                                <name>${DOCKER_REPOSITORY}/spring-microservices</name>-->
+                                <!--                                <name>${DOCKER_REPOSITORY}/spring-microservices</name>-->
 
                                 <build>
                                     <from>openjdk:8-jdk-alpine</from>
                                     <tags>
                                         <tag>${project.version}</tag>
-<!--                                        <tag>${project.artifactId}.latest</tag>-->
-<!--                                        <tag>${project.artifactId}.${project.version}</tag>-->
+                                        <tag>${project.version}-${maven.build.timestamp}</tag>
+                                        <!--                                        <tag>${project.artifactId}.latest</tag>-->
+                                        <!--                                        <tag>${project.artifactId}.${project.version}</tag>-->
                                     </tags>
 
                                     <ports>
