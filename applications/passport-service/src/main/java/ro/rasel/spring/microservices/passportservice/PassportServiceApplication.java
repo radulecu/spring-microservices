@@ -12,6 +12,7 @@ import ro.rasel.spring.microservices.component.ssl.client.EnableSslClientCompone
 import ro.rasel.spring.microservices.component.ssl.server.EnableSslServerComponent;
 import ro.rasel.spring.microservices.component.swagger.EnableSwaggerComponent;
 import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponent;
+import ro.rasel.spring.microservices.springcommon.EnableSpringCommonsComponent;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -21,6 +22,7 @@ import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponen
 @EnableSslClientComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
+@EnableSpringCommonsComponent
 @EnableHystrixClientComponent
 @EnableZipkinClientComponent
 @EnableAsync
