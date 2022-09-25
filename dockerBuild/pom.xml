@@ -46,8 +46,8 @@
                 </executions>
             </plugin>
 
-        <!--Run this by using command-->
-        <!--mvn gplus:execute -f dockerBuild/pom.xml -DexecutionScript="mvn clean install"-->
+            <!--Run this by using command-->
+            <!--mvn gplus:execute -f dockerBuild/pom.xml -DexecutionScript="mvn clean install"-->
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>

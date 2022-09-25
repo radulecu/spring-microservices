@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookmark-service
+  name: contact-service
   labels:
-    app: bookmark-service
+    app: contact-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bookmark-service
+      app: contact-service
   template:
     metadata:
       labels:
-        app: bookmark-service
+        app: contact-service
     spec:
       containers:
-        - name: bookmark-service
-          image: radulecu/bookmark-service
+        - name: contact-service
+          image: radulecu/contact-service
           command: ["java"]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/bookmark-service.jar"
+            - "/opt/app/contact-service.jar"
           ports:
-            - containerPort: 8082
+            - containerPort: 8083
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
@@ -55,15 +55,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bookmark-service
+  name: contact-service
   labels:
-    run: bookmark-service
+    run: contact-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 30082
+      nodePort: 30083
   selector:
-    app: bookmark-service
+    app: contact-service

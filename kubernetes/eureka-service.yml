@@ -1,33 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookmark-service
+  name: eureka-service
   labels:
-    app: bookmark-service
+    app: eureka-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bookmark-service
+      app: eureka-service
   template:
     metadata:
       labels:
-        app: bookmark-service
+        app: eureka-service
     spec:
       containers:
-        - name: bookmark-service
-          image: radulecu/bookmark-service
+        - name: eureka-service
+          image: radulecu/eureka-service
           command: ["java"]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/bookmark-service.jar"
+            - "/opt/app/eureka-service.jar"
           ports:
-            - containerPort: 8082
+            - containerPort: 8761
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
+            - name: server.hostname
+              value: eureka-service.default.svc.cluster.local
           resources:
             requests:
               memory: "512Mi"
@@ -55,15 +57,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bookmark-service
+  name: eureka-service
   labels:
-    run: bookmark-service
+    run: eureka-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 30082
+      nodePort: 30761
   selector:
-    app: bookmark-service
+    app: eureka-service

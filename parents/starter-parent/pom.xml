@@ -145,7 +145,7 @@
                                 <!--                                <name>${DOCKER_REPOSITORY}/spring-microservices</name>-->
 
                                 <build>
-                                    <from>openjdk:8-jdk-alpine</from>
+                                    <from>${DOCKER_REPOSITORY}/ubuntu-22-04-open-jre:latest</from>
                                     <tags>
                                         <tag>${project.version}</tag>
                                         <tag>${project.version}-${maven.build.timestamp}</tag>
