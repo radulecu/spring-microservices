@@ -17,7 +17,6 @@ import static ro.rasel.spring.microservices.bookmarkservice.utils.TestConstants.
 import static ro.rasel.spring.microservices.bookmarkservice.utils.TestConstants.LABEL;
 import static ro.rasel.spring.microservices.bookmarkservice.utils.TestConstants.USER_ID;
 
-@SuppressWarnings("OptionalGetWithoutIsPresent")
 @SpringBootTest
 public class BookmarkRepositoryTest {
     @Autowired
@@ -43,6 +42,13 @@ public class BookmarkRepositoryTest {
         final Bookmark bookmark2 = bookmarkRepository.save(new Bookmark(USER_ID, HREF + 2, DESCRIPTION + 2, LABEL + 2));
         final List<Bookmark> byUserId = bookmarkRepository.findByUserId(USER_ID);
         MatcherAssert.assertThat(byUserId, containsInAnyOrder(bookmark, bookmark2));
+    }
+
+    @Test
+    public void shouldFindByUserIdAndLabelWhenBookmarkIsCreated() {
+        final Bookmark bookmark = bookmarkRepository.save(new Bookmark(USER_ID, HREF, DESCRIPTION, LABEL));
+        final List<Bookmark> byUserId = bookmarkRepository.findByUserIdAndLabel(USER_ID, LABEL);
+        MatcherAssert.assertThat(byUserId, containsInAnyOrder(bookmark));
     }
 
     @Test

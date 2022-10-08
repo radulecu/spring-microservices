@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.Transactional;
 import ro.rasel.spring.microservices.bookmarkservice.dao.BookmarkRepository;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
 import ro.rasel.spring.microservices.component.eurekaclient.EnableEurekaClientComponent;
@@ -15,6 +16,7 @@ import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponen
 import ro.rasel.spring.microservices.springcommon.EnableSpringCommonsComponent;
 
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 @EnableSwaggerComponent
@@ -27,16 +29,21 @@ import java.util.Arrays;
 public class BookmarkServiceApplication {
 
     @Bean
+    @Transactional
     public CommandLineRunner init(BookmarkRepository bookmarkRepository) {
-        return args -> {
-            bookmarkRepository.deleteAll();
+        return args -> Arrays.asList("pwebb", "jlong")
+                .forEach(user -> addBookmarkIfNotExist(bookmarkRepository, user));
+    }
 
-            Arrays.asList("pwebb", "jlong")
-                    .forEach(n -> bookmarkRepository.save(new Bookmark(n,
-                            String.format("http://some-other-host-for-%s.com", n),
-                            String.format("A description for %s's link", n),
-                            String.format("%sLabel", n))));
-        };
+    private static void addBookmarkIfNotExist(BookmarkRepository bookmarkRepository, String user) {
+        String label = String.format("%sLabel", user);
+        List<Bookmark> byUserIdAndLabel = bookmarkRepository.findByUserIdAndLabel(user, label);
+        if (byUserIdAndLabel.isEmpty()) {
+            bookmarkRepository.save(new Bookmark(user,
+                    String.format("http://some-other-host-for-%s.com", user),
+                    String.format("A description for %s's link", user),
+                    label));
+        }
     }
 
     public static void main(String[] args) {

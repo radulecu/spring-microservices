@@ -14,6 +14,10 @@ spec:
       labels:
         app: passport-service
     spec:
+      volumes:
+        - name: app-logs-volume
+          persistentVolumeClaim:
+            claimName: app-logs-pvc
       containers:
         - name: passport-service
           image: radulecu/passport-service
@@ -28,6 +32,13 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          volumeMounts:
+            - mountPath: "/opt/log"
+              name: app-logs-volume
           resources:
             requests:
               memory: "512Mi"

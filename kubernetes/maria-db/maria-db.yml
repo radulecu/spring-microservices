@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maria-db
+  labels:
+    app: maria-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maria-db
+  template:
+    metadata:
+      labels:
+        app: maria-db
+    spec:
+      volumes:
+        - name: maria-db-volume
+          persistentVolumeClaim:
+            claimName: maria-db-pvc
+      containers:
+        - name: maria-db
+          image: radulecu/mariadb
+          env:
+            - name: MARIADB_USER
+              value: dbuser
+            - name: MARIADB_PASSWORD
+              value: dbpass
+            - name: MARIADB_ROOT_PASSWORD
+              value: pass
+          volumeMounts:
+            - mountPath: "/var/lib/mysql"
+              name: maria-db-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: maria-db
+  labels:
+    run: maria-db
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      protocol: TCP
+      targetPort: 3306
+      nodePort: 30306
+  selector:
+    app: maria-db
