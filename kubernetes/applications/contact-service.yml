@@ -1,35 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: resource-gateway-service
+  name: contact-service
   labels:
-    app: resource-gateway-service
+    app: contact-service
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: resource-gateway-service
+      app: contact-service
   template:
     metadata:
       labels:
-        app: resource-gateway-service
+        app: contact-service
     spec:
+      volumes:
+        - name: app-logs-volume
+          persistentVolumeClaim:
+            claimName: app-logs-pvc
       containers:
-        - name: resource-gateway-service
-          image: radulecu/resource-gateway-service
+        - name: contact-service
+          image: radulecu/contact-service
           command: ["java"]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/resource-gateway-service.jar"
+            - "/opt/app/contact-service.jar"
           ports:
             - containerPort: 8083
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
-            - name: eureka.client.enabled
-              value: "false"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          volumeMounts:
+            - mountPath: "/opt/log"
+              name: app-logs-volume
           resources:
             requests:
               memory: "512Mi"
@@ -57,15 +66,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: resource-gateway-service
+  name: contact-service
   labels:
-    run: resource-gateway-service
+    run: contact-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 31025
+      nodePort: 30083
   selector:
-    app: resource-gateway-service
+    app: contact-service

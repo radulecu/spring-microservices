@@ -169,7 +169,7 @@
                                     <assembly>
                                         <mode>dir</mode>
                                         <name>${project.artifactId}-${project.version}</name>
-                                        <targetDir>/opt/app</targetDir>
+                                        <targetDir>/opt</targetDir>
                                         <descriptor>assembly.xml</descriptor>
                                     </assembly>
                                 </build>

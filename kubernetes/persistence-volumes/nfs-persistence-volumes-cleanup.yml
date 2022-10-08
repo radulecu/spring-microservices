@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-recycler-pv1401
+  namespace: default
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: pv1401
+      hostPath:
+        path: /mnt/nfs_pv/pb1
+  containers:
+    - name: pv-recycler
+      image: "registry.k8s.io/busybox"
+      command: ["/bin/sh", "-c", "test -e /scrub && rm -rf /scrub/..?* /scrub/.[!.]* /scrub/*  && test -z \"$(ls -A /scrub)\" || exit 1"]
+      volumeMounts:
+        - name: pv1401
+          mountPath: /scrub
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-recycler-pv1402
+  namespace: default
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: pv1402
+      hostPath:
+        path: /mnt/nfs_pv/pb2
+  containers:
+    - name: pv-recycler
+      image: "registry.k8s.io/busybox"
+      command: ["/bin/sh", "-c", "test -e /scrub && rm -rf /scrub/..?* /scrub/.[!.]* /scrub/*  && test -z \"$(ls -A /scrub)\" || exit 1"]
+      volumeMounts:
+        - name: pv1402
+          mountPath: /scrub
