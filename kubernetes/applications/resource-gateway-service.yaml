@@ -1,37 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: contact-service
+  name: resource-gateway-service
   labels:
-    app: contact-service
+    app: resource-gateway-service
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
-      app: contact-service
+      app: resource-gateway-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 0%
   template:
     metadata:
       labels:
-        app: contact-service
+        app: resource-gateway-service
     spec:
       volumes:
         - name: app-logs-volume
           persistentVolumeClaim:
             claimName: app-logs-pvc
       containers:
-        - name: contact-service
-          image: radulecu/contact-service
+        - name: resource-gateway-service
+          image: radulecu/resource-gateway-service
           command: ["java"]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/contact-service.jar"
+            - "/opt/app/resource-gateway-service.jar"
           ports:
             - containerPort: 8083
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
+            - name: eureka.client.enabled
+              value: "false"
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -62,19 +67,26 @@ spec:
                   value: application/json
             failureThreshold: 5
             periodSeconds: 3
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/region
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: resource-gateway-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: contact-service
+  name: resource-gateway-service
   labels:
-    run: contact-service
+    run: resource-gateway-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 30083
+      nodePort: 31025
   selector:
-    app: contact-service
+    app: resource-gateway-service

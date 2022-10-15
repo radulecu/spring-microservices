@@ -1,16 +1,16 @@
 rm *.jks
 rm *.cer
 
-keytool -genkey -alias keyalias -keyalg RSA -keystore hystrix-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=hystrix-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore sso-auth-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=sso-auth-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore eureka-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=eureka-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore bookmark-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=bookmark-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore contact-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=contact-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore passport-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=passport-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore echo-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=echo-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore zipkin-dashboard-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=zipkin-dashboard-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore gateway-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=gateway-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias keyalias -keyalg RSA -keystore resource-gateway-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=resource-gateway-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
+keytool -genkey -alias keyalias -keyalg RSA -keystore hystrix-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=hystrix-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore sso-auth-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=sso-auth-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore eureka-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=eureka-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore bookmark-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=bookmark-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore contact-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=contact-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore passport-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=passport-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore echo-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=echo-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore zipkin-dashboard-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=zipkin-dashboard-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore gateway-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=gateway-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias keyalias -keyalg RSA -keystore resource-gateway-service-identity.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=resource-gateway-service, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
 
 keytool -export -alias keyalias -keystore hystrix-service-identity.jks -file hystrix-service.cer -storepass jkspass
 keytool -export -alias keyalias -keystore sso-auth-service-identity.jks -file sso-auth-service.cer -storepass jkspass
