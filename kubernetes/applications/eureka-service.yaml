@@ -1,44 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: passport-service
+  name: eureka-service
   labels:
-    app: passport-service
+    app: eureka-service
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
-      app: passport-service
+      app: eureka-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 0%
   template:
     metadata:
       labels:
-        app: passport-service
+        app: eureka-service
     spec:
-      volumes:
-        - name: app-logs-volume
-          persistentVolumeClaim:
-            claimName: app-logs-pvc
       containers:
-        - name: passport-service
-          image: radulecu/passport-service
+        - name: eureka-service
+          image: radulecu/eureka-service
           command: ["java"]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/passport-service.jar"
+            - "/opt/app/eureka-service.jar"
           ports:
-            - containerPort: 8084
+            - containerPort: 8761
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-          volumeMounts:
-            - mountPath: "/opt/log"
-              name: app-logs-volume
+            - name: server.hostname
+              value: eureka-service.default.svc.cluster.local
           resources:
             requests:
               memory: "512Mi"
@@ -62,19 +56,26 @@ spec:
                   value: application/json
             failureThreshold: 5
             periodSeconds: 3
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/region
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: eureka-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: passport-service
+  name: eureka-service
   labels:
-    run: passport-service
+    run: eureka-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 30084
+      nodePort: 30761
   selector:
-    app: passport-service
+    app: eureka-service

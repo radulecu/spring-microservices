@@ -20,8 +20,8 @@ Used to enable https and provide truststore for self signed certificates.
 
 ### Generating keystore, certificate and truststore files command (for this demo it is automatically done by maven and groovy plugin)
 
-keytool -genkey -alias jkslocalhostalias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
-keytool -genkey -alias jkscomputernamealias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
+keytool -genkey -alias jkslocalhostalias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
+keytool -genkey -alias jkscomputernamealias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=%COMPUTERNAME%, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO"
 
 keytool -export -alias jkslocalhostalias -keystore my.jks -file localhost.cer -storepass jkspass
 keytool -export -alias jkscomputernamealias -keystore my.jks -file computername.cer -storepass jkspass

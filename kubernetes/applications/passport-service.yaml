@@ -1,34 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookmark-service
+  name: passport-service
   labels:
-    app: bookmark-service
+    app: passport-service
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
-      app: bookmark-service
+      app: passport-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 0%
   template:
     metadata:
       labels:
-        app: bookmark-service
+        app: passport-service
     spec:
       volumes:
         - name: app-logs-volume
           persistentVolumeClaim:
             claimName: app-logs-pvc
       containers:
-        - name: bookmark-service
-          image: radulecu/bookmark-service
+        - name: passport-service
+          image: radulecu/passport-service
           command: ["java"]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/bookmark-service.jar"
+            - "/opt/app/passport-service.jar"
           ports:
-            - containerPort: 8082
+            - containerPort: 8084
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
@@ -62,19 +65,26 @@ spec:
                   value: application/json
             failureThreshold: 5
             periodSeconds: 3
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/region
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: passport-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: bookmark-service
+  name: passport-service
   labels:
-    run: bookmark-service
+    run: passport-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 30082
+      nodePort: 30084
   selector:
-    app: bookmark-service
+    app: passport-service

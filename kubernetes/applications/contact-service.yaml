@@ -1,35 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: eureka-service
+  name: contact-service
   labels:
-    app: eureka-service
+    app: contact-service
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
-      app: eureka-service
+      app: contact-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 0%
   template:
     metadata:
       labels:
-        app: eureka-service
+        app: contact-service
     spec:
+      volumes:
+        - name: app-logs-volume
+          persistentVolumeClaim:
+            claimName: app-logs-pvc
       containers:
-        - name: eureka-service
-          image: radulecu/eureka-service
+        - name: contact-service
+          image: radulecu/contact-service
           command: ["java"]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/eureka-service.jar"
+            - "/opt/app/contact-service.jar"
           ports:
-            - containerPort: 8761
+            - containerPort: 8083
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
-            - name: server.hostname
-              value: eureka-service.default.svc.cluster.local
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          volumeMounts:
+            - mountPath: "/opt/log"
+              name: app-logs-volume
           resources:
             requests:
               memory: "512Mi"
@@ -53,19 +65,26 @@ spec:
                   value: application/json
             failureThreshold: 5
             periodSeconds: 3
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/region
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: contact-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: eureka-service
+  name: contact-service
   labels:
-    run: eureka-service
+    run: contact-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 30761
+      nodePort: 30083
   selector:
-    app: eureka-service
+    app: contact-service

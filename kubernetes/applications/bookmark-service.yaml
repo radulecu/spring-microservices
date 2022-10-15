@@ -1,39 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: resource-gateway-service
+  name: bookmark-service
   labels:
-    app: resource-gateway-service
+    app: bookmark-service
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
-      app: resource-gateway-service
+      app: bookmark-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 0%
   template:
     metadata:
       labels:
-        app: resource-gateway-service
+        app: bookmark-service
     spec:
       volumes:
         - name: app-logs-volume
           persistentVolumeClaim:
             claimName: app-logs-pvc
       containers:
-        - name: resource-gateway-service
-          image: radulecu/resource-gateway-service
+        - name: bookmark-service
+          image: radulecu/bookmark-service
           command: ["java"]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/resource-gateway-service.jar"
+            - "/opt/app/bookmark-service.jar"
           ports:
-            - containerPort: 8083
+            - containerPort: 8082
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
-            - name: eureka.client.enabled
-              value: "false"
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -64,19 +65,26 @@ spec:
                   value: application/json
             failureThreshold: 5
             periodSeconds: 3
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/region
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: bookmark-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: resource-gateway-service
+  name: bookmark-service
   labels:
-    run: resource-gateway-service
+    run: bookmark-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 31025
+      nodePort: 30082
   selector:
-    app: resource-gateway-service
+    app: bookmark-service
