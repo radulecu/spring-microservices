@@ -20,14 +20,14 @@ spec:
       containers:
         - name: eureka-service
           image: radulecu/eureka-service
-          command: ["java"]
+          command: [ "java" ]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
             - "/opt/app/eureka-service.jar"
           ports:
-            - containerPort: 8761
+            - containerPort: 80
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud

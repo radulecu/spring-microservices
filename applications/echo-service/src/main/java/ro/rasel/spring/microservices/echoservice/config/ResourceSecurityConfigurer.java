@@ -11,7 +11,11 @@ public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
     @Override
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
         return auth -> auth
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
                 .regexMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/actuator/health/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }

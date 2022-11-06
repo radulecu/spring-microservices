@@ -13,7 +13,7 @@ CREATE TABLE role
 (
     id          INTEGER IDENTITY PRIMARY KEY,
     user_name   VARCHAR(255) NOT NULL foreign key REFERENCES user_info (user_name),
-    role        VARCHAR(255) NOT NULL,
+    role        VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE authentication_info

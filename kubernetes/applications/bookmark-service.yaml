@@ -24,14 +24,14 @@ spec:
       containers:
         - name: bookmark-service
           image: radulecu/bookmark-service
-          command: ["java"]
+          command: [ "java" ]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
             - "/opt/app/bookmark-service.jar"
           ports:
-            - containerPort: 8082
+            - containerPort: 80
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud

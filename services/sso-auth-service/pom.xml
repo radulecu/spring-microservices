@@ -59,6 +59,12 @@
             <artifactId>spring-security-jwt</artifactId>
         </dependency>
 
+        <!--MARIADB-->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+        </dependency>
+
         <!--HSQL-->
         <dependency>
             <groupId>org.hsqldb</groupId>

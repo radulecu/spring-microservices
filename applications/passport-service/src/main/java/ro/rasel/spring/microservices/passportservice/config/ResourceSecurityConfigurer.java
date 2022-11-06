@@ -14,11 +14,15 @@ public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
     @Override
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
         return authz -> authz
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
                 .regexMatchers("/v2/api-docs").permitAll()
                 .regexMatchers(HttpMethod.GET, REST_MATCHER).access("hasAuthority('SCOPE_read') or hasAuthority('SCOPE_write')")
                 .regexMatchers(HttpMethod.POST, REST_MATCHER).access("hasAuthority('SCOPE_write')")
                 .regexMatchers(HttpMethod.PUT, REST_MATCHER).access("hasAuthority('SCOPE_write')")
                 .regexMatchers(HttpMethod.DELETE, REST_MATCHER).access("hasAuthority('SCOPE_write')")
+                .antMatchers("/actuator/health/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().denyAll();
     }

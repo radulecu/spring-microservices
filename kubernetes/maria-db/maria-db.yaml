@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: maria-db
   labels:
@@ -9,15 +9,19 @@ spec:
   selector:
     matchLabels:
       app: maria-db
+  volumeClaimTemplates:
+    - metadata:
+        name: maria-db-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi
   template:
     metadata:
       labels:
         app: maria-db
     spec:
-      volumes:
-        - name: maria-db-volume
-          persistentVolumeClaim:
-            claimName: maria-db-pvc
       containers:
         - name: maria-db
           image: radulecu/mariadb

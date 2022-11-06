@@ -12,6 +12,7 @@ public class WebSecurityConfigurer implements IWebSecurityConfigurer {
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
         return auth -> auth
 //                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/actuator/health/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }

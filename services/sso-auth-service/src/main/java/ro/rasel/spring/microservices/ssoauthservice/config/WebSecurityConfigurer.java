@@ -21,6 +21,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/oauth/authorize", "/oauth/token", "/actuator/**")
             .and()
                 .authorizeRequests()
+                .antMatchers("/actuator/health/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest()
                 .authenticated()

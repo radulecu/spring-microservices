@@ -46,6 +46,7 @@ services:
     environment:
       <<: *common-variables
       server.hostname: resource-gateway-service
+      security.server.hostname: "localhost"
       registry.server.hostname: "eureka-service"
       spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
       security.server.url: https://sso-auth-service:9999/sso
@@ -67,6 +68,7 @@ services:
     environment:
       <<: *common-variables
       server.hostname: contact-service
+      security.server.hostname: "localhost"
       registry.server.hostname: "eureka-service"
       spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
       server.ssl.client-auth: none
@@ -77,6 +79,7 @@ services:
     environment:
       <<: *common-variables
       server.hostname: passport-service
+      security.server.hostname: "localhost"
       registry.server.hostname: "eureka-service"
       spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
       server.ssl.client-auth: none
@@ -87,6 +90,7 @@ services:
     environment:
       <<: *common-variables
       server.hostname: echo-service
+      security.server.hostname: "localhost"
       registry.server.hostname: "eureka-service"
       spring.zipkin.base-url: http://zipkin-dashboard-service:9411/
       server.ssl.client-auth: none

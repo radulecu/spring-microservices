@@ -12,9 +12,13 @@ public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
         return auth -> auth
                 .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/*-service/v2/api-docs").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/**/swagger-ui.html").permitAll()
+                .antMatchers("/**/swagger-resources/**").permitAll()
+                .antMatchers("/**/webjars/**").permitAll()
+                .antMatchers("/**/v2/api-docs").permitAll()
+                .antMatchers("/actuator/health/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .regexMatchers("/users/.*").access("hasAuthority('SCOPE_openid')")
                 .anyRequest().authenticated();
