@@ -162,7 +162,7 @@
                                         <exec>
                                             <arg>java</arg>
                                             <arg>-jar</arg>
-                                            <arg>/opt/app/${project.artifactId}-${project.version}.jar</arg>
+                                            <arg>/opt/app/${project.artifactId}.jar</arg>
                                         </exec>
                                     </entryPoint>
 

@@ -17,6 +17,7 @@ public class SecurityConfigurer implements IResourceSecurityConfigurer, IWebSecu
         return auth -> auth
                 .regexMatchers("/v2/api-docs").permitAll()
 //                .antMatchers("/eureka/**").permitAll()
+                .antMatchers("/actuator/health/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }

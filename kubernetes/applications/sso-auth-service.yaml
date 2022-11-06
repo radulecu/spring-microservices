@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: passport-service
+  name: sso-auth-service
   labels:
-    app: passport-service
+    app: sso-auth-service
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: passport-service
+      app: sso-auth-service
   strategy:
     rollingUpdate:
       maxSurge: 0%
   template:
     metadata:
       labels:
-        app: passport-service
+        app: sso-auth-service
     spec:
       volumes:
         - name: app-logs-volume
           persistentVolumeClaim:
             claimName: app-logs-pvc
       containers:
-        - name: passport-service
-          image: radulecu/passport-service
+        - name: sso-auth-service
+          image: radulecu/sso-auth-service
           command: [ "java" ]
           args:
             - "-XX:MaxRAMPercentage=80"
             - "-XX:+ExitOnOutOfMemoryError"
             - "-jar"
-            - "/opt/app/passport-service.jar"
+            - "/opt/app/sso-auth-service.jar"
           ports:
             - containerPort: 80
           env:
@@ -49,7 +49,7 @@ spec:
               memory: "1024Mi"
           startupProbe:
             httpGet:
-              path: /actuator/health/readiness
+              path: /sso/actuator/health/readiness
               port: 80
               httpHeaders:
                 - name: Accept
@@ -58,7 +58,7 @@ spec:
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /sso/actuator/health
               port: 80
               httpHeaders:
                 - name: Accept
@@ -71,20 +71,20 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app: passport-service
+              app: sso-auth-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: passport-service
+  name: sso-auth-service
   labels:
-    run: passport-service
+    run: sso-auth-service
 spec:
   type: NodePort
   ports:
     - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 30084
+      nodePort: 31999
   selector:
-    app: passport-service
+    app: sso-auth-service

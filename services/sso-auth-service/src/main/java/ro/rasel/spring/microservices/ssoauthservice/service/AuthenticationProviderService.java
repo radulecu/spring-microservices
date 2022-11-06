@@ -66,13 +66,13 @@ public class AuthenticationProviderService implements AuthenticationProvider, Me
             throws AuthenticationException {
         try {
             return userDetailsService.loadUser(username, (CharSequence) authentication.getCredentials());
-        } catch (UsernameNotFoundException var4) {
+        } catch (UsernameNotFoundException e) {
             return null;
-        } catch (InternalAuthenticationServiceException var5) {
-            throw var5;
-        } catch (Exception var6) {
+        } catch (InternalAuthenticationServiceException e) {
+            throw e;
+        } catch (Exception e) {
             throw new InternalAuthenticationServiceException(messages
-                    .getMessage(this.getClass().getName() + "unexpectedError", "Unexpected error"));
+                    .getMessage(this.getClass().getName() + "unexpectedError", "Unexpected error"), e);
         }
     }
 

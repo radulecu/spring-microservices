@@ -73,43 +73,44 @@ spec:
 #  nfs:
 #    path: /mnt/nfs_pv/pv2
 #    server: 192.168.33.15
-#---
-#apiVersion: v1
-#kind: PersistentVolume
-#metadata:
-#  name: pv1601
-#spec:
-#  capacity:
-#    storage: 10Gi
-#  volumeMode: Filesystem
-#  accessModes:
-#      - ReadWriteOnce
-#      - ReadWriteMany
-#  persistentVolumeReclaimPolicy: Recycle
-#  mountOptions:
-#    - hard
-#    - nfsvers=4.1
-#  nfs:
-#    path: /mnt/nfs_pv/pv1
-#    server: 192.168.33.16
-#---
-#apiVersion: v1
-#kind: PersistentVolume
-#metadata:
-#  name: pv1602
-#spec:
-#  capacity:
-#    storage: 10Gi
-#  volumeMode: Filesystem
-#  accessModes:
-#    - ReadWriteOnce
-#  persistentVolumeReclaimPolicy: Recycle
-#  mountOptions:
-#    - hard
-#    - nfsvers=4.1
-#  nfs:
-#    path: /mnt/nfs_pv/pv2
-#    server: 192.168.33.16
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv1601
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+      - ReadWriteOnce
+      - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /mnt/nfs_pv/pv1
+    server: 192.168.33.16
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv1602
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /mnt/nfs_pv/pv2
+    server: 192.168.33.16
 #---
 #apiVersion: v1
 #kind: PersistentVolume
