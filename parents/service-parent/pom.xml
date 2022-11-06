@@ -78,6 +78,22 @@
             </build>
         </profile>
         <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${project.basedir}/src/main/resources/common</directory>
+                    </resource>
+                    <resource>
+                        <directory>${project.basedir}/src/main/resources/prod</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
             <id>cloudconfig</id>
             <dependencies>
                 <dependency>
@@ -87,9 +103,6 @@
             </dependencies>
             <build>
                 <resources>
-                    <resource>
-                        <directory>${project.basedir}/src/main/resources/common</directory>
-                    </resource>
                     <resource>
                         <directory>${project.basedir}/src/main/resources/cloudconfig</directory>
                     </resource>
