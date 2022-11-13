@@ -32,7 +32,7 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
             - name: server.hostname
-              value: eureka-service.default.svc.cluster.local
+              value: eureka-service.${server.domain}
           resources:
             requests:
               memory: "512Mi"
