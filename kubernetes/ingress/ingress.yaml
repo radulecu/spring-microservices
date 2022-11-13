@@ -1,0 +1,72 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: resource-gateway-service.localdev.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: resource-gateway-service
+                port:
+                  number: 80
+    - host: bookmark-service.localdev.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: bookmark-service
+                port:
+                  number: 80
+    - host: contact-service.localdev.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: contact-service
+                port:
+                  number: 80
+    - host: passport-service.localdev.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: passport-service
+                port:
+                  number: 80
+    - host: eureka-service.localdev.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: eureka-service
+                port:
+                  number: 80
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ingress-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - port: 8080
+#      targetPort: 80
+#      nodePort: 31000
+#  selector:
+#    app: ingress
