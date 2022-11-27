@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-service
+  labels:
+    app: echo-service
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: echo-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 0%
+  template:
+    metadata:
+      labels:
+        app: echo-service
+    spec:
+      volumes:
+        - name: app-logs-volume
+          persistentVolumeClaim:
+            claimName: app-logs-pvc
+      containers:
+        - name: echo-service
+          image: radulecu/echo-service
+          command: [ "java" ]
+          args:
+            - "-XX:MaxRAMPercentage=80"
+            - "-XX:+ExitOnOutOfMemoryError"
+            - "-jar"
+            - "/opt/app/echo-service.jar"
+          ports:
+            - containerPort: 80
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: cloud
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          volumeMounts:
+            - mountPath: "/opt/log"
+              name: app-logs-volume
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "1024Mi"
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 80
+              httpHeaders:
+                - name: Accept
+                  value: application/json
+            failureThreshold: 20
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 80
+              httpHeaders:
+                - name: Accept
+                  value: application/json
+            failureThreshold: 5
+            periodSeconds: 3
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/region
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: echo-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-service
+  labels:
+    run: echo-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      nodePort: 30090
+  selector:
+    app: echo-service

@@ -2,7 +2,6 @@ package ro.rasel.spring.microservices.echoservice.controller.v1;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ro.rasel.spring.microservices.echoservice.controller.v1.dao.EchoRequest;
 import ro.rasel.spring.microservices.echoservice.controller.v1.dao.EchoResponse;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 public class EchoApiImpl implements EchoApi {
     @Override
     public ResponseEntity<EchoResponse> getEchos(
-            HttpHeaders requestHeaders, @RequestParam("responseStatus") Integer responseStatus,
+            HttpHeaders requestHeaders, Integer responseStatus,
             HttpServletRequest httpServletRequest) {
         return processEcho(new EchoRequest(responseStatus, Collections.emptyMap()),
                 httpServletRequest.getParameterMap(), requestHeaders);
