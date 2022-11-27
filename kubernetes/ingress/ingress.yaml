@@ -57,6 +57,16 @@ spec:
                 name: eureka-service
                 port:
                   number: 80
+    - host: echo-service.localdev.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: echo-service
+                port:
+                  number: 80
 #---
 #apiVersion: v1
 #kind: Service

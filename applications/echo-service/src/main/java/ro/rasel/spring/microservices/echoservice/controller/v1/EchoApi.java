@@ -2,19 +2,11 @@ package ro.rasel.spring.microservices.echoservice.controller.v1;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ro.rasel.spring.microservices.echoservice.controller.v1.dao.EchoRequest;
 import ro.rasel.spring.microservices.echoservice.controller.v1.dao.EchoResponse;
 
@@ -23,7 +15,7 @@ import javax.validation.Valid;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@RequestMapping(value = {"**"})
+@RequestMapping(value = {"/${echo.root.path:echo}/**"})
 @Api(tags = EchoApi.TAG)
 public interface EchoApi {
     String TAG = "echo";
@@ -33,7 +25,8 @@ public interface EchoApi {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok")})
     ResponseEntity<EchoResponse> getEchos(
-            @RequestHeader HttpHeaders headers, @RequestParam("responseStatus") @ApiParam(defaultValue = "200") Integer responseStatus,
+            @RequestHeader HttpHeaders headers,
+            @RequestParam(value = "responseStatus", defaultValue = "200") Integer responseStatus,
             HttpServletRequest httpServletRequest);
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
