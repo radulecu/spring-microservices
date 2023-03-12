@@ -6,12 +6,20 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ro.rasel.spring.microservices.echoservice.controller.v1.dao.EchoRequest;
 import ro.rasel.spring.microservices.echoservice.controller.v1.dao.EchoResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -26,7 +34,8 @@ public interface EchoApi {
             @ApiResponse(code = 200, message = "Ok")})
     ResponseEntity<EchoResponse> getEchos(
             @RequestHeader HttpHeaders headers,
-            @RequestParam(value = "responseStatus", defaultValue = "200") Integer responseStatus,
+            @RequestParam(value = "responseStatus", defaultValue = "200") Integer responseStatusParam,
+            @RequestParam(value = "responseHeaders", defaultValue = "") List<String> responseHeadersParam,
             HttpServletRequest httpServletRequest);
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
@@ -34,7 +43,8 @@ public interface EchoApi {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok")})
     ResponseEntity<EchoResponse> createEcho(
-            @Valid @RequestBody EchoRequest echoRequest, @RequestHeader HttpHeaders headers,
+            @Valid @RequestBody EchoRequest echoRequest,
+            @RequestHeader HttpHeaders headers,
             HttpServletRequest httpServletRequest);
 
     @PutMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
@@ -42,7 +52,8 @@ public interface EchoApi {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok")})
     ResponseEntity<EchoResponse> updateEcho(
-            @Valid @RequestBody EchoRequest echoRequest, @RequestHeader HttpHeaders headers,
+            @Valid @RequestBody EchoRequest echoRequest,
+            @RequestHeader HttpHeaders headers,
             HttpServletRequest httpServletRequest);
 
     @DeleteMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
