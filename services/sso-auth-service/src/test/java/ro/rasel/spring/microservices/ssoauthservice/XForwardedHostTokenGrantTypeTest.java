@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,11 +21,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static ro.rasel.spring.microservices.ssoauthservice.filter.ForwardPortHeaderFilter.X_FORWARDED_HOST;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"ssl.enabled=false", "server.ssl.client-auth="})
-public class AuthorizationTokenGrantTypeTest {
+public class XForwardedHostTokenGrantTypeTest {
 
     private static final String USER = "jlong";
     private static final String SECRET = "spring";
@@ -43,9 +43,6 @@ public class AuthorizationTokenGrantTypeTest {
 
     @Autowired
     TestRestTemplate testRestTemplate;
-
-    @Autowired
-    private ServletWebServerApplicationContext servletWebServerApplicationContext;
 
     @Test
     public void givenAccessTokenWhenAccessUserInfoEndpointThenSuccess() {
@@ -67,12 +64,15 @@ public class AuthorizationTokenGrantTypeTest {
 
     private String login(String username, String password) {
         // curl -k -v -X POST https://localhost:9999/sso/login -H "Content-Type: application/x-www-form-urlencoded" -d "username=jlong" -d "password=spring"
+        HttpHeaders headers = new HttpHeaders();
+        headers.put(X_FORWARDED_HOST, Collections.singletonList("localhost:30080"));
+        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
         final ResponseEntity<Void> loginResponseEntity =
                 testRestTemplate
-                        .postForEntity(LOGIN_URL, null, Void.class, username,
+                        .exchange(LOGIN_URL, HttpMethod.POST, requestEntity, Void.class, username,
                                 password);
         assertEquals(HttpStatus.FOUND, loginResponseEntity.getStatusCode());
-        assertEquals(Arrays.asList("http://localhost:"+servletWebServerApplicationContext.getWebServer().getPort()+"/sso/"), loginResponseEntity.getHeaders().get("Location"));
+        assertEquals(Arrays.asList("http://localhost:30080/sso/"), loginResponseEntity.getHeaders().get("Location"));
         return ((Map<String, String>) getCookies(loginResponseEntity)).get("JSESSIONID");
     }
 
