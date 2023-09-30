@@ -12,10 +12,20 @@ import java.util.StringJoiner;
 @ConfigurationProperties("security.server")
 public class SecurityConfigPropertiesImpl extends ConnectionConfigPropertiesImpl
         implements SecurityConfigProperties {
+    private boolean useSymmetricJwtSigningKey;
     private String jwtSigningKey;
     private String user;
     private String password;
     private String url;
+
+    @Override
+    public boolean isUseSymmetricJwtSigningKey() {
+        return useSymmetricJwtSigningKey;
+    }
+
+    public void setUseSymmetricJwtSigningKey(boolean useSymmetricJwtSigningKey) {
+        this.useSymmetricJwtSigningKey = useSymmetricJwtSigningKey;
+    }
 
     @Override
     public String getJwtSigningKey() {

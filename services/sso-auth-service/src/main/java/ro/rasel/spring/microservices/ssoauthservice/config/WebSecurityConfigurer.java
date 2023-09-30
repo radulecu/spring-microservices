@@ -19,7 +19,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception { // @formatter:off
         http.requestMatchers()
                 .antMatchers("/login", "/oauth/authorize", "/oauth/token", "/actuator/**")
-            .and()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/actuator/health/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")

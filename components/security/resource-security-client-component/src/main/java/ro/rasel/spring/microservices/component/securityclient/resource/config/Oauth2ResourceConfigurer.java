@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import ro.rasel.spring.microservices.common.utils.properties.securityclient.SecurityConfigProperties;
 import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
 import ro.rasel.spring.microservices.component.securityclient.resource.config.properties.ResourceSecurityProperties;
+import ro.rasel.spring.microservices.component.securityclient.resource.service.PublicKeyLoaderService;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Optional;
@@ -42,9 +43,17 @@ class Oauth2ResourceConfigurer extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtDecoder jwtDecoder() {
+    public JwtDecoder jwtDecoder(PublicKeyLoaderService publicKeyLoaderService) {
         // this is the symmetric key used in security service
-        return NimbusJwtDecoder
-                .withSecretKey(new SecretKeySpec(securityConfig.getJwtSigningKey().getBytes(), "HMACSHA256")).build();
+        if (securityConfig.isUseSymmetricJwtSigningKey()) {
+            return NimbusJwtDecoder
+                    .withSecretKey(new SecretKeySpec(securityConfig.getJwtSigningKey().getBytes(), "HMACSHA256"))
+                    .build();
+        } else {
+            return NimbusJwtDecoder
+                    .withPublicKey(publicKeyLoaderService.loadSigningKey()).build();
+        }
+//                .withJwkSetUri("https://localhost:9999/sso/.well-known/openid-configuration").build();
+        // spring should have been able to use also to do the same spring.security.oauth2.resourceserver.jwt.issuer-uri=${security.server.url}
     }
 }

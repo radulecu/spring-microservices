@@ -1,5 +1,6 @@
 package ro.rasel.spring.microservices.ssoauthservice.config;
 
+import com.nimbusds.jose.jwk.JWK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,23 +12,34 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.endpoint.RedirectResolver;
+import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import ro.rasel.spring.microservices.ssoauthservice.config.properites.SecurityAuthorizationConfig;
+import ro.rasel.spring.microservices.ssoauthservice.domain.JwtCertificate;
+
+import java.security.KeyPair;
 
 @Configuration
 @EnableAuthorizationServer
 class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
     private final SecurityAuthorizationConfig securityAuthorizationConfig;
+    private final AccessTokenConverter accessTokenConverter;
+    private final TokenStore tokenStore;
 
     @Autowired
     public OAuth2Config(
             AuthenticationManager authenticationManager,
-            SecurityAuthorizationConfig securityAuthorizationConfig) {
+            SecurityAuthorizationConfig securityAuthorizationConfig,
+            AccessTokenConverter accessTokenConverter,
+            TokenStore tokenStore) {
         this.authenticationManager = authenticationManager;
         this.securityAuthorizationConfig = securityAuthorizationConfig;
+        this.accessTokenConverter = accessTokenConverter;
+        this.tokenStore = tokenStore;
     }
 
     @Override
@@ -41,8 +53,8 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
         super.configure(endpoints);
         endpoints
                 .authenticationManager(authenticationManager)
-                .tokenStore(tokenStore())
-                .accessTokenConverter(accessTokenConverter())
+                .tokenStore(this.tokenStore)
+                .accessTokenConverter(this.accessTokenConverter)
                 .redirectResolver(getRedirectResolver());
     }
 
@@ -63,22 +75,27 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     }
 
     @Bean
-    public TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
+    public static TokenStore tokenStore(JwtAccessTokenConverter accessTokenConverter) {
+        return new JwtTokenStore(accessTokenConverter);
     }
 
     @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
+    public static JwtAccessTokenConverter accessTokenConverter(JwtCertificate jwtCertificate,
+                                                               SecurityAuthorizationConfig securityAuthorizationConfig) {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(securityAuthorizationConfig.getSigningKey());
+        if (securityAuthorizationConfig.isPublicKey()) {
+            converter.setKeyPair(jwtCertificate.getKeyPair());
+        } else {
+            converter.setSigningKey(securityAuthorizationConfig.getSigningKey());
+        }
         return converter;
     }
 
     @Bean
     @Primary
-    public DefaultTokenServices tokenServices() {
+    public static DefaultTokenServices tokenServices(TokenStore tokenStore) {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore());
+        defaultTokenServices.setTokenStore(tokenStore);
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setRefreshTokenValiditySeconds(Integer.MAX_VALUE);
         return defaultTokenServices;
