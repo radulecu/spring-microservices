@@ -2,7 +2,6 @@ package ro.rasel.spring.microservices.ssoauthservice.config.properites;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import ro.rasel.spring.microservices.ssoauthservice.config.SecurityAuthorizationConfig;
 
 import java.util.StringJoiner;
 
@@ -11,6 +10,9 @@ import java.util.StringJoiner;
 class SecurityAuthorizationProperties implements SecurityAuthorizationConfig {
     private String clientUser;
     private String clientPassword;
+    private boolean publicKey = false;
+
+    public String issuer;
     private String signingKey;
     private int accessTokenValiditySeconds = 1800;
     private int refreshTokenValiditySeconds = 21600;
@@ -34,8 +36,27 @@ class SecurityAuthorizationProperties implements SecurityAuthorizationConfig {
     }
 
     @Override
+    public boolean isPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(boolean publicKey) {
+        this.publicKey = publicKey;
+    }
+
+    @Override
     public String getSigningKey() {
         return signingKey;
+    }
+
+    public void setSigningKey(String signingKey) {
+        this.signingKey = signingKey;
+    }
+
+
+    @Override
+    public int getAccessTokenValiditySeconds() {
+        return accessTokenValiditySeconds;
     }
 
     public void setAccessTokenValiditySeconds(int accessTokenValiditySeconds) {
@@ -43,21 +64,12 @@ class SecurityAuthorizationProperties implements SecurityAuthorizationConfig {
     }
 
     @Override
-    public int getAccessTokenValiditySeconds() {
-        return accessTokenValiditySeconds;
-    }
-
-    public void setRefreshTokenValiditySeconds(int refreshTokenValiditySeconds) {
-        this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
-    }
-
-    @Override
     public int getRefreshTokenValiditySeconds() {
         return refreshTokenValiditySeconds;
     }
 
-    public void setSigningKey(String signingKey) {
-        this.signingKey = signingKey;
+    public void setRefreshTokenValiditySeconds(int refreshTokenValiditySeconds) {
+        this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
     }
 
     @Override

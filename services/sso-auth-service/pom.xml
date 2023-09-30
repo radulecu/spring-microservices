@@ -26,6 +26,10 @@
             <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>ssl-component</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ro.rasel.spring.microservices.components</groupId>
+            <artifactId>swagger-component</artifactId>
+        </dependency>
 
         <!--Spring Boot-->
         <dependency>
@@ -97,6 +101,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
         </dependency>
     </dependencies>
 

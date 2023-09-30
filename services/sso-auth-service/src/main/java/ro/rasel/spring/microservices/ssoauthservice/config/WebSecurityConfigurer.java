@@ -17,10 +17,17 @@ import java.util.Collections;
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception { // @formatter:off
-        http.requestMatchers()
-                .antMatchers("/login", "/oauth/authorize", "/oauth/token", "/actuator/**")
-            .and()
+        http
+//            .requestMatchers()
+//                .antMatchers("/login", "/oauth/authorize", "/oauth/token", "/actuator/**", "/swagger**","/webjars/**")
+//            .and()
                 .authorizeRequests()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/publicKey").permitAll()
+                .antMatchers("/.well-known/**").permitAll()
+                .regexMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/actuator/health/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest()
