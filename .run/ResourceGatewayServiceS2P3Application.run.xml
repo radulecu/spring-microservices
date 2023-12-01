@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ResourceGatewayServiceS2P3Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <module name="resource-gateway-service-s2p3" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ro.rasel.spring.microservices.resourcegatewayservice.ResourceGatewayServiceS2P3Application" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

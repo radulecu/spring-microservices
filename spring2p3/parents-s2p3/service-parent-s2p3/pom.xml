@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ro.rasel.spring.microservices.parents</groupId>
+        <artifactId>starter-parent-s2p3</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../starter-parent-s2p3/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>service-parent-s2p3</artifactId>
+    <packaging>pom</packaging>
+
+    <description>Contains the dependencies for the common components used as part of the project so that component alignment can be done easier</description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>resource-security-client-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>web-security-client-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>basic-security-client-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>eureka-client-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>hystrix-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>ssl-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>swagger-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.components</groupId>
+                <artifactId>zipkin-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${project.basedir}/src/main/resources/common</directory>
+                    </resource>
+                    <resource>
+                        <directory>${project.basedir}/src/main/resources/local</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${project.basedir}/src/main/resources/common</directory>
+                    </resource>
+                    <resource>
+                        <directory>${project.basedir}/src/main/resources/prod</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>cloudconfig</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-config</artifactId>
+                </dependency>
+            </dependencies>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${project.basedir}/src/main/resources/cloudconfig</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
+</project>

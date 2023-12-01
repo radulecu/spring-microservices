@@ -24,6 +24,11 @@ keytool -export -alias keyalias -keystore zipkin-dashboard-service-identity.jks 
 keytool -export -alias keyalias -keystore gateway-service-identity.jks -file gateway-service.cer -storepass jkspass
 keytool -export -alias keyalias -keystore resource-gateway-service-identity.jks -file resource-gateway-service.cer -storepass jkspass
 
+openssl x509 -inform der -in bookmark-service.cer -out bookmark-service.pem
+openssl x509 -inform der -in contact-service.cer -out contact-service.pem
+openssl x509 -inform der -in passport-service.cer -out passport-service.pem
+openssl x509 -inform der -in echo-service.cer -out echo-service.pem
+
 keytool -importcert -keystore truststore.jks -alias hystrix-service -storepass jkspass -file hystrix-service.cer -noprompt
 keytool -importcert -keystore truststore.jks -alias sso-auth-service -storepass jkspass -file sso-auth-service.cer -noprompt
 keytool -importcert -keystore truststore.jks -alias eureka-service -storepass jkspass -file eureka-service.cer -noprompt

@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,9 +35,13 @@ public class TempFileManager implements ITempFileManager {
 
     @Override
     public File copyToTempFile(URI uri, String name) throws IOException {
-        URL input = uri.toURL();
         File output = creteTempFile(name);
-        FileUtils.copyURLToFile(input, output);
+        if (uri.getScheme().equals("classpath")) {
+            Files.copy(this.getClass().getResourceAsStream("/" + uri.getSchemeSpecificPart()), output.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } else {
+            URL input = uri.toURL();
+            FileUtils.copyURLToFile(input, output);
+        }
         return output;
     }
 

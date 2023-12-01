@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>2.3.5.RELEASE</version>
+        <!--suppress CheckTagEmptyBody -->
+        <relativePath></relativePath>
+    </parent>
+
+    <groupId>ro.rasel.spring.microservices.parents</groupId>
+    <artifactId>dependency-parent-s2p3</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <description>Parent pom which defines maven configuration common to all modules.</description>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <spring-cloud-dependencies.version>Hoxton.SR1</spring-cloud-dependencies.version>
+
+        <spring-security-oauth2-autoconfigure.version>2.1.5.RELEASE</spring-security-oauth2-autoconfigure.version>
+        <spring-security-oauth2.version>2.5.0.RELEASE</spring-security-oauth2.version>
+        <spring-security-jwt.version>1.0.10.RELEASE</spring-security-jwt.version>
+
+        <swagger.version>2.9.2</swagger.version>
+        <zipkin-server.version>2.19.2</zipkin-server.version>
+
+        <jaxb-api.version>2.3.1</jaxb-api.version>
+        <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
+        <activation.version>1.1.1</activation.version>
+
+        <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <modelmapper.version>2.3.5</modelmapper.version>
+
+        <!--Plugins-->
+        <gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
+        <groovy-all.version>2.4.17</groovy-all.version>
+        <dependency-check-maven.version>7.2.0</dependency-check-maven.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--Spring Cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--Spring Security-->
+            <dependency>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${spring-security-oauth2-autoconfigure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${spring-security-oauth2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>${spring-security-jwt.version}</version>
+            </dependency>
+
+            <!--Swagger-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <!--Zipkin-->
+            <dependency>
+                <groupId>io.zipkin</groupId>
+                <artifactId>zipkin-server</artifactId>
+                <version>${zipkin-server.version}</version>
+            </dependency>
+
+            <!--jaxb-->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb-runtime.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>${activation.version}</version>
+            </dependency>
+
+            <!--Logstash-->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
+            </dependency>
+
+            <!--Apache Commons-->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
+            <!--Model Mapper-->
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>${gmavenplus-plugin.version}</version>
+                    <configuration>
+                        <properties>
+                            <workingDir>${project.basedir}</workingDir>
+                        </properties>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-all</artifactId>
+                            <version>${groovy-all.version}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${dependency-check-maven.version}</version>
+                    <configuration>
+                        <versionCheckEnabled>true</versionCheckEnabled>
+                        <!--Find latest here: https://nvd.nist.gov/vuln/data-feeds-->
+                        <cveUrlModified>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz</cveUrlModified>
+                        <cveUrlBase>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-recent.json.gz</cveUrlBase>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>owasp</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>project.local</id>
+            <name>project</name>
+            <!--suppress UnresolvedMavenProperty -->
+            <url>file:${maven.multiModuleProjectDirectory}/.repo/snapshot</url>
+        </snapshotRepository>
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <!--suppress UnresolvedMavenProperty -->
+            <url>file:${maven.multiModuleProjectDirectory}/.repo/release</url>
+        </repository>
+    </distributionManagement>
+</project>

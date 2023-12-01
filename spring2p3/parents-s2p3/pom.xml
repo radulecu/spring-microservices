@@ -4,20 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ro.rasel.spring.microservices</groupId>
-        <artifactId>spring-microservices</artifactId>
+        <artifactId>spring-microservices-s2p3</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>ro.rasel.spring.microservices.services</groupId>
-    <artifactId>services</artifactId>
+    <groupId>ro.rasel.spring.microservices.parents</groupId>
+    <artifactId>parents-s2p3</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>eureka-service</module>
-        <module>sso-auth-service</module>
-        <module>gateway-service</module>
-        <module>resource-gateway-service-new</module>
-        <module>zipkin-dashboard-service</module>
-        <module>spring-config-service</module>
-        <module>hystrix-dashboard-service</module>
+        <module>dependency-parent-s2p3</module>
+        <module>starter-parent-s2p3</module>
+        <module>service-parent-s2p3</module>
     </modules>
 </project>

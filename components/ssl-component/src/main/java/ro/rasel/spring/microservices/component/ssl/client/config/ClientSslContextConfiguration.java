@@ -2,6 +2,7 @@ package ro.rasel.spring.microservices.component.ssl.client.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import ro.rasel.spring.microservices.common.utils.resource.ITempFileManager;
 import ro.rasel.spring.microservices.component.ssl.client.config.properties.ClientSslContextProperties;
 
 import javax.net.ssl.KeyManager;
@@ -9,8 +10,8 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -22,10 +23,12 @@ import java.security.cert.CertificateException;
 @Configuration
 public class ClientSslContextConfiguration {
     private final ClientSslContextProperties clientSslContextProperties;
+    private final ITempFileManager tempFileManager;
 
     @Autowired
-    public ClientSslContextConfiguration(ClientSslContextProperties clientSslContextProperties) {
+    public ClientSslContextConfiguration(ClientSslContextProperties clientSslContextProperties, ITempFileManager tempFileManager) {
         this.clientSslContextProperties = clientSslContextProperties;
+        this.tempFileManager = tempFileManager;
     }
 
     public SSLContext clientSSLContext() {
@@ -50,7 +53,8 @@ public class ClientSslContextConfiguration {
         }
         KeyStore trustStore1 = KeyStore.getInstance(type);
 
-        trustStore1.load(new URI(trustStore).toURL().openStream(), trustStorePassword.toCharArray());
+        File trustStoreFile = tempFileManager.copyToTempFile(trustStore, "clientKeyStore");
+        trustStore1.load(trustStoreFile.toURI().toURL().openStream(), trustStorePassword.toCharArray());
 
         TrustManagerFactory trustManagerFactory =
                 TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
@@ -66,7 +70,8 @@ public class ClientSslContextConfiguration {
         }
         KeyStore keystore = KeyStore.getInstance(type);
 
-        keystore.load(new URI(keyStore).toURL().openStream(),
+        File keyStoreFile = tempFileManager.copyToTempFile(keyStore, "clientKeyStore");
+        keystore.load(keyStoreFile.toURI().toURL().openStream(),
                 keyStorePassword.toCharArray());
 
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());

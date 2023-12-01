@@ -2,21 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>ro.rasel.spring.microservices</groupId>
+        <artifactId>spring-microservices</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
-    <groupId>ro.rasel.spring.microservices</groupId>
-    <artifactId>spring-microservices</artifactId>
+    <artifactId>spring-microservices-s2p3</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>parents</module>
-        <module>commons</module>
-        <module>components</module>
-        <module>services</module>
-        <module>applications</module>
-        <module>gatling-performance-testing</module>
-        <module>dockerBuild</module>
-        <module>spring2p3</module>
+        <module>parents-s2p3</module>
+        <module>services-s2p3</module>
     </modules>
 
     <build>
