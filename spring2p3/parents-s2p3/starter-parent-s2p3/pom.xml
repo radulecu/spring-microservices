@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.5.RELEASE</version>
+        <!--suppress CheckTagEmptyBody -->
+        <relativePath></relativePath>
+    </parent>
+
+    <groupId>ro.rasel.spring.microservices.parents</groupId>
+    <artifactId>starter-parent-s2p3</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!--Plugins-->
+        <gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
+        <groovy-all.version>2.4.17</groovy-all.version>
+        <dependency-check-maven.version>7.2.0</dependency-check-maven.version>
+        <swagger-maven-plugin.version>3.1.7</swagger-maven-plugin.version>
+        <swagger-codegen-maven-plugin.version>2.4.5</swagger-codegen-maven-plugin.version>
+        <fabric8-maven-plugin.version>4.4.0</fabric8-maven-plugin.version>
+        <server.port>8080</server.port>
+
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ro.rasel.spring.microservices.parents</groupId>
+                <artifactId>dependency-parent-s2p3</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>${gmavenplus-plugin.version}</version>
+                    <configuration>
+                        <properties>
+                            <workingDir>${project.basedir}</workingDir>
+                        </properties>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-all</artifactId>
+                            <version>${groovy-all.version}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${dependency-check-maven.version}</version>
+                    <configuration>
+                        <versionCheckEnabled>true</versionCheckEnabled>
+                        <!--Find latest here: https://nvd.nist.gov/vuln/data-feeds-->
+                        <cveUrlModified>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz
+                        </cveUrlModified>
+                        <cveUrlBase>https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-recent.json.gz</cveUrlBase>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.kongchen</groupId>
+                    <artifactId>swagger-maven-plugin</artifactId>
+                    <version>${swagger-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <apiSources>
+                            <apiSource>
+                                <springmvc>true</springmvc>
+                                <swaggerDirectory>${project.build.directory}/generated/swagger</swaggerDirectory>
+                                <swaggerFileName>${project.artifactId}-swagger</swaggerFileName>
+                                <info>
+                                    <title>${project.name}</title>
+                                    <version>${project.version}</version>
+                                    <description>${project.description}</description>
+                                </info>
+                            </apiSource>
+                        </apiSources>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>javax.xml.bind</groupId>
+                            <artifactId>jaxb-api</artifactId>
+                            <version>2.3.1</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-codegen-maven-plugin</artifactId>
+                    <version>${swagger-codegen-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>fabric8-maven-plugin</artifactId>
+                    <version>${fabric8-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                            <phase>install</phase>
+                        </execution>
+                        <execution>
+                            <id>push</id>
+                            <goals>
+                                <goal>push</goal>
+                            </goals>
+                            <phase>deploy</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <verbose>true</verbose>
+                        <images>
+                            <image>
+                                <name>${DOCKER_REPOSITORY}/${project.artifactId}</name>
+                                <!--                                <name>${DOCKER_REPOSITORY}/spring-microservices</name>-->
+
+                                <build>
+                                    <from>${DOCKER_REPOSITORY}/ubuntu-22-04-open-jre:latest</from>
+                                    <tags>
+                                        <tag>${project.version}</tag>
+                                        <tag>${project.version}-${maven.build.timestamp}</tag>
+                                        <!--                                        <tag>${project.artifactId}.latest</tag>-->
+                                        <!--                                        <tag>${project.artifactId}.${project.version}</tag>-->
+                                    </tags>
+
+                                    <ports>
+                                        <port>${server.port}</port>
+                                    </ports>
+
+                                    <entryPoint>
+                                        <!-- exec form for ENTRYPOINT -->
+                                        <exec>
+                                            <arg>java</arg>
+                                            <arg>-jar</arg>
+                                            <arg>/opt/app/${project.artifactId}.jar</arg>
+                                        </exec>
+                                    </entryPoint>
+
+                                    <assembly>
+                                        <mode>dir</mode>
+                                        <name>${project.artifactId}-${project.version}</name>
+                                        <targetDir>/opt</targetDir>
+                                        <descriptor>assembly.xml</descriptor>
+                                    </assembly>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                </plugin>
+                <!--                <plugin>-->
+                <!--                    <groupId>io.fabric8</groupId>-->
+                <!--                    <artifactId>docker-maven-plugin</artifactId>-->
+                <!--                    <version>4.4.1</version>-->
+                <!--                    <configuration>-->
+                <!--                        <imagees>-->
+                <!--                            <image>-->
+                <!--                                <name>{project.groupId}.${project.artifactId}:${project.version}</name>-->
+                <!--                            </image>-->
+                <!--                        </imagees>-->
+                <!--                    </configuration>-->
+                <!--                </plugin>-->
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>owasp</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>project.local</id>
+            <name>project</name>
+            <!--suppress UnresolvedMavenProperty -->
+            <url>file:${maven.multiModuleProjectDirectory}/.repo/snapshot</url>
+        </snapshotRepository>
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <!--suppress UnresolvedMavenProperty -->
+            <url>file:${maven.multiModuleProjectDirectory}/.repo/release</url>
+        </repository>
+    </distributionManagement>
+</project>

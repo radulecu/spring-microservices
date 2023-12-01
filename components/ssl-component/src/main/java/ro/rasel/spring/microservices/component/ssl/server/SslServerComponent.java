@@ -5,5 +5,5 @@ import org.springframework.context.annotation.PropertySource;
 
 @ConditionalOnProperty(name = "server.ssl.enabled", havingValue = "true", matchIfMissing = true)
 @PropertySource("classpath:application-serverSsl.properties")
-public class SslClientComponent {
+public class SslServerComponent {
 }

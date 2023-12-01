@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BookmarkServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="bookmark-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ro.rasel.spring.microservices.bookmarkservice.BookmarkServiceApplication" />
+    <option name="VM_PARAMETERS" value="-DTEST_MEMORY_LOAD_ENABLED=true" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

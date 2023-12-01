@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PassportServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="passport-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ro.rasel.spring.microservices.passportservice.PassportServiceApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
