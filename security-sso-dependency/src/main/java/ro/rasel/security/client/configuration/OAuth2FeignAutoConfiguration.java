@@ -2,7 +2,6 @@ package ro.rasel.security.client.configuration;
 
 import feign.Feign;
 import feign.RequestInterceptor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;

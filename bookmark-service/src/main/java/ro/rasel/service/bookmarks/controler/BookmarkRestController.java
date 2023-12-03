@@ -35,6 +35,4 @@ public class BookmarkRestController {
         return this.bookmarkRepository.save(bookmarkInstance);
     }
 
-
-
 }

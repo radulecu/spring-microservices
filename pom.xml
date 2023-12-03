@@ -10,6 +10,7 @@
         <module>starter-parent</module>
         <module>dependency-parent</module>
         <module>eureka-service</module>
+        <module>eureka-client-dependency</module>
         <module>bookmark-service</module>
         <module>contact-service</module>
         <module>passport-service</module>

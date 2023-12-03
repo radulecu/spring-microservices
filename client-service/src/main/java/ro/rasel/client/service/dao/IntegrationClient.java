@@ -6,8 +6,8 @@ import ro.rasel.client.service.domain.Bookmark;
 import ro.rasel.client.service.domain.Contact;
 import ro.rasel.client.service.domain.Passport;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 @Component
 public class IntegrationClient {
@@ -25,9 +25,10 @@ public class IntegrationClient {
         this.passportClient = passportClient;
     }
 
+    @SuppressWarnings("unused")
     public Collection<Bookmark> getBookmarksFallback(String userId) {
         System.out.println("getBookmarksFallback");
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @HystrixCommand(fallbackMethod = "getBookmarksFallback")
@@ -35,9 +36,10 @@ public class IntegrationClient {
         return this.bookmarkClient.getBookmarks(userId);
     }
 
+    @SuppressWarnings("unused")
     public Collection<Contact> getContactsFallback(String userId) {
         System.out.println("getContactsFallback");
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @HystrixCommand(fallbackMethod = "getContactsFallback")
@@ -45,6 +47,7 @@ public class IntegrationClient {
         return this.contactClient.getContacts(userId);
     }
 
+    @SuppressWarnings("unused")
     public Passport getPassportFallback(String userId) {
         System.out.println("getPassportFallback");
         return null;
@@ -52,9 +55,9 @@ public class IntegrationClient {
 
     @HystrixCommand(fallbackMethod = "getPassportFallback")
     public Passport getPassport(String userId) {
-        try{
+        try {
             return this.passportClient.getPassport(userId);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             e.printStackTrace();
             throw e;
         }

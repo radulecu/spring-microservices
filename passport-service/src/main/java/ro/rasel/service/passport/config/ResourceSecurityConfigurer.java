@@ -3,7 +3,6 @@ package ro.rasel.service.passport.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import ro.rasel.security.client.resource.IResourceSecurityConfigurer;
-import ro.rasel.security.client.sso.IWebSecurityConfigurer;
 
 @Configuration
 public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
