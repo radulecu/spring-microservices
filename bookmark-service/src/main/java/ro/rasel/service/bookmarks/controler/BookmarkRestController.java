@@ -16,18 +16,18 @@ public class BookmarkRestController {
         this.bookmarkRepository = bookmarkRepository;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping()
     public Collection<Bookmark> getBookmarks(@PathVariable String userId) {
         return this.bookmarkRepository.findByUserId(userId);
     }
 
-    @RequestMapping(value = "/{bookmarkId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{bookmarkId}")
     public Bookmark getBookmark(@PathVariable String userId,
                                 @PathVariable Long bookmarkId) {
         return this.bookmarkRepository.findByUserIdAndId(userId, bookmarkId);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public Bookmark createBookmark(@PathVariable String userId,
                                    @RequestBody Bookmark bookmark) {
         Bookmark bookmarkInstance = new Bookmark(userId, bookmark.getHref(),

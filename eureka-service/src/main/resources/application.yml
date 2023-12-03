@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: eureka-service
+security:
+  basic:
+    enabled: false
 eureka:
   client:
     registerWithEureka: false

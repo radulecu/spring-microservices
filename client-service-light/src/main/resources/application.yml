@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: client-service-light
+security:
+  basic:
+    enabled: false
 #eureka:
 #  instance:
 #    instanceId: ${random.uuid}
