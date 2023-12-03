@@ -10,7 +10,7 @@
     <artifactId>hystrix-dashboard-service</artifactId>
     <packaging>pom</packaging>
     <properties>
-        <start.class>ro.rasel.service.histrix.HystrixDashboardApplication</start.class>
+        <start.class>ro.rasel.service.hystrix.HystrixDashboardApplication</start.class>
     </properties>
     <dependencies>
         <dependency>

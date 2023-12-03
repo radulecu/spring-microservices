@@ -14,7 +14,7 @@ import java.util.Collection;
 @RestController
 class ClientRestController {
 
-    private IntegrationClient integrationClient;
+    private final IntegrationClient integrationClient;
 
     @Autowired
     ClientRestController(IntegrationClient integrationClient) {

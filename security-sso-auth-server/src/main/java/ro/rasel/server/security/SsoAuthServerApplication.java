@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ro.rasel.server.security.dao.UserDetasDao;
+import ro.rasel.server.security.dao.UserDetailsDao;
 
 import java.security.Principal;
 
@@ -22,8 +22,8 @@ public class SsoAuthServerApplication {
     }
 
     @Bean
-    UserDetailsService userDetailsService(UserDetasDao userDetasDao) {
-        return userDetasDao::findUserByName;
+    UserDetailsService userDetailsService(UserDetailsDao userDetailsDao) {
+        return userDetailsDao::findUserByName;
     }
 
     public static void main(String[] args) {

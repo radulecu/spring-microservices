@@ -5,4 +5,4 @@ This module has few tricks under his belt:
 - The basic function is to provide resources
 - Uses other resource servers to prove that authentication can be forwarded to other resources
 - It is used also as a web client to provide other details (e.g. in this case hystrix details from <url>/hystrix.stream but other actuator tools work the same )
-- Zuul/Histrix/Ribbon/Feign for resources
+- Zuul/Hystrix/Ribbon/Feign for resources
