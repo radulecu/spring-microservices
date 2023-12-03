@@ -1,4 +1,4 @@
-package demo;
+package ro.rasel.service.histrix;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

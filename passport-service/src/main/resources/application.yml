@@ -1,5 +1,8 @@
 server:
   port: ${PORT:8084}
+spring:
+  application:
+    name: passport-service
 #eureka:
 #  instance:
 #    instanceId: ${random.uuid}
