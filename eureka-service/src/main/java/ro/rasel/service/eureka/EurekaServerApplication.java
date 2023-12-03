@@ -13,8 +13,9 @@ import ro.rasel.ssl.truststore.TrustStoreComponent;
 public class EurekaServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{EurekaServerApplication.class, EurekaClientComponent.class, TrustStoreComponent.class,
-                ResourceSecurityClientComponent.class, WebSecurityClientComponent.class}, args);
+        SpringApplication.run(new Class<?>[]{EurekaServerApplication.class, EurekaClientComponent.class,
+                TrustStoreComponent.class, ResourceSecurityClientComponent.class,
+                WebSecurityClientComponent.class}, args);
     }
 
 }

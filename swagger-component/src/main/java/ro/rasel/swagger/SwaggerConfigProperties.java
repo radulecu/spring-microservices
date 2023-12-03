@@ -8,7 +8,7 @@ import java.util.Set;
 @Configuration
 @ConfigurationProperties("swagger")
 public class SwaggerConfigProperties {
-    private boolean enabled=false;
+    private boolean enabled = false;
 
     private Set<String> blacklist;
 
