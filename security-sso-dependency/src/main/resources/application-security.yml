@@ -19,8 +19,7 @@ security:
       userInfoUri: ${server.security.url}/uaa/user
   basic:
     enabled: false
-
-#histrix strategy is required to avoid errors caused by the fact that hystrix handles requests in a different thread causing unexpected errors
+# histrix strategy is required to avoid errors caused by the fact that hystrix handles requests in a different thread causing unexpected errors over feign
 hystrix:
   command:
     default:
@@ -30,13 +29,3 @@ hystrix:
 spring:
   profiles:
     include: ssl, truststore
-# setup eureka properties will be ignored if eureka unused
-eureka:
-  instance:
-    nonSecurePortEnabled: false
-    securePortEnabled: true
-    securePort: ${server.port}
-    hostname: ${server.host:localhost}
-    statusPageUrl: https://${eureka.instance.hostname}:${server.port}/info
-    healthCheckUrl: https://${eureka.instance.hostname}:${server.port}/health
-    homePageUrl: https://${eureka.instance.hostName}:${server.port}/
