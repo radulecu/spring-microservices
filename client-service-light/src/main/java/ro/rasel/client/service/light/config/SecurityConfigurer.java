@@ -10,6 +10,7 @@ public class SecurityConfigurer implements IWebSecurityConfigurer {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/swagger-resources/**").permitAll()
                 .anyRequest().authenticated();
     }
 }
