@@ -1,11 +1,13 @@
 package ro.rasel.service.contacts.domain;
 
+import ro.rasel.domain.contact.IContact;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Contact {
+public class Contact implements IContact {
 
     @Id
     @GeneratedValue
