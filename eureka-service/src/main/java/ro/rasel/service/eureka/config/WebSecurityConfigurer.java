@@ -9,7 +9,7 @@ public class WebSecurityConfigurer implements IWebSecurityConfigurer {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // formatter:off
-        http
+        http.regexMatcher("/")
             .authorizeRequests()
                 .anyRequest().authenticated();
         // formatter:on
