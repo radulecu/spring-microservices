@@ -1,4 +1,4 @@
-package ro.rasel.tls.configuration;
+package ro.rasel.ssl.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +11,12 @@ import java.io.File;
 import java.io.IOException;
 
 @Configuration
-public class SSLConfig {
+public class TruststoreConfig {
     private final Environment env;
     private final TempFileManager tempFileManager;
 
     @Autowired
-    public SSLConfig(Environment env, TempFileManager tempFileManager) {
+    public TruststoreConfig(Environment env, TempFileManager tempFileManager) {
         this.env = env;
         this.tempFileManager = tempFileManager;
     }
