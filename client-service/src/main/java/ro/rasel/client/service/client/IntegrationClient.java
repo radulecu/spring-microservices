@@ -1,8 +1,7 @@
-package ro.rasel.client.service.dao;
+package ro.rasel.client.service.client;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.stereotype.Component;
-import ro.rasel.client.service.domain.Bookmark;
 import ro.rasel.client.service.domain.Contact;
 import ro.rasel.client.service.domain.Passport;
 
@@ -26,13 +25,14 @@ public class IntegrationClient {
     }
 
     @SuppressWarnings("unused")
-    public Collection<Bookmark> getBookmarksFallback(String userId) {
+    public String getBookmarksFallback(String userId) {
         System.out.println("getBookmarksFallback");
-        return Collections.emptyList();
+        return Collections.emptyList().toString();
     }
 
+    // you can return directly the rest as string when you do not need it in the object format (e.g. you just forward it to other service) ...
     @HystrixCommand(fallbackMethod = "getBookmarksFallback")
-    public Collection<Bookmark> getBookmarks(String userId) {
+    public String getBookmarks(String userId) {
         return this.bookmarkClient.getBookmarks(userId);
     }
 
@@ -42,11 +42,13 @@ public class IntegrationClient {
         return Collections.emptyList();
     }
 
+    // ... or you can use a collection of objects ...
     @HystrixCommand(fallbackMethod = "getContactsFallback")
     public Collection<Contact> getContacts(String userId) {
         return this.contactClient.getContacts(userId);
     }
 
+    // ... or just a single object
     @SuppressWarnings("unused")
     public Passport getPassportFallback(String userId) {
         System.out.println("getPassportFallback");
@@ -55,12 +57,7 @@ public class IntegrationClient {
 
     @HystrixCommand(fallbackMethod = "getPassportFallback")
     public Passport getPassport(String userId) {
-        try {
-            return this.passportClient.getPassport(userId);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            throw e;
-        }
+        return this.passportClient.getPassport(userId);
     }
 
 }

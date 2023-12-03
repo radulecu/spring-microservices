@@ -7,6 +7,7 @@ zuul:
       path: /user/**
       url: ${server.security.url}/uaa/user
 security:
+  enabled: true
   user:
     password: password
   oauth2:

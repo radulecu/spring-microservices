@@ -1,10 +1,10 @@
-package ro.rasel.service.passport.dao;
+package ro.rasel.client.service.client;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ro.rasel.service.passport.domain.Contact;
+import ro.rasel.client.service.domain.Contact;
 
 import java.util.Collection;
 

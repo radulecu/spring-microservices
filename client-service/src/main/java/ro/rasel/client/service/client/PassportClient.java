@@ -1,4 +1,4 @@
-package ro.rasel.client.service.dao;
+package ro.rasel.client.service.client;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
