@@ -27,21 +27,16 @@ hystrix:
       execution:
         isolation:
           strategy: SEMAPHORE
+spring:
+  profiles:
+    include: ssl, truststore
 # setup eureka properties will be ignored if eureka unused
-#eureka:
-#  instance:
-#    nonSecurePortEnabled: false
-#    securePortEnabled: true
-#    securePort: ${server.port}
-#    hostname: ${server.hostname:localhost}
-#    statusPageUrl: https://${eureka.instance.hostname}:${server.port}/info
-#    healthCheckUrl: https://${eureka.instance.hostname}:${server.port}/health
-#    homePageUrl: https://${eureka.instance.hostName}:${server.port}/
-#server:
-#  ssl:
-#    key-alias: jksalias
-#    key-store-password: jkspass
-#    key-store: classpath:my.jks
-#    key-store-provider: SUN
-#    key-store-type: JKS
-#    protocol: TLSv1.2
+eureka:
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    hostname: ${server.host:localhost}
+    statusPageUrl: https://${eureka.instance.hostname}:${server.port}/info
+    healthCheckUrl: https://${eureka.instance.hostname}:${server.port}/health
+    homePageUrl: https://${eureka.instance.hostName}:${server.port}/

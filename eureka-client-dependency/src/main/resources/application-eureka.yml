@@ -2,5 +2,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
+    registry-fetch-interval-seconds: 10
+    eureka-service-url-poll-interval-seconds: 5
+    initial-instance-info-replication-interval-seconds: 15
+    instance-info-replication-interval-seconds: 10
   instance:
     leaseRenewalIntervalInSeconds: 10
+#    lease-expiration-duration-in-seconds: 30
+# all interval properties above should be adjusted for performance, they were set to 1 because I did not knw which ones are responsible for making server synchronization with eureka.

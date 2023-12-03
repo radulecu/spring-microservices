@@ -5,7 +5,7 @@ import java.io.File;
 public class TempFileManager {
     private final File rootDir;
 
-    public TempFileManager(String name){
+    public TempFileManager(String name) {
         this(new File(name));
     }
 
@@ -14,7 +14,7 @@ public class TempFileManager {
         rootDir.deleteOnExit();
     }
 
-    public File creteFile(String path){
+    public File creteFile(String path) {
         File file = new File(rootDir, path);
         file.deleteOnExit();
         return file;
