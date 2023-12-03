@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ro.rasel</groupId>
+    <artifactId>microservices-test</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>starter-parent</module>
+        <module>dependency-parent</module>
+        <module>eureka-service</module>
+        <module>bookmark-service</module>
+        <module>contact-service</module>
+        <module>passport-service</module>
+        <module>client-service</module>
+        <module>client-service-light</module>
+        <module>hystrix-dashboard-service</module>
+        <module>security-sso-dependency</module>
+        <module>security-sso-ui</module>
+        <module>security-sso-auth-server</module>
+    </modules>
+</project>

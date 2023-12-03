@@ -1,0 +1,26 @@
+
+server:
+  port: ${PORT:8082}
+
+spring:
+  jpa:
+    generate-ddl: true
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    instanceId: ${java.runtime.name}:${random.uuid}
+
+---
+#eureka:
+#  instance:
+#    hostname: ${APPLICATION_DOMAIN}
+#    nonSecurePort: 80
+spring:
+  profiles:
+    include: security
+
