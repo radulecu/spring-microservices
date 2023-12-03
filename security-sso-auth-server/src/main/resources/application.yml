@@ -1,9 +1,6 @@
 server:
   port: 9999
   context-path: /uaa
-security:
-  user:
-    password: password
 spring:
   datasource:
     url: jdbc:hsqldb:file:./target/db/testdb

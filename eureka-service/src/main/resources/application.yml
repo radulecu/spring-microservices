@@ -8,7 +8,7 @@ security:
     enabled: false
 eureka:
   client:
-    registerWithEureka: false
+#    registerWithEureka: false
     fetchRegistry: false
   server:
     enable-self-preservation: false
@@ -22,4 +22,5 @@ eureka:
 ---
 spring:
   profiles:
-    include: sslTrustStore, security
+    include: sslTrustStore, security, eureka
+
