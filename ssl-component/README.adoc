@@ -16,3 +16,23 @@ Used to enable https and provide truststore for self signed certificates.
 * client-service-light
 * security-sso-ui
 
+== SSL security
+
+=== Generating keystore, certificate and truststore files command
+
+keytool -genkey -alias jksalias -keyalg RSA -keystore my.jks -deststoretype JKS -validity 1825 -keypass jkspass -storepass jkspass -dname "CN=localhost, OU=N/A, O=N/A, L=Bucharest, ST=Romania, C=RO correct?"
+
+keytool -export -alias jksalias -keystore my.jks -file my.cer -storepass jkspass
+
+keytool -importcert -keystore my.truststore -alias jksalias -storepass jkspass -file my.cer -noprompt
+
+The first command is to generate a jks keystore. It will be used to enable the SSL/TSL for the server.
+Next a certificate for the keystore is generated.
+Using the certificate we can nou create the truststore. The role of the trustore is to be able to use the SSL/TSL signed service.
+
+=== Viewing  keystore details
+
+keytool -list -v -alias jksalias -keystore ./my.jks -storepass jkspass
+
+
+
