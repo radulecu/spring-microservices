@@ -45,7 +45,7 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
         .and()
             .authorizeRequests()
-            .antMatchers("/","/user","/login","/hystrix.stream").permitAll()
+            .antMatchers("/user","/login","/hystrix.stream").permitAll()
         .and()
             .csrf()
                 .csrfTokenRepository(csrfTokenRepository())
