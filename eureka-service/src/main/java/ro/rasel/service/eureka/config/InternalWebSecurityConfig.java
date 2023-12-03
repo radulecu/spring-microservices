@@ -1,6 +1,7 @@
 package ro.rasel.service.eureka.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
 @Configuration
+@ConditionalOnProperty(name = "security.enabled", havingValue = "true")
 @Order(1)
 public class InternalWebSecurityConfig extends WebSecurityConfigurerAdapter {
     private EurekaConfigProperties eurekaConfigProperties;
