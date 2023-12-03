@@ -1,10 +1,5 @@
-
-
 server:
   port: ${PORT:8761}
-
-
-
 eureka:
   client:
     registerWithEureka: false
@@ -12,4 +7,7 @@ eureka:
   server:
     enable-self-preservation: false
     responseCacheAutoExpirationInSeconds: 10
-
+---
+spring:
+  profiles:
+    include: ssl, sslTrustStore
