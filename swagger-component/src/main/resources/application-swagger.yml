@@ -1,2 +1,3 @@
 swagger:
   enabled: true
+  blacklist: ${spring.application.name},eureka-service,client-service,client-service-light
