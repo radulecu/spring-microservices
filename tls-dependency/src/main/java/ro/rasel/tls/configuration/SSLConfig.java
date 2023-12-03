@@ -1,7 +1,6 @@
 package ro.rasel.tls.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import ro.rasel.commons.utils.ResourceUtilities;
@@ -12,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 
 @Configuration
-@ComponentScan(basePackageClasses = TempFileManager.class)
 public class SSLConfig {
     private final Environment env;
     private final TempFileManager tempFileManager;
