@@ -15,6 +15,7 @@
     <description>Component used to provide dependencies, default configuration and code for connection to Eureka service.</description>
 
     <dependencies>
+        <!--Spring Cloud-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka</artifactId>

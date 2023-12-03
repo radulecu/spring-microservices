@@ -17,6 +17,7 @@
     </properties>
 
     <dependencies>
+        <!--Spring Cloud-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>

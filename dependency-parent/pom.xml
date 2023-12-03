@@ -26,6 +26,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--Spring Cloud-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-eureka</artifactId>
@@ -52,8 +53,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
-            <!--Hystrix-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-hystrix</artifactId>
@@ -65,7 +64,7 @@
                 <version>${spring-cloud.version}</version>
             </dependency>
 
-            <!--Security-->
+            <!--Spring Security-->
             <dependency>
                 <groupId>org.springframework.security.oauth</groupId>
                 <artifactId>spring-security-oauth2</artifactId>
