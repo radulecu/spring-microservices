@@ -1,2 +1,1 @@
-# other files will have LF
-* text=lf
+*.java eol=lf 
