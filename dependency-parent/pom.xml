@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>1.4.7.RELEASE</version>
+        <version>1.5.10.RELEASE</version>
     </parent>
 
     <groupId>ro.rasel</groupId>
@@ -19,29 +19,69 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <spring-cloud.version>1.4.3.RELEASE</spring-cloud.version>
+        <spring-cloud-security.version>1.2.2.RELEASE</spring-cloud-security.version>
+        <spring-security-oauth2.version>2.2.1.RELEASE</spring-security-oauth2.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.security.oauth</groupId>
-                <artifactId>spring-security-oauth2</artifactId>
-                <version>${spring-security-oauth.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-bom</artifactId>
-                <version>${spring-security.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-eureka</artifactId>
+                <version>${spring-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Camden.SR7</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <artifactId>spring-cloud-starter-feign</artifactId>
+                <version>${spring-cloud.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-zuul</artifactId>
+                <version>${spring-cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-eureka-server</artifactId>
+                <version>${spring-cloud.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>servlet-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!--Hystrix-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-hystrix</artifactId>
+                <version>${spring-cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
+                <version>${spring-cloud.version}</version>
+            </dependency>
+
+            <!--Security-->
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${spring-security-oauth2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-security</artifactId>
+                <version>${spring-cloud-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>1.0.9.RELEASE</version>
+            </dependency>
+
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>

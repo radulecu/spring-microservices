@@ -12,7 +12,6 @@ import ro.rasel.ssl.truststore.TrustStoreComponent;
 @SpringBootApplication
 @EnableFeignClients
 @EnableCircuitBreaker
-@EnableZuulProxy
 public class PassportServiceApplication {
 
     public static void main(String[] args) {
