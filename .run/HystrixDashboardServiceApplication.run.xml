@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="HystrixDashboardServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="hystrix-dashboard-service" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="ro.rasel.spring.microservices.service.hystrix.HystrixDashboardServiceApplication" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
-</component>

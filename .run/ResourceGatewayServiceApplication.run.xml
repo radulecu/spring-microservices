@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ResourceGatewayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-    <module name="resource-gateway-service-new" />
+    <module name="resource-gateway-service" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="ro.rasel.spring.microservices.resourcegatewayservice.ResourceGatewayServiceApplication" />
     <extension name="coverage">
       <pattern>

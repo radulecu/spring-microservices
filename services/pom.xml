@@ -13,11 +13,9 @@
 
     <modules>
         <module>eureka-service</module>
-        <module>sso-auth-service</module>
-        <module>gateway-service</module>
-        <module>resource-gateway-service-new</module>
+        <module>resource-gateway-service</module>
         <module>zipkin-dashboard-service</module>
         <module>spring-config-service</module>
-        <module>hystrix-dashboard-service</module>
+<!--        <module>hystrix-dashboard-service</module>-->
     </modules>
 </project>

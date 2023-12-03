@@ -6,23 +6,22 @@
     <parent>
         <groupId>ro.rasel.spring.microservices.parents</groupId>
         <artifactId>service-parent-s2p3</artifactId>
-         <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>
         <relativePath>../../parents-s2p3/service-parent-s2p3/pom.xml</relativePath>
     </parent>
 
     <groupId>ro.rasel.spring.microservices.services</groupId>
-    <artifactId>resource-gateway-service-s2p3</artifactId>
+    <artifactId>gateway-service-s2p3</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <start.class>ro.rasel.spring.microservices.resourcegatewayservice.ResourceGatewayServiceS2P3Application</start.class>
-        <server.port>9025</server.port>
+        <start.class>ro.rasel.client.service.light.GatewayServiceApplication</start.class>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>resource-security-client-component</artifactId>
+            <artifactId>web-security-client-component</artifactId>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
@@ -62,18 +61,4 @@
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>docker</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>io.fabric8</groupId>
-                        <artifactId>fabric8-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

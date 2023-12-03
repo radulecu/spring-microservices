@@ -5,32 +5,25 @@
 
     <parent>
         <groupId>ro.rasel.spring.microservices.parents</groupId>
-        <artifactId>service-parent-s2p3</artifactId>
-         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../parents-s2p3/service-parent-s2p3/pom.xml</relativePath>
+        <artifactId>service-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../parents/service-parent/pom.xml</relativePath>
     </parent>
 
     <groupId>ro.rasel.spring.microservices.services</groupId>
-    <artifactId>resource-gateway-service-s2p3</artifactId>
+    <artifactId>resource-gateway-service</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <start.class>ro.rasel.spring.microservices.resourcegatewayservice.ResourceGatewayServiceS2P3Application</start.class>
+        <start.class>ro.rasel.spring.microservices.resourcegatewayservice.ResourceGatewayServiceApplication
+        </start.class>
         <server.port>9025</server.port>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>resource-security-client-component</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ro.rasel.spring.microservices.components</groupId>
             <artifactId>eureka-client-component</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>swagger-component</artifactId>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
@@ -46,20 +39,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-        </dependency>
 
         <!--Spring Cloud-->
-        <!--Server is used to be able to render eureka UI-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <version>2.3.5.RELEASE</version>
         </dependency>
     </dependencies>
 
