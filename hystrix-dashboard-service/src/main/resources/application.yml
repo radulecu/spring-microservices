@@ -1,4 +1,0 @@
-
-
-server:
-  port: ${PORT:9903}
