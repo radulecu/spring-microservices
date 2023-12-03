@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>hystrix-component</artifactId>
+            <artifactId>resilience-component</artifactId>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>

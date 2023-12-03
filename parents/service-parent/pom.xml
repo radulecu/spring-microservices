@@ -15,51 +15,6 @@
 
     <description>Contains the dependencies for the common components used as part of the project so that component alignment can be done easier</description>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>resource-security-client-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>web-security-client-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>basic-security-client-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>eureka-client-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>hystrix-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>ssl-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>swagger-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>zipkin-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <profiles>
         <profile>
             <id>local</id>

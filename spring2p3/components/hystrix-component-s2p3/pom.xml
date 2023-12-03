@@ -5,13 +5,13 @@
 
     <parent>
         <groupId>ro.rasel.spring.microservices.parents</groupId>
-        <artifactId>dependency-parent</artifactId>
+        <artifactId>dependency-parent-s2p3</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../parents/dependency-parent/pom.xml</relativePath>
+        <relativePath>../../parents-s2p3/dependency-parent-s2p3/pom.xml</relativePath>
     </parent>
 
     <groupId>ro.rasel.spring.microservices.components</groupId>
-    <artifactId>hystrix-component</artifactId>
+    <artifactId>hystrix-component-s2p3</artifactId>
     <packaging>jar</packaging>
 
     <description>Enable hystrix</description>

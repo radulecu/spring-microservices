@@ -1,16 +1,23 @@
 package ro.rasel.spring.microservices.passportservice.client;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 import ro.rasel.spring.microservices.api.bookmark.data.BookmarkResponse;
+import ro.rasel.spring.microservices.api.contact.ContactApi;
 import ro.rasel.spring.microservices.api.contact.data.ContactResponse;
-import rx.Observable;
-import rx.Single;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Future;
 
 @Component
 public class AsyncIntegrationClientImpl implements AsyncIntegrationClient {
@@ -20,36 +27,41 @@ public class AsyncIntegrationClientImpl implements AsyncIntegrationClient {
 
     private final BookmarkClient bookmarkClient;
 
-    public AsyncIntegrationClientImpl(ContactClient contactClient, BookmarkClient bookmarkClient) {
+    public AsyncIntegrationClientImpl(ContactClient contactClient,
+                                      BookmarkClient bookmarkClient) {
         this.contactClient = contactClient;
         this.bookmarkClient = bookmarkClient;
     }
 
     @SuppressWarnings("unused")
-    public Collection<BookmarkResponse> getBookmarksFallback(String userId, Throwable t) {
+    public Future<Collection<BookmarkResponse>> getBookmarksFallback(String userId, Throwable t) {
         LOG.error("getBookmarksFallback", t);
-        return Collections.emptyList();
+        return new AsyncResult<>(Collections.emptyList());
     }
 
     @Override
-    @HystrixCommand(fallbackMethod = "getBookmarksFallback")
-    public Observable<Collection<BookmarkResponse>> getBookmarks(String userId) {
+    @Async
+    @Bulkhead(name = BookmarkClient.NAME, fallbackMethod = "getBookmarksFallback")
+    @CircuitBreaker(name = BookmarkClient.NAME, fallbackMethod = "getBookmarksFallback")
+    @Retry(name = BookmarkClient.NAME, fallbackMethod = "getBookmarksFallback")
+    public Future<Collection<BookmarkResponse>> getBookmarks(String userId) {
         LOG.info("getting bookmarks form bookmark service for userId={}", userId);
-        return Single.just((Collection<BookmarkResponse>) this.bookmarkClient.getBookmarks(userId).getBody())
-                .toObservable();
+        return AsyncResult.forValue(this.bookmarkClient.getBookmarks(userId).getBody());
     }
 
     @SuppressWarnings("unused")
-    public Collection<ContactResponse> getContactsFallback(String userId, Throwable t) {
+    public Future<Collection<ContactResponse>> getContactsFallback(String userId, Throwable t) {
         LOG.error("getContactsFallback", t);
-        return Collections.emptyList();
+        return new AsyncResult<>(Collections.emptyList());
     }
 
     @Override
-    @HystrixCommand(fallbackMethod = "getContactsFallback")
-    public Observable<Collection<ContactResponse>> getContacts(String userId) {
+    @Async
+    @Bulkhead(name = ContactClient.NAME, fallbackMethod = "getContactsFallback")
+    @CircuitBreaker(name = ContactClient.NAME, fallbackMethod = "getContactsFallback")
+    @Retry(name = ContactClient.NAME, fallbackMethod = "getContactsFallback")
+    public Future<Collection<ContactResponse>> getContacts(String userId) {
         LOG.info("getting contacts form bookmark service for userId={}", userId);
-        return Single.just((Collection<ContactResponse>) this.contactClient.getContacts(userId).getBody())
-                .toObservable();
+        return AsyncResult.forValue(this.contactClient.getContacts(userId).getBody());
     }
 }

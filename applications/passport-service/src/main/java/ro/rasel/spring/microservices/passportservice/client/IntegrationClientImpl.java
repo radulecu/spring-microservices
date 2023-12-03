@@ -1,6 +1,8 @@
 package ro.rasel.spring.microservices.passportservice.client;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -30,7 +32,9 @@ public class IntegrationClientImpl implements IntegrationClient {
     }
 
     @Override
-    @HystrixCommand(fallbackMethod = "getBookmarksFallback")
+    @Bulkhead(name = BookmarkClient.NAME, fallbackMethod = "getBookmarksFallback")
+    @CircuitBreaker(name = BookmarkClient.NAME, fallbackMethod = "getBookmarksFallback")
+    @Retry(name = BookmarkClient.NAME, fallbackMethod = "getBookmarksFallback")
     public Collection<BookmarkResponse> getBookmarks(String userId) {
         LOG.info("getting bookmarks form bookmark service for userId={}", userId);
         return this.bookmarkClient.getBookmarks(userId).getBody();
@@ -44,7 +48,9 @@ public class IntegrationClientImpl implements IntegrationClient {
 
 
     @Override
-    @HystrixCommand(fallbackMethod = "getContactsFallback")
+    @Bulkhead(name = ContactClient.NAME, fallbackMethod = "getContactsFallback")
+    @CircuitBreaker(name = ContactClient.NAME, fallbackMethod = "getContactsFallback")
+    @Retry(name = ContactClient.NAME, fallbackMethod = "getContactsFallback")
     public Collection<ContactResponse> getContacts(String userId) {
         LOG.info("getting contacts form bookmark service for userId={}", userId);
         return this.contactClient.getContacts(userId).getBody();

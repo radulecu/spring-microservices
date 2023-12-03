@@ -1,16 +1,13 @@
-package ro.rasel.spring.microservices.component.hystrix.config;
+package ro.rasel.spring.microservices.component.resilience.config;
 
 import com.netflix.hystrix.HystrixInvokable;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestVariableDefault;
 import com.netflix.hystrix.strategy.executionhook.HystrixCommandExecutionHook;
-import org.springframework.core.annotation.AnnotationUtils;
 import ro.rasel.spring.microservices.common.utils.Touple;
 import ro.rasel.spring.microservices.common.utils.async.AsynchronousDataProvider;
-import ro.rasel.spring.microservices.common.utils.async.ProviderName;
+import ro.rasel.spring.microservices.common.utils.async.AsynchronousDataProviderHelper;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,17 +24,7 @@ public class HystrixCommandExecutionHookWrapper extends HystrixCommandExecutionH
             List<AsynchronousDataProvider> asynchronousDataProviders) {
         this.hystrixCommandExecutionHook = hystrixCommandExecutionHook;
         this.asynchronousDataProviders =
-                asynchronousDataProviders != null ?
-                        asynchronousDataProviders.stream()
-                                .filter(HystrixCommandExecutionHookWrapper::isSpecific).collect(Collectors.toList()) :
-                        Collections.emptyList();
-    }
-
-    private static boolean isSpecific(AsynchronousDataProvider asynchronousDataProvider) {
-        final ProviderName providerName = AnnotationUtils.findAnnotation(asynchronousDataProvider.getClass(),ProviderName.class);
-        final List<String> names = providerName != null ? Arrays.asList(providerName.value()) :
-                Collections.singletonList(ProviderName.ALL);
-        return names.contains("all") || names.contains(NAME);
+                AsynchronousDataProviderHelper.filterAsynchronousDataProviders(asynchronousDataProviders, NAME);
     }
 
     public <T> void onStart(HystrixInvokable<T> commandInstance) {

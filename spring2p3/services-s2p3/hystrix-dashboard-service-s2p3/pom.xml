@@ -7,7 +7,7 @@
         <groupId>ro.rasel.spring.microservices.parents</groupId>
         <artifactId>service-parent-s2p3</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../../parents/service-parent/pom.xml</relativePath>
+        <relativePath>../../parents-s2p3/service-parent-s2p3/pom.xml</relativePath>
     </parent>
 
     <groupId>ro.rasel.spring.microservices.services</groupId>

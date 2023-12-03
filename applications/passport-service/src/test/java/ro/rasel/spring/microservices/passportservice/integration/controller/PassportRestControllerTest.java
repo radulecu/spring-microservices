@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.test.web.client.MockRestServiceServer;
 import ro.rasel.spring.microservices.api.bookmark.data.BookmarkResponse;
 import ro.rasel.spring.microservices.api.contact.data.AddressResponse;
@@ -14,10 +15,12 @@ import ro.rasel.spring.microservices.api.contact.data.ContactResponse;
 import ro.rasel.spring.microservices.api.contact.data.PhoneNumberDetails;
 import ro.rasel.spring.microservices.passportservice.client.AsyncIntegrationClient;
 import ro.rasel.spring.microservices.passportservice.controller.dto.PassportResponse;
-import rx.Observable;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -40,9 +43,9 @@ class PassportRestControllerTest {
         public AsyncIntegrationClient asyncIntegrationClient() {
             return new AsyncIntegrationClient() {
                 @Override
-                public Observable<Collection<BookmarkResponse>> getBookmarks(
+                public Future<Collection<BookmarkResponse>> getBookmarks(
                         String userId) {
-                    return Observable.just(
+                    return AsyncResult.forValue(
                             Collections.singletonList(new BookmarkResponse()
                                     .id(12345L)
                                     .userId("userID")
@@ -54,9 +57,9 @@ class PassportRestControllerTest {
                 }
 
                 @Override
-                public Observable<Collection<ContactResponse>> getContacts(
+                public Future<Collection<ContactResponse>> getContacts(
                         String userId) {
-                    return Observable.just(
+                    return AsyncResult.forValue(
                             Collections.singletonList(new ContactResponse()
                                     .id(121L)
                                     .userId("userID")
