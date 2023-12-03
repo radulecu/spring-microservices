@@ -41,7 +41,7 @@
         </dependency>
         <dependency>
             <groupId>ro.rasel</groupId>
-            <artifactId>tls-dependency</artifactId>
+            <artifactId>ssl-component</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
