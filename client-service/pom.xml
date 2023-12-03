@@ -34,6 +34,11 @@
         </dependency>
         <dependency>
             <groupId>ro.rasel</groupId>
+            <artifactId>swagger-component</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ro.rasel</groupId>
             <artifactId>domain-interfaces</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
@@ -52,16 +57,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
-        </dependency>
-
-        <!--Swagger-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
     </dependencies>
 </project>

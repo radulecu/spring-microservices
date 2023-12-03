@@ -7,6 +7,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import ro.rasel.security.client.sso.WebSecurityClientComponent;
 import ro.rasel.ssl.truststore.TrustStoreComponent;
+import ro.rasel.swagger.SwaggerConfig;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -17,7 +18,7 @@ public class ClientServiceLightApplication {
     public static void main(String[] args) {
         SpringApplication
                 .run(new Class<?>[]{ClientServiceLightApplication.class, WebSecurityClientComponent.class,
-                        TrustStoreComponent.class}, args);
+                        TrustStoreComponent.class, SwaggerConfig.class}, args);
     }
 }
  
