@@ -12,6 +12,8 @@
     <artifactId>security-sso-component</artifactId>
     <packaging>pom</packaging>
 
+    <description>Security client component for oauth2 authentication/authorisation</description>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
