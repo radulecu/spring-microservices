@@ -1,14 +1,18 @@
-DROP TABLE users if EXISTS ;
-DROP TABLE user_roles if EXISTS ;
+DROP TABLE users
+IF EXISTS;
+DROP TABLE user_roles
+IF EXISTS;
 
-CREATE TABLE users(
-  user_name varchar(255) not null,
-  password varchar(255) not null,
-  enabled BOOLEAN default true);
+CREATE TABLE users (
+  user_name VARCHAR(255) NOT NULL,
+  password  VARCHAR(255) NOT NULL,
+  enabled   BOOLEAN DEFAULT TRUE
+);
 
-CREATE TABLE user_roles(
-  user_name varchar(255) not null,
-  role varchar(255) not null,);
+CREATE TABLE user_roles (
+  user_name VARCHAR(255) NOT NULL,
+  role      VARCHAR(255) NOT NULL,
+);
 
 -- create table client_details(
 --   CLIENT_ID VARCHAR (255) not null unique ,

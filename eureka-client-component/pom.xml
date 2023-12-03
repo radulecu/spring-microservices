@@ -12,7 +12,9 @@
     <artifactId>eureka-client-component</artifactId>
     <packaging>jar</packaging>
 
-    <description>Component used to provide dependencies, default configuration and code for connection to Eureka service.</description>
+    <description>Component used to provide dependencies, default configuration and code for connection to Eureka
+        service.
+    </description>
 
     <dependencies>
         <!--Spring Cloud-->

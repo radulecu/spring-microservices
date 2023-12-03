@@ -33,6 +33,7 @@ public class TrustStoreConfig {
         System.setProperty("javax.net.ssl.trustStore", truststoreFile.getAbsolutePath());
         System.setProperty("javax.net.ssl.trustStorePassword",
                 env.getProperty("system.property.server.ssl.trust-store-password", "jkspass"));
-        System.setProperty("javax.net.ssl.trustStoreType", env.getProperty("system.property.server.ssl.trust-store-type", "jks"));
+        System.setProperty("javax.net.ssl.trustStoreType",
+                env.getProperty("system.property.server.ssl.trust-store-type", "jks"));
     }
 }
