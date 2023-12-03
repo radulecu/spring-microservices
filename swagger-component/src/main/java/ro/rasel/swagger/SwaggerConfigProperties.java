@@ -11,7 +11,7 @@ import java.util.Set;
 public class SwaggerConfigProperties {
     private boolean enabled = false;
 
-    private Set<String> blacklist=new HashSet<>();
+    private Set<String> blacklist = new HashSet<>();
 
     public boolean isEnabled() {
         return enabled;
