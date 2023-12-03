@@ -20,7 +20,7 @@ security:
       userInfoUri: ${server.security.url}/uaa/user
   basic:
     enabled: false
-# hystrix strategy is required to avoid errors caused by the fact that hystrix handles requests in a different thread causing unexpected errors over feign
+# Hystrix strategy is required to avoid errors caused by the fact that it handles requests in a different thread causing unexpected errors over feign
 hystrix:
   command:
     default:
