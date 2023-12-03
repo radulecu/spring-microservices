@@ -1,4 +1,4 @@
-package ro.rasel.spring.commons.utils;
+package ro.rasel.spring.commons.file.manager;
 
 import org.springframework.stereotype.Component;
 

@@ -4,14 +4,31 @@ To access any resource via SSO you need to get a token from the security service
 
 In this chase we can have 2 types of secured services
 
-- resource servers
+- resource services
     * used for providing resources
     * to access it you (or the client who is accessing it) have to provide the token received from the security service
-- client server
+- client services
     * can be either a web application (javascript/angular)
     * has to authenticate
         ** in chase of simple spring boot rest/mvc service it is done via OAuth2 (@EnableOAuth2Sso)
-        ** in chase of javascript
+        ** in chase of javascript you have to acquire the token from the security service and forward it in the header at future requests
+
+== Usage
+* Security for a resource server is enabled using security-sso-component by:
+    ** using ro.rasel:ssl-component maven dependency
+    ** include ResourceSecurityClientComponent class in SpringApplication.run() source classes
+    ** default configuration by including security profile in configuration file (which ends up including application-security.yml
+* To enable a client server instead of ResourceSecurityClientComponent class we will include WebSecurityClientComponent in SpringApplication.run() source classes
+
+== Example services using security
+* Resource servers:
+    ** bookmark-service
+    ** contact-service
+    ** passport-service
+* client service
+    ** client-service
+    ** client-service-light
+    ** security-sso-ui
 
 == Accessing a resource server
 curl -k -X POST -vu acme:acmesecret https://localhost:9999/uaa/oauth/token -H "Accept: application/json" -d "password=spring&username=jlong&grant_type=password&scope=openid&client_secret=acmesecret&client_id=acme"
@@ -55,3 +72,8 @@ keytool -list -v -alias jksalias -keystore ./my.jks -storepass jkspass
 - Security with spring: Baeldung
     * http://www.baeldung.com/security-spring
     * http://www.baeldung.com/rest-api-spring-oauth2-angularjs
+- JWT (JSON Web Tokens)
+    * https://jwt.io/
+- Authentication and Authorisation
+    * OAuth: https://oauth.net/
+    * OpenID vs OAuth2 vs SAML https://spin.atomicobject.com/2016/05/30/openid-oauth-saml/

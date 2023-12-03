@@ -10,9 +10,6 @@ public class WebSecurityConfigurer implements IWebSecurityConfigurer {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .regexMatchers("/passport/[a-zA-Z0-9]+").authenticated()
-//                .regexMatchers("/contacts/[a-zA-Z0-9]+").authenticated()
-//                .regexMatchers("/bookmarks/[a-zA-Z0-9]+").authenticated()
                 .anyRequest().authenticated();
     }
 }

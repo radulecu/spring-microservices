@@ -21,8 +21,6 @@
         <module>passport-service</module>
         <module>client-service</module>
         <module>client-service-light</module>
-        <module>spring-batch-scalability</module>
-        <module>batch-processing</module>
         <module>hystrix-dashboard-service</module>
         <module>security-sso-ui</module>
     </modules>

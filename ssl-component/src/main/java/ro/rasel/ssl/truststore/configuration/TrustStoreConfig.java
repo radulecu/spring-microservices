@@ -1,22 +1,22 @@
-package ro.rasel.ssl.configuration;
+package ro.rasel.ssl.truststore.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import ro.rasel.commons.utils.ITempFileManager;
 import ro.rasel.commons.utils.ResourceUtilities;
-import ro.rasel.spring.commons.utils.TempFileManager;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 
 @Configuration
-public class TruststoreConfig {
+public class TrustStoreConfig {
     private final Environment env;
-    private final TempFileManager tempFileManager;
+    private final ITempFileManager tempFileManager;
 
     @Autowired
-    public TruststoreConfig(Environment env, TempFileManager tempFileManager) {
+    public TrustStoreConfig(Environment env, ITempFileManager tempFileManager) {
         this.env = env;
         this.tempFileManager = tempFileManager;
     }

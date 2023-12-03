@@ -1,0 +1,18 @@
+= SSL component
+
+Used to enable https and provide truststore for self signed certificates.
+
+== Usage
+* Same is for truststore and keystore dependency for ssl certificates
+    ** add ro.rasel:ssl-component
+    ** for trustStore include TrustStoreComponent class in SpringApplication.run()  source classes
+    ** include ssl and sslTrustStore in configuration file depending if you want to enable ssl or access a ssl service (can be bot used)
+
+== Example services using security
+* bookmark-service
+* contact-service
+* passport-service
+* client-service
+* client-service-light
+* security-sso-ui
+

@@ -1,7 +1,6 @@
-:compat-mode:
 = Client service light
 
-This module is a carbon copy of contact-service module.It tries to show that you do noc actually need to create all the mappers to the service by hand.
+This module is a carbon copy of contact-service.It tries to show how you can use Zuul proxy to expose data from rest services.
 
 You can mace any call by using the name of the service and the url.
 For example:
