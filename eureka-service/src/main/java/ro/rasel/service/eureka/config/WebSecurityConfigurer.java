@@ -9,9 +9,13 @@ public class WebSecurityConfigurer implements IWebSecurityConfigurer {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // formatter:off
-        http.regexMatcher("/")
+        http.regexMatcher(regetNot(ResourceSecurityConfigurer.REGEX_EUREKA_PATTERN))
             .authorizeRequests()
                 .anyRequest().authenticated();
         // formatter:on
+    }
+
+    private String regetNot(String s) {
+        return "(?!" + s + ").*";
     }
 }

@@ -1,7 +1,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://jlong:spring@localhost:8761/eureka/
+      defaultZone: http://eureka:eurekasecret@localhost:8761/eureka/
     # all interval properties below may require to be adjusted for performance
     registry-fetch-interval-seconds: 10
     eureka-service-url-poll-interval-seconds: 5
