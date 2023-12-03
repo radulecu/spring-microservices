@@ -3,6 +3,7 @@ package ro.rasel.swagger;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Configuration
@@ -10,7 +11,7 @@ import java.util.Set;
 public class SwaggerConfigProperties {
     private boolean enabled = false;
 
-    private Set<String> blacklist;
+    private Set<String> blacklist=new HashSet<>();
 
     public boolean isEnabled() {
         return enabled;
