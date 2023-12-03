@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>ssl-component</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <description>Enable https and provide truststore for self signed certificates</description>
 

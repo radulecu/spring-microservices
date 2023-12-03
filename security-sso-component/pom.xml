@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>security-sso-component</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <description>Security client component for oauth2 authentication/authorisation</description>
 

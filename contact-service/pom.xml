@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>contact-service</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <start.class>ro.rasel.service.contacts.ContactServiceApplication</start.class>

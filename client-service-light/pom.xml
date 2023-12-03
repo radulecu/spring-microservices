@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>client-service-light</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <start.class>ro.rasel.client.service.light.ClientServiceLightApplication</start.class>
