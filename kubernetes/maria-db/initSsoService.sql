@@ -1,9 +1,3 @@
-GRANT ALL PRIVILEGES ON *.* TO 'dbuser'@'%';
-
-create schema if NOT EXISTS bookmark_service;
-create schema if NOT EXISTS contact_service;
-create schema if NOT EXISTS sso_auth_service;
-
 INSERT INTO sso_auth_service.user_info (user_name, enabled ,password) VALUES ('jlong', true, 'spring');
 INSERT INTO sso_auth_service.user_info (user_name, enabled ,password) VALUES ('pwebb', true, 'boot');
 
