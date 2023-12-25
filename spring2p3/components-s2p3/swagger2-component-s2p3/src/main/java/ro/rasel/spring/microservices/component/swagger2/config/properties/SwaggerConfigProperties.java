@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.component.swagger.config.properties;
+package ro.rasel.spring.microservices.component.swagger2.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

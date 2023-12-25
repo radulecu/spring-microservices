@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>swagger-component</artifactId>
+            <artifactId>swagger2-component-s2p3</artifactId>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>

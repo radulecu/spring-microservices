@@ -109,7 +109,7 @@
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>swagger-component</artifactId>
+                <artifactId>swagger2-component-s2p3</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -133,18 +133,6 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-jwt</artifactId>
                 <version>${spring-security-jwt.version}</version>
-            </dependency>
-
-            <!--Swagger-->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
             </dependency>
 
             <!--Zipkin-->

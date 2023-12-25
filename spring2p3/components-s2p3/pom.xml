@@ -13,5 +13,6 @@
 
     <modules>
         <module>hystrix-component-s2p3</module>
+        <module>swagger2-component-s2p3</module>
     </modules>
 </project>

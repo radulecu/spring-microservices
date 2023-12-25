@@ -1,10 +1,10 @@
-package ro.rasel.spring.microservices.component.swagger.config;
+package ro.rasel.spring.microservices.component.swagger2.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ro.rasel.spring.microservices.common.utils.properties.securityclient.SecurityConfigProperties;
-import ro.rasel.spring.microservices.component.swagger.config.properties.SwaggerConfigProperties;
+import ro.rasel.spring.microservices.component.swagger2.config.properties.SwaggerConfigProperties;
 import springfox.documentation.builders.AuthorizationCodeGrantBuilder;
 import springfox.documentation.builders.OAuthBuilder;
 import springfox.documentation.builders.PathSelectors;

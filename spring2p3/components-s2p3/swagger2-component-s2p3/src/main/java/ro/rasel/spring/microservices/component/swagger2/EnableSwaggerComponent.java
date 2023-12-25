@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.component.swagger;
+package ro.rasel.spring.microservices.component.swagger2;
 
 import org.springframework.context.annotation.Import;
 

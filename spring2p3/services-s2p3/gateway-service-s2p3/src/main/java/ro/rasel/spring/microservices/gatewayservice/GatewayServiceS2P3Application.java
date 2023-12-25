@@ -9,7 +9,7 @@ import ro.rasel.spring.microservices.component.eurekaclient.EnableEurekaClientCo
 import ro.rasel.spring.microservices.component.securityclient.web.EnableWebSecurityClientComponent;
 import ro.rasel.spring.microservices.component.ssl.client.EnableSslClientComponent;
 import ro.rasel.spring.microservices.component.ssl.server.EnableSslServerComponent;
-import ro.rasel.spring.microservices.component.swagger.EnableSwaggerComponent;
+import ro.rasel.spring.microservices.component.swagger2.EnableSwaggerComponent;
 import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponent;
 
 @SpringBootApplication

@@ -1,4 +1,4 @@
-package ro.rasel.spring.microservices.component.swagger.config;
+package ro.rasel.spring.microservices.component.swagger2.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import ro.rasel.spring.microservices.common.utils.Touple;
-import ro.rasel.spring.microservices.component.swagger.config.properties.SwaggerConfigProperties;
+import ro.rasel.spring.microservices.component.swagger2.config.properties.SwaggerConfigProperties;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
