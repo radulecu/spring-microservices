@@ -16,7 +16,7 @@
         <module>resilience-component</module>
         <module>ssl-component</module>
         <module>security</module>
-<!--        <module>swagger-component</module>-->
+        <module>swagger-component</module>
         <module>zipkin-component</module>
     </modules>
 </project>

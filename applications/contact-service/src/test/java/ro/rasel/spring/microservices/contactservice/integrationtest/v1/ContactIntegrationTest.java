@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.AddressResponse;
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactRequest;
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactResponse;
-import ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberResponse;
+import ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberDetailsResponse;
 import ro.rasel.spring.microservices.contactservice.dao.ContactRepository;
 import ro.rasel.spring.microservices.contactservice.domain.Address;
 import ro.rasel.spring.microservices.contactservice.domain.Contact;
@@ -218,8 +218,8 @@ class ContactIntegrationTest {
                     contact.getAddresses().stream().map(this::toAddressResponse).collect(Collectors.toList()));
         }
 
-        public PhoneNumberResponse toPhoneNumberResponse(PhoneNumber phoneNumber) {
-            return new PhoneNumberResponse(phoneNumber.getId(), phoneNumber.getNumber(), phoneNumber.getDescription());
+        public PhoneNumberDetailsResponse toPhoneNumberResponse(PhoneNumber phoneNumber) {
+            return new PhoneNumberDetailsResponse(phoneNumber.getId(), phoneNumber.getNumber(), phoneNumber.getDescription());
         }
 
         public AddressResponse toAddressResponse(Address address) {

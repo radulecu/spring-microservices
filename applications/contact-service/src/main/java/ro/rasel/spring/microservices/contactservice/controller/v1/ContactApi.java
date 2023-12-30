@@ -1,17 +1,12 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactRequest;
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactResponse;
 
@@ -21,52 +16,52 @@ import java.util.Collection;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequestMapping(value = "/v1/users/{userId}/contacts", produces = APPLICATION_JSON_VALUE)
-@Api(tags = ContactApi.TAG)
+@OpenAPIDefinition(tags = @Tag(name = ContactApi.NAME, description = ContactApi.NAME + " REST controller"))
 public interface ContactApi {
-    String TAG = "contact";
+    String NAME = "Contact";
 
     @GetMapping
-    @ApiOperation(value = "get contacts", notes = "Get a list of contacts", tags = TAG)
+    @Operation(summary = "Get contacts", description = "Get a list of contacts", tags = NAME)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
+            @ApiResponse(responseCode = "200", description = "Found"),
+            @ApiResponse(responseCode = "404", description = "Not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     ResponseEntity<Collection<ContactResponse>> getContacts(@PathVariable String userId);
 
     @GetMapping(value = "/{contactId}")
-    @ApiOperation(value = "get contact", notes = "Get a contact", tags = TAG)
+    @Operation(summary = "Get contact", description = "Get a contact", tags = NAME)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
+            @ApiResponse(responseCode = "200", description = "Found"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     ResponseEntity<ContactResponse> getContact(@PathVariable String userId, @PathVariable long contactId);
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "add contact", notes = "Create a new contact and return it", tags = TAG)
+    @Operation(summary = "Add contact", description = "Create a new contact and return it", tags = NAME)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 500, message = "Internal server error")})
+            @ApiResponse(responseCode = "200", description = "Ok"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     ContactResponse createContact(@PathVariable String userId, @Valid @RequestBody ContactRequest contactRequest);
 
     @PutMapping(value = "/{contactId}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "add contact", notes = "Update a contact and return it", tags = TAG)
+    @Operation(summary = "Update contact", description = "Update a contact and return it", tags = NAME)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
+            @ApiResponse(responseCode = "200", description = "Ok"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     ResponseEntity<ContactResponse> updateContact(
             @PathVariable String userId, @PathVariable long contactId,
             @Valid @RequestBody ContactRequest contactRequest);
 
     @DeleteMapping(value = "/{contactId}")
-    @ApiOperation(code = 201, value = "delete contact", notes = "Delete a contact", tags = TAG)
+    @Operation(summary = "Delete contact", description = "Delete a contact", tags = NAME)
     @ApiResponses({
-            @ApiResponse(code = 201, message = "No content"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal server error")})
+            @ApiResponse(responseCode = "200", description = "No content"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     ResponseEntity<Void> deleteContact(@PathVariable String userId, @PathVariable long contactId);
 }

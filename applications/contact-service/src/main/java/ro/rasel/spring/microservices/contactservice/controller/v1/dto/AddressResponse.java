@@ -1,13 +1,14 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.beans.ConstructorProperties;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@ApiModel(description = "Address")
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
+@Schema(description = "Address")
 public class AddressResponse extends AddressDto {
     private Long id;
 
@@ -22,7 +23,7 @@ public class AddressResponse extends AddressDto {
         this.id = id;
     }
 
-    @ApiModelProperty(required = true, example = "31")
+    @Schema(requiredMode = REQUIRED, example = "31")
     public void setId(Long id) {
         this.id = id;
     }
@@ -55,7 +56,6 @@ public class AddressResponse extends AddressDto {
     public String toString() {
         return new StringJoiner(", ", AddressResponse.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .toString()
                 + " " + super.toString();
     }
 }

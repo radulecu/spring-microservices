@@ -1,28 +1,31 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.beans.ConstructorProperties;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@ApiModel(value = "PhoneNumberDetails", description = "Phone Number Details")
-public class PhoneNumberResponse extends PhoneNumberDto {
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+import static ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberDto.DESCRIPTION;
+
+@SuppressWarnings("ALL")
+@Schema(title = "PhoneNumberDetailsResponse", description = DESCRIPTION)
+public class PhoneNumberDetailsResponse extends PhoneNumberDto {
     private Long id;
 
-    public PhoneNumberResponse() {
+    public PhoneNumberDetailsResponse() {
     }
 
     @ConstructorProperties({"id", "number", "description"})
-    public PhoneNumberResponse(Long id, String number, String description) {
+    public PhoneNumberDetailsResponse(Long id, String number, String description) {
         super(number, description);
         this.id = id;
     }
 
     @NotNull
-    @ApiModelProperty(required = true, example = "64")
+    @Schema(requiredMode = REQUIRED, example = "64")
     public Long getId() {
         return id;
     }
@@ -42,7 +45,7 @@ public class PhoneNumberResponse extends PhoneNumberDto {
         if (!super.equals(o)) {
             return false;
         }
-        PhoneNumberResponse that = (PhoneNumberResponse) o;
+        PhoneNumberDetailsResponse that = (PhoneNumberDetailsResponse) o;
         return Objects.equals(id, that.id);
     }
 
@@ -53,9 +56,8 @@ public class PhoneNumberResponse extends PhoneNumberDto {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", PhoneNumberRequest.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", PhoneNumberDetailsRequest.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .toString()
                 + " " + super.toString();
     }
 }

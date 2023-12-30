@@ -1,11 +1,11 @@
 package ro.rasel.spring.microservices.bookmarkservice.controller.v1.dto;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import ro.rasel.spring.microservices.bookmarkservice.domain.Bookmark;
 
 import java.beans.ConstructorProperties;
 
-@ApiModel(value = "BookmarkRequest", description = "User Bookmark")
+@Schema(title = "BookmarkRequest", description = "User bookmark")
 public class BookmarkRequest extends BookmarkDto {
     @ConstructorProperties({"href", "description", "label"})
     public BookmarkRequest(String href, String description, String label) {

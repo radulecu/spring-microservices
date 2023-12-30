@@ -2,8 +2,8 @@ package ro.rasel.spring.microservices.contactservice.utils;
 
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.AddressRequest;
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.AddressResponse;
-import ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberRequest;
-import ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberResponse;
+import ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberDetailsRequest;
+import ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberDetailsResponse;
 
 import java.util.Arrays;
 
@@ -42,12 +42,12 @@ public class DtoGenerator {
                 .withAddresses(Arrays.asList(createAddressRequest(), createAddressRequestWithMandatoryFieldsOnly()));
     }
 
-    private static PhoneNumberRequest createPhoneNumberRequest() {
-        return new PhoneNumberRequest(PHONE_NUMBER, USER_ID + " " + FIRST_NAME + " " + PHONE_NUMBER_DESCRIPTION);
+    private static PhoneNumberDetailsRequest createPhoneNumberRequest() {
+        return new PhoneNumberDetailsRequest(PHONE_NUMBER, USER_ID + " " + FIRST_NAME + " " + PHONE_NUMBER_DESCRIPTION);
     }
 
-    private static PhoneNumberRequest createPhoneNumberRequestWithoutDescription() {
-        return new PhoneNumberRequest(PHONE_NUMBER2, null);
+    private static PhoneNumberDetailsRequest createPhoneNumberRequestWithoutDescription() {
+        return new PhoneNumberDetailsRequest(PHONE_NUMBER2, null);
     }
 
     private static AddressRequest createAddressRequest() {
@@ -75,13 +75,13 @@ public class DtoGenerator {
                 .withAddresses(Arrays.asList(createAddressResponse(), createAddressResponseWithMandatoryFieldsOnly()));
     }
 
-    private static PhoneNumberResponse createPhoneNumberResponse() {
-        return new PhoneNumberResponse(PHONE_NUMBER_ID, PHONE_NUMBER,
+    private static PhoneNumberDetailsResponse createPhoneNumberResponse() {
+        return new PhoneNumberDetailsResponse(PHONE_NUMBER_ID, PHONE_NUMBER,
                 USER_ID + " " + FIRST_NAME + " " + PHONE_NUMBER_DESCRIPTION);
     }
 
-    private static PhoneNumberResponse createPhoneNumberResponseWithoutDescription() {
-        return new PhoneNumberResponse(PHONE_NUMBER_ID2, PHONE_NUMBER2, null);
+    private static PhoneNumberDetailsResponse createPhoneNumberResponseWithoutDescription() {
+        return new PhoneNumberDetailsResponse(PHONE_NUMBER_ID2, PHONE_NUMBER2, null);
     }
 
     private static AddressResponse createAddressResponse() {

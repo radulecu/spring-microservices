@@ -1,10 +1,10 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.beans.ConstructorProperties;
 
-@ApiModel(description = "Address")
+@Schema(description = "Address")
 public class AddressRequest extends AddressDto {
 
     @ConstructorProperties({"country", "town", "street", "number", "entrance", "flatNumber"})

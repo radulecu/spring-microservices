@@ -1,13 +1,16 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 public class PhoneNumberDto {
+    public static final String DESCRIPTION = "Phone number details";
     private String number;
 
     private String description;
@@ -21,7 +24,7 @@ public class PhoneNumberDto {
     }
 
     @NotBlank
-    @ApiModelProperty(required = true,example = "+10723123456")
+    @Schema(requiredMode = REQUIRED,example = "+10723123456")
     public String getNumber() {
         return number;
     }
@@ -31,7 +34,7 @@ public class PhoneNumberDto {
     }
 
     @Size(min = 1, message = "PhoneNumber description should not be blank")
-    @ApiModelProperty(example = "phone number description Stéphane Maldini")
+    @Schema(example = "phone number description Stéphane Maldini")
     public String getDescription() {
         return description;
     }

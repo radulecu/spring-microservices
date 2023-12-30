@@ -1,5 +1,8 @@
 package ro.rasel.spring.microservices.bookmarkservice;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +14,7 @@ import ro.rasel.spring.microservices.component.eurekaclient.EnableEurekaClientCo
 import ro.rasel.spring.microservices.component.securityclient.resource.EnableResourceSecurityClientComponent;
 import ro.rasel.spring.microservices.component.ssl.client.EnableSslClientComponent;
 import ro.rasel.spring.microservices.component.ssl.server.EnableSslServerComponent;
-import ro.rasel.spring.microservices.component.swagger2.EnableSwaggerComponent;
+import ro.rasel.spring.microservices.component.swagger.EnableSwaggerComponent;
 import ro.rasel.spring.microservices.component.zipkin.EnableZipkinClientComponent;
 import ro.rasel.spring.microservices.springcommon.EnableSpringCommonsComponent;
 
@@ -19,13 +22,25 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
-@EnableSwaggerComponent
 @EnableSslClientComponent
 @EnableSslServerComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
 @EnableSpringCommonsComponent
 @EnableZipkinClientComponent
+@OpenAPIDefinition(info = @Info(title = "Bookmark service", description = "Bookmark REST service", version = "v1",
+        license = @License(name = "Apache License, Version 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0")))
+@EnableSwaggerComponent
+//@SecuritySchemes(
+//        @SecurityScheme(name = OAUTH2_AUTHORISATION_CODE_SECURITY_SCHEME_NAME, type = SecuritySchemeType.OAUTH2,
+//                in = SecuritySchemeIn.HEADER,
+//                flows = @OAuthFlows(
+//                        authorizationCode = @OAuthFlow(authorizationUrl = "${security.server.url}/oauth/authorize",
+//                                tokenUrl = "${security.server.url}/oauth/token",
+//                                scopes = {@OAuthScope(name = "read"), @OAuthScope(name = "write")}),
+//                        password = @OAuthFlow(authorizationUrl = "${security.server.url}/oauth/authorize",
+//                                tokenUrl = "${security.server.url}/oauth/token",
+//                                scopes = {@OAuthScope(name = "read"), @OAuthScope(name = "write")}))))
 public class BookmarkServiceApplication {
 
     @Bean

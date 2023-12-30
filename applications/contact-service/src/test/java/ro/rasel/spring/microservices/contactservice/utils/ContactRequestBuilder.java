@@ -2,7 +2,7 @@ package ro.rasel.spring.microservices.contactservice.utils;
 
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.AddressRequest;
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactRequest;
-import ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberRequest;
+import ro.rasel.spring.microservices.contactservice.controller.v1.dto.PhoneNumberDetailsRequest;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public final class ContactRequestBuilder {
         return this;
     }
 
-    public ContactRequestBuilder withPhoneNumbers(List<PhoneNumberRequest> phoneNumbers) {
+    public ContactRequestBuilder withPhoneNumbers(List<PhoneNumberDetailsRequest> phoneNumbers) {
         contactRequest.setPhoneNumbers(phoneNumbers);
         return this;
     }

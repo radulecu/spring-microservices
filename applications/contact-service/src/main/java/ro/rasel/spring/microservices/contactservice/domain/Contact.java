@@ -1,6 +1,5 @@
 package ro.rasel.spring.microservices.contactservice.domain;
 
-import io.swagger.annotations.ApiModel;
 import ro.rasel.spring.microservices.common.utils.validators.Validator;
 import ro.rasel.spring.microservices.common.utils.validators.Validators;
 

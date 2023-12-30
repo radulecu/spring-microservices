@@ -1,6 +1,6 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import static ro.rasel.spring.microservices.contactservice.utils.Constants.EMAIL_PATTERN_STRING;
 
-public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
+public class ContactDetailsDto<P extends PhoneNumberDto, A extends AddressDto> {
     private String firstName;
     private String lastName;
     private String email;
@@ -18,10 +19,10 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
     private List<P> phoneNumbers;
     private List<A> addresses;
 
-    public ContactDetails() {
+    public ContactDetailsDto() {
     }
 
-    public ContactDetails(
+    public ContactDetailsDto(
             String firstName, String lastName, String email, String relationship, List<P> phoneNumbers,
             List<A> addresses) {
         this.firstName = firstName;
@@ -33,7 +34,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
     }
 
     @NotBlank
-    @ApiModelProperty(value = "First name", required = true, example = "Stéphane")
+    @Schema(title = "First name", requiredMode = REQUIRED, example = "Stéphane")
     public String getFirstName() {
         return firstName;
     }
@@ -43,7 +44,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
     }
 
     @NotBlank
-    @ApiModelProperty(value = "Last name", required = true, example = "Maldini")
+    @Schema(title = "Last name", requiredMode = REQUIRED, example = "Maldini")
     public String getLastName() {
         return lastName;
     }
@@ -52,7 +53,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
         this.lastName = lastName;
     }
 
-    @ApiModelProperty(value = "Email", example = "stéphane@email.com")
+    @Schema(title = "Email", example = "stéphane@email.com")
     @Pattern(regexp = EMAIL_PATTERN_STRING)
     public String getEmail() {
         return email;
@@ -63,7 +64,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
     }
 
     @NotBlank
-    @ApiModelProperty(value = "Relationship", example="friend")
+    @Schema(title = "Relationship", example = "friend")
     public String getRelationship() {
         return relationship;
     }
@@ -96,7 +97,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ContactDetails<?, ?> that = (ContactDetails<?, ?>) o;
+        ContactDetailsDto<?, ?> that = (ContactDetailsDto<?, ?>) o;
         return Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(email, that.email) &&
@@ -112,7 +113,7 @@ public class ContactDetails<P extends PhoneNumberDto, A extends AddressDto> {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", ContactDetails.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", ContactDetailsDto.class.getSimpleName() + "[", "]")
                 .add("firstName='" + firstName + "'")
                 .add("lastName='" + lastName + "'")
                 .add("email='" + email + "'")

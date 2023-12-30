@@ -1,7 +1,6 @@
 package ro.rasel.spring.microservices.contactservice.controller.v1.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import ro.rasel.spring.microservices.common.utils.validators.Validator;
 import ro.rasel.spring.microservices.common.utils.validators.Validators;
 
@@ -11,8 +10,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@ApiModel(description = "User Contacts")
-public class ContactResponse extends ContactDetails<PhoneNumberResponse, AddressResponse> {
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
+@Schema(description = "User contacts")
+public class ContactResponse extends ContactDetailsDto<PhoneNumberDetailsResponse, AddressResponse> {
     private static final Validator<CharSequence> USER_ID_VALIDATOR = Validators.notBlankValidator("userId");
 
     private Long id;
@@ -26,20 +27,20 @@ public class ContactResponse extends ContactDetails<PhoneNumberResponse, Address
     @ConstructorProperties({"id", "userId", "firstName", "lastName", "email", "relationship", "phoneNumbers", "addresses"})
     public ContactResponse(
             long id, String userId, String firstName, String lastName, String email, String relationship,
-            List<PhoneNumberResponse> phoneNumbers, List<AddressResponse> addresses) {
+            List<PhoneNumberDetailsResponse> phoneNumbers, List<AddressResponse> addresses) {
         this(userId, firstName, lastName, email, relationship, phoneNumbers, addresses);
         this.id = id;
     }
 
     public ContactResponse(
             String userId, String firstName, String lastName, String email, String relationship,
-            List<PhoneNumberResponse> phoneNumbers, List<AddressResponse> addresses) {
+            List<PhoneNumberDetailsResponse> phoneNumbers, List<AddressResponse> addresses) {
         super(firstName, lastName, email, relationship, phoneNumbers, addresses);
 
         this.userId = USER_ID_VALIDATOR.validate(userId);
     }
 
-    @ApiModelProperty(value = "Contact id", required = true,example = "3")
+    @Schema(title = "Contact id", requiredMode = REQUIRED, example = "3")
     public Long getId() {
         return id;
     }
@@ -48,7 +49,7 @@ public class ContactResponse extends ContactDetails<PhoneNumberResponse, Address
         this.id = id;
     }
 
-    @ApiModelProperty(value = "Used id", required = true, example = "jlong")
+    @Schema(title = "Used id", requiredMode = REQUIRED, example = "jlong")
     public String getUserId() {
         return userId;
     }
@@ -83,7 +84,6 @@ public class ContactResponse extends ContactDetails<PhoneNumberResponse, Address
         return new StringJoiner(", ", ContactResponse.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("userId='" + userId + "'")
-                .toString()
                 + " " + super.toString();
     }
 }
