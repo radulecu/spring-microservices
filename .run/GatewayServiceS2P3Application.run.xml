@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="GatewayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+  <configuration default="false" name="GatewayServiceS2P3Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <module name="gateway-service-s2p3" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="ro.rasel.spring.microservices.gatewayservice.GatewayServiceS2P3Application" />
     <method v="2">
