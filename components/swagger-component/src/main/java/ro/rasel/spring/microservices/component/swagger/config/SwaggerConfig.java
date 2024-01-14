@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import ro.rasel.spring.microservices.common.utils.properties.securityclient.SecurityConfigProperties;
 import ro.rasel.spring.microservices.component.swagger.config.properties.SwaggerConfigProperties;
 
+import java.util.Optional;
+
 @Configuration
 public class SwaggerConfig {
     public static final String OAUTH2_AUTHORISATION_CODE_SECURITY_SCHEME_NAME = "oauth2_authorisation_code";
@@ -30,8 +32,7 @@ public class SwaggerConfig {
     public OpenAPI securityScheme() {
         OpenAPI openApi = new OpenAPI();
         if (userAuthConfigured()) {
-            return new OpenAPI()
-                    .addSecurityItem(new SecurityRequirement()
+            openApi.addSecurityItem(new SecurityRequirement()
                             .addList(OAUTH2_AUTHORISATION_CODE_SECURITY_SCHEME_NAME)
                             .addList(OAUTH2_PASSWORD_SECURITY_SCHEME_NAME))
                     .components(new Components()
@@ -39,12 +40,11 @@ public class SwaggerConfig {
                                     authorizationCodeSecurityScheme())
                             .addSecuritySchemes(OAUTH2_PASSWORD_SECURITY_SCHEME_NAME, passwordSecurityScheme())
                     );
-        } else {
-//            Optional.of(swaggerConfigProperties)
-//                    .map(SwaggerConfigProperties::getInfo)
-//                    .map(SwaggerConfigProperties.Info::toSwaggerInfo)
-//                    .ifPresent(openApi::setInfo);
         }
+        Optional.of(swaggerConfigProperties)
+                .map(SwaggerConfigProperties::getInfo)
+                .map(SwaggerConfigProperties.Info::toSwaggerInfo)
+                .ifPresent(openApi::setInfo);
         return openApi;
     }
 
@@ -67,7 +67,6 @@ public class SwaggerConfig {
     }
 
     public SecurityScheme authorizationCodeSecurityScheme() {
-        ;
         OAuthFlows flows = new OAuthFlows();
         flows.authorizationCode(oAuthFlow());
 

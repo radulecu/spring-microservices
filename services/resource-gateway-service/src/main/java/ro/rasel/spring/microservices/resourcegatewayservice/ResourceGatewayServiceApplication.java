@@ -3,8 +3,6 @@ package ro.rasel.spring.microservices.resourcegatewayservice;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
-import io.swagger.v3.oas.annotations.servers.Server;
-import io.swagger.v3.oas.annotations.servers.Servers;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ro.rasel.spring.microservices.component.eurekaclient.EnableEurekaClientComponent;
@@ -21,7 +19,7 @@ import ro.rasel.spring.microservices.springcommon.EnableSpringCommonsComponent;
 @EnableEurekaClientComponent
 @EnableZipkinClientComponent
 @EnableSwaggerComponent
-@OpenAPIDefinition(info = @Info(title = "Gateway service", description = "Bookmark REST service", version = "v1",
+@OpenAPIDefinition(info = @Info(title = "Gateway service", description = "Gateway service", version = "v1",
         license = @License(name = "Apache License, Version 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0")))
 public class ResourceGatewayServiceApplication {
 

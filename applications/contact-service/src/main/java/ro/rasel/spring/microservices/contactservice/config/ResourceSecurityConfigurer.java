@@ -14,10 +14,12 @@ public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
     @Override
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
         return auth -> auth
+                .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
-                .regexMatchers("/v3/api-docs").permitAll()
+                .antMatchers("/v3/api-docs").permitAll()
+                .antMatchers("/v3/api-docs/swagger-config").permitAll()
                 .regexMatchers(HttpMethod.GET, REST_MATCHER).access("hasAuthority('SCOPE_read') or hasAuthority('SCOPE_write')")
                 .regexMatchers(HttpMethod.POST, REST_MATCHER).access("hasAuthority('SCOPE_write')")
                 .regexMatchers(HttpMethod.PUT, REST_MATCHER).access("hasAuthority('SCOPE_write')")

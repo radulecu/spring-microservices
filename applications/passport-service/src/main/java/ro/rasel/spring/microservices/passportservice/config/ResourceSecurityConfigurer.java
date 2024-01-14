@@ -13,7 +13,8 @@ public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
 
     @Override
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
-        return authz -> authz
+        return auth -> auth
+                .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()

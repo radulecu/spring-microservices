@@ -65,9 +65,9 @@ public class EchoApiImpl implements EchoApi {
 
     private static Map<String, List<String>> extractResponseHeadersFromParameters(List<String> responseHeaders) {
         return responseHeaders.stream()
-                .filter(s -> s.contains("="))
-                .map(s -> s.split("=", 2))
-                .map(ss -> (Pair<String, String>) new ImmutablePair<>(ss[0], ss[1]))
+                .filter(s -> s.contains(":"))
+                .map(s -> s.split(":", 2))
+                .map(ss -> (Pair<String, String>) new ImmutablePair<>(ss[0].trim(), ss[1].trim()))
                 .collect(Collectors.groupingBy(Pair::getKey, Collectors.mapping(Pair::getValue, Collectors.toList())));
     }
 

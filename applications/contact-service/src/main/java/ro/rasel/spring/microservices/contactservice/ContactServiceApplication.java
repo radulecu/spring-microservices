@@ -1,5 +1,8 @@
 package ro.rasel.spring.microservices.contactservice;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,13 +25,16 @@ import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
-@EnableSwaggerComponent
 @EnableSslServerComponent
 @EnableSslClientComponent
 @EnableResourceSecurityClientComponent
 @EnableEurekaClientComponent
 @EnableSpringCommonsComponent
 @EnableZipkinClientComponent
+@EnableSwaggerComponent
+@OpenAPIDefinition(info = @Info(title = "Contact service", description = "Contact REST service", version = "v1",
+        license = @License(name = "Apache License, Version 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0"),
+        contact = @io.swagger.v3.oas.annotations.info.Contact(name = "John Doe", email = "john.doe@domain.com",url = "http://johns-doe-url.domain.com")))
 public class ContactServiceApplication {
 
     @Bean

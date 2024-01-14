@@ -1,6 +1,7 @@
 package ro.rasel.spring.microservices.bookmarkservice;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.CommandLineRunner;
@@ -28,9 +29,10 @@ import java.util.List;
 @EnableEurekaClientComponent
 @EnableSpringCommonsComponent
 @EnableZipkinClientComponent
-@OpenAPIDefinition(info = @Info(title = "Bookmark service", description = "Bookmark REST service", version = "v1",
-        license = @License(name = "Apache License, Version 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0")))
 @EnableSwaggerComponent
+@OpenAPIDefinition(info = @Info(title = "Bookmark service", description = "Bookmark REST service", version = "v1",
+        license = @License(name = "Apache License, Version 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0"),
+        contact = @Contact(name = "John Doe", email = "john.doe@domain.com",url = "http://johns-doe-url.domain.com")))
 //@SecuritySchemes(
 //        @SecurityScheme(name = OAUTH2_AUTHORISATION_CODE_SECURITY_SCHEME_NAME, type = SecuritySchemeType.OAUTH2,
 //                in = SecuritySchemeIn.HEADER,

@@ -1,7 +1,6 @@
 package ro.rasel.spring.microservices.echoservice.controller.v1.dao;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.beans.ConstructorProperties;
 import java.util.Collections;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-@ApiModel
+@Schema(description = "Echo Request")
 public class EchoRequest {
     private final Map<String, List<String>> responseHeaders;
     private final int responseStatus;
@@ -24,7 +23,7 @@ public class EchoRequest {
         return responseHeaders;
     }
 
-    @ApiModelProperty(example = "200")
+    @Schema(example = "200")
     public int getResponseStatus() {
         return responseStatus;
     }
