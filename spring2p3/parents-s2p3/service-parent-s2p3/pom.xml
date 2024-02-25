@@ -19,27 +19,27 @@
         <dependencies>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>resource-security-client-component</artifactId>
+                <artifactId>resource-security-client-component-s2p3</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>web-security-client-component</artifactId>
+                <artifactId>web-security-client-component-s2p3</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>basic-security-client-component</artifactId>
+                <artifactId>basic-security-client-component-s2p3</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>eureka-client-component</artifactId>
+                <artifactId>eureka-client-component-s2p3</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>hystrix-component</artifactId>
+                <artifactId>hystrix-component-s2p3</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

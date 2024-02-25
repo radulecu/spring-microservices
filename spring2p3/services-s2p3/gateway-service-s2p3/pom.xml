@@ -21,11 +21,11 @@
     <dependencies>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>web-security-client-component</artifactId>
+            <artifactId>web-security-client-component-s2p3</artifactId>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>eureka-client-component</artifactId>
+            <artifactId>eureka-client-component-s2p3</artifactId>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>

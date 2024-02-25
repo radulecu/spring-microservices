@@ -12,7 +12,10 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>eureka-client-component-s2p3</module>
         <module>hystrix-component-s2p3</module>
+        <module>security-s2p3</module>
         <module>swagger2-component-s2p3</module>
+        <module>zipkin-component-s2p3</module>
     </modules>
 </project>

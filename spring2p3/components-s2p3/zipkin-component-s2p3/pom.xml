@@ -11,32 +11,26 @@
     </parent>
 
     <groupId>ro.rasel.spring.microservices.components</groupId>
-    <artifactId>swagger2-component-s2p3</artifactId>
+    <artifactId>zipkin-component-s2p3</artifactId>
     <packaging>jar</packaging>
 
-    <description>Security client component for oauth2 authentication/authorisation</description>
+    <description>Enable Zipkin</description>
+
+    <properties>
+        <wro4j.version>1.7.6</wro4j.version>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>eureka-client-component-s2p3</artifactId>
+            <groupId>ro.rasel.spring.microservices.commons</groupId>
+            <artifactId>spring-common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <!--Spring Boot-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-
-        <!--Swagger-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
     </dependencies>
 </project>

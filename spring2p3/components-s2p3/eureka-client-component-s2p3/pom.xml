@@ -11,32 +11,40 @@
     </parent>
 
     <groupId>ro.rasel.spring.microservices.components</groupId>
-    <artifactId>swagger2-component-s2p3</artifactId>
+    <artifactId>eureka-client-component-s2p3</artifactId>
     <packaging>jar</packaging>
 
-    <description>Security client component for oauth2 authentication/authorisation</description>
+    <description>Component used to provide dependencies, default configuration and code for connection to Eureka
+        service.
+    </description>
 
     <dependencies>
         <dependency>
-            <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>eureka-client-component-s2p3</artifactId>
+            <groupId>ro.rasel.spring.microservices.commons</groupId>
+            <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <!--Spring Boot-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
-        <!--Swagger-->
+        <!--Spring Cloud-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -94,11 +94,6 @@
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>hystrix-component</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
                 <artifactId>resilience-component</artifactId>
                 <version>${project.version}</version>
             </dependency>
