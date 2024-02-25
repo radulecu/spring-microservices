@@ -119,8 +119,8 @@ class BookmarkIntegrationTest {
                 .exchange(BOOKMARK_ENDPOINT, HttpMethod.PUT,
                         new HttpEntity<>(bookmarkDto), BookmarkResponse.class, USER_ID, bookmarkId);
 
-        assertThat(result.getBody(), is(bookmark));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), is(bookmark));
     }
 
     @Test
@@ -131,8 +131,8 @@ class BookmarkIntegrationTest {
                 .exchange(BOOKMARK_ENDPOINT, HttpMethod.PUT,
                         new HttpEntity<>(bookmarkDto), BookmarkResponse.class, USER_ID, 1);
 
-        assertThat(result.getBody(), is((BookmarkResponse) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(result.getBody(), is((BookmarkResponse) null));
     }
 
     @Test

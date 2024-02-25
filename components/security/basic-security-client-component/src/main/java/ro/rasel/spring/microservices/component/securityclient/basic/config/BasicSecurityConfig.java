@@ -5,18 +5,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import ro.rasel.spring.microservices.component.securityclient.basic.config.properties.BasicSecurityProperties;
 import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
 
 import java.util.Optional;
 
 @Configuration
-@Order(1)
-public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
+public class BasicSecurityConfig {
     private final IBasicSecurityConfigurer basicSecurityConfigurer;
     private final BasicSecurityProperties basicSecurityProperties;
 
@@ -28,9 +27,10 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
         this.basicSecurityProperties = basicSecurityProperties;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
+    @Bean
+    @Order(1)
+    public SecurityFilterChain basicSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
                 .antMatcher(basicSecurityProperties.getUrlAntMatcher())
                 .csrf().disable()
                 .httpBasic().and()
@@ -44,7 +44,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                                 AuthorityUtils.createAuthorityList("ROLE_USER"));
                     }
                     return null;
-                });
+                }).build();
     }
 
     // This should not be used in production

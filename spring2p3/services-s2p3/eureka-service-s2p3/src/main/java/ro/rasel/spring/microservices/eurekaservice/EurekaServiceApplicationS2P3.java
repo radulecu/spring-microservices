@@ -15,10 +15,10 @@ import ro.rasel.spring.microservices.component.ssl.server.EnableSslServerCompone
 @EnableBasicSecurityClientComponent
 @EnableWebSecurityClientComponent
 //@EnableEurekaClientComponent // needed only if I want also expose eureka service through gateway
-public class EurekaServiceApplication {
+public class EurekaServiceApplicationS2P3 {
 
     public static void main(String[] args) {
-        SpringApplication.run(EurekaServiceApplication.class, args);
+        SpringApplication.run(EurekaServiceApplicationS2P3.class, args);
     }
 
 }

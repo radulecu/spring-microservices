@@ -64,8 +64,8 @@ class ContactIntegrationTest {
                         new ParameterizedTypeReference<List<ContactResponse>>() {
                         }, USER_ID);
 
-        assertThat(result.getBody().get(0), is(expectedContactResponse));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody().get(0), is(expectedContactResponse));
     }
 
     @Test
@@ -75,8 +75,8 @@ class ContactIntegrationTest {
                         new ParameterizedTypeReference<List<ContactResponse>>() {
                         }, USER_ID);
 
-        assertThat(result.getBody(), is((List<ContactResponse>) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(result.getBody(), is((List<ContactResponse>) null));
     }
 
     @Test
@@ -86,8 +86,8 @@ class ContactIntegrationTest {
                 .exchange(CONTACT_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, ContactResponse.class,
                         USER_ID, expectedContactResponse.getId());
 
-        assertThat(result.getBody(), is(expectedContactResponse));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), is(expectedContactResponse));
     }
 
     @Test
@@ -96,8 +96,8 @@ class ContactIntegrationTest {
                 .exchange(CONTACT_ENDPOINT, HttpMethod.GET, HttpEntity.EMPTY, ContactResponse.class,
                         USER_ID, 3);
 
-        assertThat(result.getBody(), is((ContactResponse) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(result.getBody(), is((ContactResponse) null));
     }
 
     @Test
@@ -110,16 +110,15 @@ class ContactIntegrationTest {
 
         final ContactResponse contact = result.getBody();
 
+        assertThat(result.getStatusCode(), is(HttpStatus.CREATED));
+
         assertThat(contact.getUserId(), is(USER_ID));
         assertThat(contact.getFirstName(), is(FIRST_NAME));
         assertThat(contact.getLastName(), is(LAST_NAME));
         assertThat(contact.getEmail(), is(EMAIL));
         assertThat(contact.getRelationship(), is(RELATIONSHIP));
 
-        assertThat(result.getStatusCode(), is(HttpStatus.OK));
-
         assertThat(dbUtils.getContactFromDb(contact.getId(), USER_ID).get(), is(contact));
-
     }
 
     @Test
@@ -135,8 +134,8 @@ class ContactIntegrationTest {
         final ContactResponse contactResponse = result.getBody();
         alignIds(contactResponse, expectedContactResponse);
 
-        assertThat(contactResponse, is(expectedContactResponse));
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(contactResponse, is(expectedContactResponse));
     }
 
     @Test
@@ -147,8 +146,8 @@ class ContactIntegrationTest {
                 .exchange(CONTACT_ENDPOINT, HttpMethod.PUT,
                         new HttpEntity<>(contactDetails), ContactResponse.class, USER_ID, 1);
 
-        assertThat(result.getBody(), is((ContactResponse) null));
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(result.getBody(), is((ContactResponse) null));
     }
 
     @Test

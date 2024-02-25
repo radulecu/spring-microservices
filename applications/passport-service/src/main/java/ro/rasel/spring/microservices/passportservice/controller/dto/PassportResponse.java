@@ -5,6 +5,7 @@ import ro.rasel.spring.microservices.api.bookmark.data.BookmarkResponse;
 import ro.rasel.spring.microservices.api.contact.data.ContactResponse;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 @Schema(name = "Passport", description = "User Passport")
@@ -43,5 +44,23 @@ public class PassportResponse {
                 .add("bookmarks=" + bookmarks)
                 .add("contacts=" + contacts)
                 .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PassportResponse that = (PassportResponse) o;
+        return Objects.equals(userId, that.userId) && Objects.equals(bookmarks, that.bookmarks) &&
+                Objects.equals(contacts, that.contacts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, bookmarks, contacts);
     }
 }

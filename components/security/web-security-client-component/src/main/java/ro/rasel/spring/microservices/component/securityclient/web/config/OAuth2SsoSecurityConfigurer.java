@@ -1,11 +1,12 @@
 package ro.rasel.spring.microservices.component.securityclient.web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
@@ -27,8 +28,7 @@ import java.util.List;
 
 
 @Configuration
-@Order(2)
-public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class OAuth2SsoSecurityConfigurer {
     private final List<IWebSecurityConfigurer> configurers;
     private final WebSecurityProperties webSecurityProperties;
 
@@ -40,10 +40,11 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
         this.configurers = configurers;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    @Order(2)
+    public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
         // @formatter:off
-        http
+        HttpSecurity httpSecurity = http
             .oauth2Login()
             .and()
             .logout()
@@ -87,9 +88,11 @@ public class OAuth2SsoSecurityConfigurer extends WebSecurityConfigurerAdapter {
         // @formatter:on
 
 
-        if (configurers.size()==0){
-            http.authorizeRequests().anyRequest().authenticated();
+        if (configurers.isEmpty()){
+            httpSecurity = httpSecurity.authorizeRequests().anyRequest().authenticated().and();
         }
+
+        return httpSecurity.build();
     }
 
     private Filter csrfHeaderFilter() {

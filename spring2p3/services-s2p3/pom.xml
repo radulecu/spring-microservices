@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>eureka-service-s2p3</module>
         <module>sso-auth-service-s2p3</module>
         <module>resource-gateway-service-s2p3</module>
         <module>gateway-service-s2p3</module>

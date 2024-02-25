@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.rasel.spring.microservices.contactservice.controller.v1.dto.ContactRequest;
@@ -22,6 +23,7 @@ public interface ContactApi {
 
     @GetMapping
     @Operation(summary = "Get contacts", description = "Get a list of contacts", tags = NAME)
+    @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Found"),
             @ApiResponse(responseCode = "404", description = "Not found"),
@@ -30,6 +32,7 @@ public interface ContactApi {
 
     @GetMapping(value = "/{contactId}")
     @Operation(summary = "Get contact", description = "Get a contact", tags = NAME)
+    @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Found"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
@@ -39,14 +42,16 @@ public interface ContactApi {
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @Operation(summary = "Add contact", description = "Create a new contact and return it", tags = NAME)
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Ok"),
+            @ApiResponse(responseCode = "201", description = "Created"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
     ContactResponse createContact(@PathVariable String userId, @Valid @RequestBody ContactRequest contactRequest);
 
     @PutMapping(value = "/{contactId}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @Operation(summary = "Update contact", description = "Update a contact and return it", tags = NAME)
+    @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Ok"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
@@ -58,6 +63,7 @@ public interface ContactApi {
 
     @DeleteMapping(value = "/{contactId}")
     @Operation(summary = "Delete contact", description = "Delete a contact", tags = NAME)
+    @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "No content"),
             @ApiResponse(responseCode = "400", description = "Bad request"),

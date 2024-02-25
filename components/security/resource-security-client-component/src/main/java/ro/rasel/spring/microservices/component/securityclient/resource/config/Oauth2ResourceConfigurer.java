@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.web.SecurityFilterChain;
 import ro.rasel.spring.microservices.common.utils.properties.securityclient.SecurityConfigProperties;
 import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
 import ro.rasel.spring.microservices.component.securityclient.resource.config.properties.ResourceSecurityProperties;
@@ -18,8 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Optional;
 
 @Configuration
-@Order(3)
-class Oauth2ResourceConfigurer extends WebSecurityConfigurerAdapter {
+class Oauth2ResourceConfigurer {
     private final IResourceSecurityConfigurer resourceSecurityConfigurer;
     private final ResourceSecurityProperties resourceSecurityProperties;
     private final SecurityConfigProperties securityConfig;
@@ -33,13 +32,14 @@ class Oauth2ResourceConfigurer extends WebSecurityConfigurerAdapter {
         this.securityConfig = securityConfig;
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.antMatcher(resourceSecurityProperties.getUrlAntMatcher())
+    @Bean
+    @Order(3)
+    public SecurityFilterChain resourceSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.antMatcher(resourceSecurityProperties.getUrlAntMatcher())
                 .authorizeRequests(Optional.ofNullable(resourceSecurityConfigurer)
                         .map(IHttpSecurityConfigurer::getExpressionInterceptUrlRegistryCustomizer)
                         .orElse(auth -> auth.anyRequest().authenticated()))
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt).build();
     }
 
     @Bean
