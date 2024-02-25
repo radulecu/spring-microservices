@@ -114,11 +114,6 @@
             </dependency>
             <dependency>
                 <groupId>ro.rasel.spring.microservices.components</groupId>
-                <artifactId>swagger2-component-s2p3</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ro.rasel.spring.microservices.components</groupId>
                 <artifactId>zipkin-component</artifactId>
                 <version>${project.version}</version>
             </dependency>

@@ -95,7 +95,7 @@ class BookmarkIntegrationTest {
                 .exchange(BOOKMARKS_ENDPOINT, HttpMethod.POST, new HttpEntity<>(bookmarkDto),
                         BookmarkResponse.class, USER_ID);
 
-        assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getStatusCode(), is(HttpStatus.CREATED));
 
         final BookmarkResponse bookmarkResponse = result.getBody();
         assertThat(bookmarkResponse.getUserId(), is(USER_ID));

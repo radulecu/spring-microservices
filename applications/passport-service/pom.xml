@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
-            <artifactId>swagger2-component-s2p3</artifactId>
+            <artifactId>swagger-component</artifactId>
         </dependency>
         <dependency>
             <groupId>ro.rasel.spring.microservices.components</groupId>
@@ -100,44 +100,98 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <!-- RELEASE_VERSION -->
+                <version>6.0.1</version>
+                <!-- /RELEASE_VERSION -->
                 <executions>
                     <execution>
+                        <phase>generate-resources</phase>
                         <id>bookmark-api-generate</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
-                        <!--suppress MavenModelInspection -->
                         <configuration>
                             <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>
                             <apiPackage>ro.rasel.spring.microservices.api.bookmark</apiPackage>
                             <modelPackage>ro.rasel.spring.microservices.api.bookmark.data</modelPackage>
+                            <configOptions>
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
+                        <phase>generate-resources</phase>
                         <id>contact-api-generate</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
-                        <!--suppress MavenModelInspection -->
                         <configuration>
                             <inputSpec>${project.basedir}/swagger/contact-service-swagger.json</inputSpec>
                             <apiPackage>ro.rasel.spring.microservices.api.contact</apiPackage>
                             <modelPackage>ro.rasel.spring.microservices.api.contact.data</modelPackage>
+                            <configOptions>
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>
-                <!--suppress MavenModelInspection -->
                 <configuration>
-                    <language>spring</language>
+                    <generatorName>spring</generatorName>
                     <library>spring-cloud</library>
                     <generateSupportingFiles>false</generateSupportingFiles>
+                    <skipValidationSpec>true</skipValidationSpec>
+                    <generateModelTests>false</generateModelTests>
+                    <generateApiTests>false</generateApiTests>
                     <configOptions>
+                        <dateLibrary>java8</dateLibrary>
                         <interfaceOnly>true</interfaceOnly>
+                        <java8>true</java8>
+                        <documentationProvider>springdoc</documentationProvider>
+                        <openApiNullable>false</openApiNullable>
                     </configOptions>
                 </configuration>
             </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>io.swagger</groupId>-->
+            <!--                <artifactId>swagger-codegen-maven-plugin</artifactId>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>bookmark-api-generate</id>-->
+            <!--                        <goals>-->
+            <!--                            <goal>generate</goal>-->
+            <!--                        </goals>-->
+            <!--                        &lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+            <!--                        <configuration>-->
+            <!--                            <inputSpec>${project.basedir}/swagger/bookmark-service-swagger.json</inputSpec>-->
+            <!--                            <apiPackage>ro.rasel.spring.microservices.api.bookmark</apiPackage>-->
+            <!--                            <modelPackage>ro.rasel.spring.microservices.api.bookmark.data</modelPackage>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                    <execution>-->
+            <!--                        <id>contact-api-generate</id>-->
+            <!--                        <goals>-->
+            <!--                            <goal>generate</goal>-->
+            <!--                        </goals>-->
+            <!--                        &lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+            <!--                        <configuration>-->
+            <!--                            <inputSpec>${project.basedir}/swagger/contact-service-swagger.json</inputSpec>-->
+            <!--                            <apiPackage>ro.rasel.spring.microservices.api.contact</apiPackage>-->
+            <!--                            <modelPackage>ro.rasel.spring.microservices.api.contact.data</modelPackage>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--                &lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+            <!--                <configuration>-->
+            <!--                    <language>spring</language>-->
+            <!--                    <library>spring-cloud</library>-->
+            <!--                    <generateSupportingFiles>false</generateSupportingFiles>-->
+            <!--                    <configOptions>-->
+            <!--                        <interfaceOnly>true</interfaceOnly>-->
+            <!--                    </configOptions>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 
