@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ro.rasel.spring.microservices.common.utils.properties.securityclient.SecurityConfigProperties;
-import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
 import ro.rasel.spring.microservices.component.securityclient.resource.config.properties.ResourceSecurityProperties;
 import ro.rasel.spring.microservices.component.securityclient.resource.service.PublicKeyLoaderService;
 
@@ -35,9 +34,9 @@ class Oauth2ResourceConfigurer {
     @Bean
     @Order(3)
     public SecurityFilterChain resourceSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.antMatcher(resourceSecurityProperties.getUrlAntMatcher())
-                .authorizeRequests(Optional.ofNullable(resourceSecurityConfigurer)
-                        .map(IHttpSecurityConfigurer::getExpressionInterceptUrlRegistryCustomizer)
+        return httpSecurity.securityMatcher(resourceSecurityProperties.getUrlAntMatcher())
+                .authorizeHttpRequests(Optional.ofNullable(resourceSecurityConfigurer)
+                        .map(IResourceSecurityConfigurer::getAuthorizationManagerRequestMatcherRegistryCustomizer)
                         .orElse(auth -> auth.anyRequest().authenticated()))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt).build();
     }

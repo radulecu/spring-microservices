@@ -3,6 +3,7 @@ package ro.rasel.spring.microservices.eurekaservice.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import ro.rasel.spring.microservices.component.securityclient.resource.config.IResourceSecurityConfigurer;
 import ro.rasel.spring.microservices.component.securityclient.web.config.IWebSecurityConfigurer;
@@ -15,10 +16,20 @@ public class SecurityConfigurer implements IResourceSecurityConfigurer, IWebSecu
     @Override
     public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
         return auth -> auth
-                .regexMatchers("/v2/api-docs").permitAll()
-//                .antMatchers("/eureka/**").permitAll()
-                .antMatchers("/actuator/health/**").permitAll()
-                .antMatchers("/actuator/**").hasRole("ACTUATOR")
+                .requestMatchers("/v2/api-docs").permitAll()
+//                .requestMatchers("/eureka/**").permitAll()
+                .requestMatchers("/actuator/health/**").permitAll()
+                .requestMatchers("/actuator/**").hasRole("ACTUATOR")
+                .anyRequest().authenticated();
+    }
+
+    @Override
+    public Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> getAuthorizationManagerRequestMatcherRegistryCustomizer() {
+        return auth -> auth
+                .requestMatchers("/v2/api-docs").permitAll()
+//                .requestMatchers("/eureka/**").permitAll()
+                .requestMatchers("/actuator/health/**").permitAll()
+                .requestMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().authenticated();
     }
 }

@@ -16,12 +16,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 import ro.rasel.spring.microservices.component.securityclient.web.config.properties.WebSecurityProperties;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class OAuth2SsoSecurityConfigurer {
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
             .and()
-            .antMatcher(webSecurityProperties.getUrlAntMatcher())
+            .securityMatcher(webSecurityProperties.getUrlAntMatcher())
             .authorizeRequests((ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry auth) -> {
                     for (IWebSecurityConfigurer configurer : configurers) {
                         configurer.getExpressionInterceptUrlRegistryCustomizer().customize(auth);

@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ro.rasel.spring.microservices.component.securityclient.basic.config.properties.BasicSecurityProperties;
-import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
 
 import java.util.Optional;
 
@@ -31,11 +30,11 @@ public class BasicSecurityConfig {
     @Order(1)
     public SecurityFilterChain basicSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .antMatcher(basicSecurityProperties.getUrlAntMatcher())
+                .securityMatcher(basicSecurityProperties.getUrlAntMatcher())
                 .csrf().disable()
                 .httpBasic().and()
                 .authorizeRequests(Optional.ofNullable(basicSecurityConfigurer)
-                        .map(IHttpSecurityConfigurer::getExpressionInterceptUrlRegistryCustomizer)
+                        .map(IBasicSecurityConfigurer::getExpressionInterceptUrlRegistryCustomizer)
                         .orElse(auth -> auth.anyRequest().authenticated()))
                 .userDetailsService(s -> {
                     String user = basicSecurityProperties.getUser();

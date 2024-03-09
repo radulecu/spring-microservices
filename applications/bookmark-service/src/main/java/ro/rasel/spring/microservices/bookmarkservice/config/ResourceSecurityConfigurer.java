@@ -2,30 +2,37 @@ package ro.rasel.spring.microservices.bookmarkservice.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authorization.method.MethodExpressionAuthorizationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import ro.rasel.spring.microservices.component.securityclient.resource.config.IResourceSecurityConfigurer;
+
+import javax.el.MethodExpression;
+import java.util.function.Consumer;
 
 @Configuration
 public class ResourceSecurityConfigurer implements IResourceSecurityConfigurer {
     private static final String REST_MATCHER = "/v1/users/[^/]*/bookmarks(/[^/]*)?";
 
     @Override
-    public Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer() {
+    public Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> getAuthorizationManagerRequestMatcherRegistryCustomizer() {
         return auth -> auth
-                .antMatchers("/favicon.ico").permitAll()
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/v3/api-docs").permitAll()
-                .antMatchers("/v3/api-docs/swagger-config").permitAll()
-                .regexMatchers(HttpMethod.GET, REST_MATCHER).access("hasAuthority('SCOPE_read') or hasAuthority('SCOPE_write')")
-                .regexMatchers(HttpMethod.POST, REST_MATCHER).access("hasAuthority('SCOPE_write')")
-                .regexMatchers(HttpMethod.PUT, REST_MATCHER).access("hasAuthority('SCOPE_write')")
-                .regexMatchers(HttpMethod.DELETE, REST_MATCHER).access("hasAuthority('SCOPE_write')")
-                .antMatchers("/actuator/health/**").permitAll()
-                .antMatchers("/actuator/**").hasRole("ACTUATOR")
+                .requestMatchers("/favicon.ico").permitAll()
+                .requestMatchers("/swagger-ui.html").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/webjars/**").permitAll()
+                .requestMatchers("/v3/api-docs").permitAll()
+                .requestMatchers("/v3/api-docs/swagger-config").permitAll()
+                .requestMatchers(new RegexRequestMatcher(REST_MATCHER,HttpMethod.GET.name())).hasAnyAuthority("SCOPE_read", "SCOPE_write")
+                .requestMatchers(new RegexRequestMatcher(REST_MATCHER, HttpMethod.POST.name())).hasAuthority("SCOPE_write")
+                .requestMatchers(new RegexRequestMatcher(REST_MATCHER, HttpMethod.PUT.name())).hasAuthority("SCOPE_write")
+                .requestMatchers(new RegexRequestMatcher(REST_MATCHER, HttpMethod.DELETE.name())).hasAuthority("SCOPE_write")
+                .requestMatchers("/actuator/health/**").permitAll()
+                .requestMatchers("/actuator/**").hasRole("ACTUATOR")
                 .anyRequest().denyAll();
     }
 }

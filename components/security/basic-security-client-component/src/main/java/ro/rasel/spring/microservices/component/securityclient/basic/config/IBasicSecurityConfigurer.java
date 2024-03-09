@@ -1,6 +1,9 @@
 package ro.rasel.spring.microservices.component.securityclient.basic.config;
 
-import ro.rasel.spring.microservices.component.securityclient.common.config.IHttpSecurityConfigurer;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 
-public interface IBasicSecurityConfigurer extends IHttpSecurityConfigurer {
+public interface IBasicSecurityConfigurer {
+    Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> getExpressionInterceptUrlRegistryCustomizer();
 }
